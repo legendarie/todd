@@ -1,10 +1,10 @@
 ## What is the Phaser Project Template?
 
-This is a simple project template I created to help add structure and automation to your next [Phaser](http://phaser.io/) game. It includes the following things:
+This is a simple project template I created to help add structure and automation to your next [Phaser](http://phaser.io/) phaser. It includes the following things:
 
 *   A **package.json** for installing npm dependencies
-*   **GruntFile.js** for automating build tasks and compiling your game
-*   **src** folder where you can put your game code.
+*   **GruntFile.js** for automating build tasks and compiling your phaser
+*   **src** folder where you can put your phaser code.
 *   **deploy** folder where all code gets compiled to and you can push to a server
 
 To get started all you need to do is download a <a target="_blank" href="https://github.com/gamecook/phaser-template-project">copy of this template</a>, the latest version of <a target="_blank" href="https://github.com/photonstorm/phaser">Phaser</a>, [NodeJS](http://nodejs.org) and [Grunt](http://gruntjs.com/).
@@ -22,7 +22,7 @@ From here, Grunt should work via the command line. If you have never installed N
 * [Installing Git, NodeJS and PHP for Impact Game Dev Part 1](http://vimeo.com/78634968)
 * [Installing Git, NodeJS and PHP for Impact Game Dev Part 2](http://vimeo.com/78637475)
 
-These two videos help walk you through how I have used Node and Grunt in the past with my other game starterkits. *Note: You will not need to install PHP for this project which is covered in these videos*.
+These two videos help walk you through how I have used Node and Grunt in the past with my other phaser starterkits. *Note: You will not need to install PHP for this project which is covered in these videos*.
 
 
 ## Setting up the Template's Dependencies
@@ -43,7 +43,7 @@ It will launch a browser with the default screen which will look something like 
 
 <img border="0" width="624"id="Picture 3" src="http://jessefreeman.com/wp-content/uploads/2014/03/Phaser-Template.png" />
 
-You can start building a game with Phaser, simply modify the main.js file inside of the src/game directory. As long as you have the Grunt task running, your project will automatically recompile every time you make a change to any JavaScript file inside of the src directory. Once the project is recompiled, simply refresh your browser to see the changes. Also make sure you disable your browser's cache.
+You can start building a phaser with Phaser, simply modify the main.js file inside of the src/phaser directory. As long as you have the Grunt task running, your project will automatically recompile every time you make a change to any JavaScript file inside of the src directory. Once the project is recompiled, simply refresh your browser to see the changes. Also make sure you disable your browser's cache.
 
 ## What Else?
 

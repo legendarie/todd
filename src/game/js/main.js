@@ -1,18 +1,18 @@
 /**
  *
- * This is a simple state template to use for getting a Phaser game up
- * and running quickly. Simply add your own game logic to the default
+ * This is a simple state template to use for getting a Phaser phaser up
+ * and running quickly. Simply add your own phaser logic to the default
  * state object or delete it and make your own.
  *
  */
 
-var state = {
+var fightState = {
 
     preload: function() {
-        // STate preload logic goes here
-        this.game.load.image('bg', 'assets/background.jpg');
-        this.game.load.image('santa', 'assets/Picture1.png');
-        this.game.load.image('candy', 'assets/candy.png');
+        // State preload logic goes here
+        this.game.load.image('bg', 'src/phaser/assets/background.jpg');
+        this.game.load.image('santa', 'src/phaser/assets/Picture1.png');
+        this.game.load.image('candy', 'src/phaser/assets/candy.png');
 
     },
     create: function(){
@@ -50,6 +50,6 @@ var game = new Phaser.Game(
     720,
     Phaser.AUTO,
     'game',
-    state
+    fightState
 );
 
