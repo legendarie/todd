@@ -10,9 +10,9 @@ var fightState = {
 
     create: function(){
         // State create logic goes here
-        this.background = game.add.sprite(0,0,'bg');this.background.scale.setTo(0.5,0.5);
-        this.candy = game.add.sprite(this.game.world.centerX,this.game.world.height,'candy');this.candy.anchor.setTo(0.5,1);
-        this.santa = game.add.sprite(0,this.game.world.centerY,'santa');this.santa.anchor.setTo(0.5,0.5);
+        this.background = game.add.image(0,0,'bg');this.background.scale.setTo(0.5,0.5);
+        this.candy = game.add.sprite(game.world.centerX,game.world.height,'candy');this.candy.anchor.setTo(0.5,1);
+        this.santa = game.add.sprite(0,game.world.centerY,'santa');this.santa.anchor.setTo(0.5,0.5);
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.physics.enable(this.candy);
