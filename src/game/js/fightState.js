@@ -23,11 +23,11 @@ var fightState = {
         // randomly chooses between the two candy sprites and adds it to the world
         var num = Math.random();
         if (num < 0.5) {
-            candy = game.add.sprite(game.world.centerX, game.world.height, 'dotCandy');
+            candy = game.add.sprite(game.world.centerX, 650, 'dotCandy');
             candy.scale.setTo(0.1,0.1);
             candy.anchor.setTo(0.5, 1);
         } else {
-            candy = game.add.sprite(game.world.centerX, game.world.height, 'stripeCandy');
+            candy = game.add.sprite(game.world.centerX, 650, 'stripeCandy');
             candy.scale.setTo(0.1,0.1);
             candy.anchor.setTo(0.5, 1);
         }
@@ -37,28 +37,31 @@ var fightState = {
         slingshot.anchor.setTo(0.5, 0.5);
 
         // add the santa sprite to the middle of the world
-        santa = game.add.sprite(game.world.centerX, game.world.centerY, 'santa');
+        santa = game.add.sprite(100, game.world.centerY, 'santa');
         santa.anchor.setTo(0.5, 0.5);
-
 
         // enables the arcade-style physics pre-loaded into Phaser
         game.physics.startSystem(Phaser.Physics.ARCADE);
-
-        // enables game physics to apply to the candy sprite, then sets its x and y velocity, the gravity
-        // that will be applied to the sprite when it falls, and the x and y trajectory upon a bounce
         game.physics.enable(candy);
-        candy.body.collideWorldBounds = true;
-        candy.body.gravity.x = 10;
-        candy.body.velocity.x = 200;
-        candy.body.velocity.y = 500;
-        //this.candy.body.gravity.y = 100 + Math.random() * 100;
-        candy.body.bounce.setTo(1, 1);
-
         // enables the santa sprite to be interacted with, but does not allow it to move through the world
         game.physics.enable(santa);
         santa.body.immovable = true;
+        santa.inputEnabled = true;
 
-        //fightState.update(candy, santa);
+        santa.events.onInputDown.add(this.launch, this);
+
+    },
+
+    launch: function() {
+
+        // enables game physics to apply to the candy sprite, then sets its x and y velocity, the gravity
+        // that will be applied to the sprite when it falls, and the x and y trajectory upon a bounce
+        candy.body.collideWorldBounds = true;
+        candy.body.gravity.x = 100;
+        candy.body.velocity.x = game.rnd.integerInRange(-750, 750); // keeps updating
+        candy.body.velocity.y = game.rnd.integerInRange(-900,-100); // keeps updating
+        //this.candy.body.gravity.y = 100 + Math.random() * 100;
+        candy.body.bounce.setTo(1, 1);
 
     },
 
