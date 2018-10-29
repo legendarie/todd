@@ -18,27 +18,28 @@ var fightState = {
     create: function() {
         // adds the background to the game world
         background = game.add.image(0, 0, 'bg');
-        background.scale.setTo(0.5, 0.5);
+        background.scale.setTo(0.5);
 
         // randomly chooses between the two candy sprites and adds it to the world
         var num = Math.random();
         if (num < 0.5) {
             candy = game.add.sprite(game.world.centerX, 650, 'dotCandy');
-            candy.scale.setTo(0.1,0.1);
+            candy.scale.setTo(0.1);
             candy.anchor.setTo(0.5, 1);
         } else {
             candy = game.add.sprite(game.world.centerX, 650, 'stripeCandy');
-            candy.scale.setTo(0.1,0.1);
+            candy.scale.setTo(0.1);
             candy.anchor.setTo(0.5, 1);
         }
 
+        // add the slingshot to the bottom center of the window
         slingshot = game.add.sprite(game.world.centerX, game.world.height, 'slingshot');
-        slingshot.scale.setTo(0.07, 0.07);
-        slingshot.anchor.setTo(0.5, 0.5);
+        slingshot.scale.setTo(0.07);
+        slingshot.anchor.setTo(0.5);
 
         // add the santa sprite to the middle of the world
         santa = game.add.sprite(100, game.world.centerY, 'santa');
-        santa.anchor.setTo(0.5, 0.5);
+        santa.anchor.setTo(0.5);
 
         // enables the arcade-style physics pre-loaded into Phaser
         game.physics.startSystem(Phaser.Physics.ARCADE);
