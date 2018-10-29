@@ -3,11 +3,12 @@ var text;
 var textBar;
 var style;
 var clickCount = 0;
-var counterText;
-var blueButton;
-var brownButton;
-var redButton;
-var whiteButton;
+//var counterText;
+var blueDial;
+var brownDial;
+var redDial;
+var whiteDial;
+var door;
 
 var scene1 = {
 
@@ -36,37 +37,93 @@ var scene1 = {
         text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
         text.setTextBounds(0, 40, 1200, 100);
 
-        clickCount = 0;
-        counterText = game.add.text(0,0, clickCount);
+        //clickCount = 0;
+        //counterText = game.add.text(0,0, clickCount);
 
-        textBar.events.onInputDown.add(this.changeText, this);
+        textBar.events.onInputUp.add(this.changeText, this);
 
     },
 
     changeText: function() {
-        clickCount++;
-        text.kill();
-        counterText.kill();
-        counterText = game.add.text(0, 0, clickCount);
+        if (clickCount < 2) {
+            clickCount++;
+            text.kill();
+            //counterText.kill();
+            //counterText = game.add.text(0, 0, clickCount);
+            if (clickCount == 1) {
+                text = game.add.text(0, 0, "To what color do you turn the dial?", style);
+                text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+                text.setTextBounds(0, 40, 1200, 100);
+            } else if (clickCount == 2) {
+                text = game.add.text(0, 0, "Choose a color", style);
+                text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+                text.setTextBounds(0, 40, 1200, 100);
+                this.dialClicks();
+            }
+        }
 
-        if (clickCount == 1) {
-            // text.kill();
-            text = game.add.text(0, 0, "To what color do you turn the dial?", style);
-            text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-            text.setTextBounds(0, 40, 1200, 100);
-        }
-        if (clickCount == 2) {
-            // text.kill();
-            text = game.add.text(0, 0, "Choose a color", style);
-            text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-            text.setTextBounds(0, 40, 1200, 100);
-        }
     },
 
-    update: function() {
+    dialClicks: function() {
+
+        blueDial = game.add.graphics();
+        blueDial.beginFill(0x000000, 0);
+        blueDial.drawRect(540, 263, 60, 40);
+        blueDial.inputEnabled = true;
+        blueDial.events.onInputUp.add(this.blueMessage, this);
+
+        brownDial = game.add.graphics();
+        brownDial.beginFill(0x000000, 0);
+        brownDial.drawRect(584, 292, 40, 55);
+        brownDial.inputEnabled = true;
+        brownDial.events.onInputUp.add(this.otherMessage, this);
+
+        redDial = game.add.graphics();
+        redDial.beginFill(0x000000, 0);
+        redDial.drawRect(540, 335, 60, 45);
+        redDial.inputEnabled = true;
+        redDial.events.onInputUp.add(this.otherMessage, this);
+
+        whiteDial = game.add.graphics();
+        whiteDial.beginFill(0x000000, 0);
+        whiteDial.drawRect(515, 292, 40, 55);
+        whiteDial.inputEnabled = true;
+        whiteDial.events.onInputUp.add(this.otherMessage, this);
+
+    },
+
+    blueMessage: function() {
+        text.kill();
+
+        style = style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+
+        text = game.add.text(0, 0, "The door unlocks. Open the door.", style);
+        text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+        text.setTextBounds(0, 40, 1200, 100);
+
+        this.doorOpen();
+    },
+
+    otherMessage: function() {
+        text.kill();
+
+        style = style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+
+        text = game.add.text(0, 0, "The dial seems to be stuck... Choose another color.", style);
+        text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+        text.setTextBounds(0, 40, 1200, 100);
+    },
+
+    doorOpen: function() {
+        door = game.add.graphics();
+        door.beginFill(0x000000, 0);
+        door.drawRect(450, 210, 250, 420);
+        door.inputEnabled = true;
+        door.events.onInputUp.add(this.changeState, this);
+    },
+
+    changeState: function() {
+        game.state.start('scene2', scene2);
     }
 
-    /*change: function() {
-        game.state.start('fightState');
-    }*/
 };
