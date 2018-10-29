@@ -39,22 +39,24 @@ var scene1 = {
         clickCount = 0;
         counterText = game.add.text(0,0, clickCount);
 
-        textBar.events.onInputUp.add(this.changeText, this);
+        textBar.events.onInputDown.add(this.changeText, this);
 
     },
 
     changeText: function() {
         clickCount++;
+        text.kill();
         counterText.kill();
         counterText = game.add.text(0, 0, clickCount);
-        if (clickCount = 1) {
-            text.kill();
+
+        if (clickCount == 1) {
+            // text.kill();
             text = game.add.text(0, 0, "To what color do you turn the dial?", style);
             text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
             text.setTextBounds(0, 40, 1200, 100);
         }
-        if (clickCount = 2) {
-            text.kill();
+        if (clickCount == 2) {
+            // text.kill();
             text = game.add.text(0, 0, "Choose a color", style);
             text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
             text.setTextBounds(0, 40, 1200, 100);
