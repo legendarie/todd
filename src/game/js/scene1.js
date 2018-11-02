@@ -32,7 +32,7 @@ var scene1 = {
         textBar.drawRect(0, 40, 1200, 100);
         textBar.inputEnabled = true;
 
-        //set the style of the font to be put in the text bar (this is used in multiple functions
+        //set the style of the font to be put in the text bar (this is used in multiple functions)
         style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
 
         //add the text to the center of the text bar
