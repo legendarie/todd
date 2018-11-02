@@ -4,7 +4,7 @@ var text;
 var style;
 var door;
 
-var scene2 = {
+var openDoorState = {
 
     preload: function () {
         game.load.image('scene2bg', 'assets/scene2bg.png');
@@ -50,7 +50,7 @@ var scene2 = {
     },
 
     changeState: function () {
-      game.state.start('fightState', fightState);
+      game.state.start('caveState', caveState);
     }
 
 };

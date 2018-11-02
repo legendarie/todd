@@ -3,12 +3,12 @@ var cave;
 var text;
 var textBar;
 var style;
-var clickCount = 0;
+var clickCount;
 var leftCave;
 var rightCave;
 
 //initialize the state
-var sceneCave = {
+var caveState = {
 
     preload: function() {
         //load in the background image to the state
@@ -38,6 +38,8 @@ var sceneCave = {
 
         //when the text bar is clicked, go to the changeText function
         textBar.events.onInputUp.add(this.changeText, this);
+
+        clickCount = 0;
 
     },
 
@@ -93,12 +95,12 @@ var sceneCave = {
 
     changeStatePuzzle: function() {
         //change states to the gear puzzle
-        game.state.start('sceneGearPuzzle', scene1);
+        game.state.start('sceneGearPuzzle', doorState);
     },
 
     changeStateHall: function() {
         //change states to the algae hallway
-        game.state.start('sceneAlgaeHall', scene2);
+        game.state.start('sceneAlgaeHall', openDoorState);
     }
 
 }

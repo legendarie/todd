@@ -11,7 +11,7 @@ var whiteDial;
 var door;
 
 //initialize the state
-var scene1 = {
+var doorState = {
 
     preload: function() {
 
@@ -130,8 +130,8 @@ var scene1 = {
     },
 
     changeState: function() {
-        //change states to scene2
-        game.state.start('scene2', scene2);
+        //change states to openDoorState
+        game.state.start('openDoorState', openDoorState);
     }
 
 };
