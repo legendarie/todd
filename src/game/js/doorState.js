@@ -1,47 +1,36 @@
 //establish the global variables
 var scene1bg;
-var text;
-var textBar;
-var style;
 var clickCount = 0;
 var blueDial;
 var brownDial;
 var redDial;
 var whiteDial;
 var door;
+let doorScene = null;
 
 //initialize the state
 var doorState = {
 
     preload: function() {
-
-        //load in the background image to the state
-        game.load.image('scene1bg', 'assets/scene1bg.png');
-        game.load.image('button', 'assets/button.png')
+        //declare doorScene to be an instance of a Scene, and load in the background image to the state
+        doorScene = new Scene;
+        doorScene.setBackground('scene1bg', 'assets/scene1bg.png');
 
     },
 
     create: function() {
-        //add the background the the canvas and scale appropriately
-        scene1bg = game.add.image(0, 0, 'scene1bg');
-        scene1bg.scale.setTo(0.6);
+        //check to make sure the doorScene variable is not null
+        if (doorScene != null) {
 
-        //add the text bar and make it interactable
-        textBar = game.add.graphics();
-        textBar.beginFill(0x000000, 0.2);
-        textBar.drawRect(0, 40, 1200, 100);
-        textBar.inputEnabled = true;
+            //load the background and scale it
+            doorScene.loadScene('scene1bg', 0.6);
 
-        //set the style of the font to be put in the text bar (this is used in multiple functions)
-        style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+            //add the text bar (with all universal settings), with the first line of text
+            doorScene.addTextBar("You awaken in a room with nothing but a door with a dial.");
 
-        //add the text to the center of the text bar
-        text = game.add.text(0, 0, "You awaken in a room with nothing but a door with a dial.", style);
-        text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-        text.setTextBounds(0, 40, 1200, 100);
-
-        //when the text bar is clicked, go to the changeText function
-        textBar.events.onInputUp.add(this.changeText, this);
+            //when the text bar is clicked, go to the changeText function
+            textBar.events.onInputUp.add(this.changeText, this);
+        }
 
     },
 
@@ -49,89 +38,51 @@ var doorState = {
         //only increment the click count twice
         if (clickCount < 2) {
             clickCount++;
-            text.kill();
-            if (clickCount == 1) {
-                //change the text in the text bar
-                text = game.add.text(0, 0, "To what color do you turn the dial?", style);
-                text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-                text.setTextBounds(0, 40, 1200, 100);
+            if (clickCount === 1) {
+                doorScene.changeText("To what color do you turn the dial?")
             } else {
                 //change the text in the text bar, then call the dialClicks function
-                text = game.add.text(0, 0, "Choose a color", style);
-                text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-                text.setTextBounds(0, 40, 1200, 100);
+                doorScene.changeText("Choose a color.");
                 this.dialClicks();
             }
         }
-
     },
 
     dialClicks: function() {
         //make the blue part of the dial clickable. If clicked, it will call the blueMessage function
-        blueDial = game.add.graphics();
-        blueDial.beginFill(0x000000, 0);
-        blueDial.drawRect(540, 263, 60, 40);
-        blueDial.inputEnabled = true;
+        blueDial = doorScene.addButton(540, 263, 60, 40, 0);
         blueDial.events.onInputUp.add(this.blueMessage, this);
 
         //make the brown part of the dial clickable. If clicked, it will call the otherMessage function
-        brownDial = game.add.graphics();
-        brownDial.beginFill(0x000000, 0);
-        brownDial.drawRect(584, 292, 40, 55);
-        brownDial.inputEnabled = true;
+        brownDial = doorScene.addButton(584, 292, 40, 55, 0);
         brownDial.events.onInputUp.add(this.otherMessage, this);
 
         //make the red part of the dial clickable. If clicked, it will call the otherMessage function
-        redDial = game.add.graphics();
-        redDial.beginFill(0x000000, 0);
-        redDial.drawRect(540, 335, 60, 45);
-        redDial.inputEnabled = true;
+        redDial = doorScene.addButton(540, 335, 60, 45, 0);
         redDial.events.onInputUp.add(this.otherMessage, this);
 
         //make the white part of the dial clickable. If clicked, it will call the otherMessage function
-        whiteDial = game.add.graphics();
-        whiteDial.beginFill(0x000000, 0);
-        whiteDial.drawRect(515, 292, 40, 55);
-        whiteDial.inputEnabled = true;
+        whiteDial = doorScene.addButton(515, 292, 40, 55, 0);
         whiteDial.events.onInputUp.add(this.otherMessage, this);
 
     },
 
     blueMessage: function() {
-        //remove text in the text bar
-        text.kill();
-
         //reset the text in the text box
-        text = game.add.text(0, 0, "The door unlocks. Open the door.", style);
-        text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-        text.setTextBounds(0, 40, 1200, 100);
+        doorScene.changeText("The door unlocks. Open the door.");
 
-        //call the doorOpen function
-        this.doorOpen();
+        //make the door clickable. If the region is clicked, call the changeState function
+        door = doorScene.addButton(450, 210, 250, 420, 0);
+        door.events.onInputUp.add(this.changeState, this);
     },
 
     otherMessage: function() {
-        //remove text in the text bar
-        text.kill();
-
         //reset the text in the text box
-        text = game.add.text(0, 0, "The dial seems to be stuck... Choose another color.", style);
-        text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-        text.setTextBounds(0, 40, 1200, 100);
-    },
-
-    doorOpen: function() {
-        //make the door clickable. If the region is clicked, call the changeState function
-        door = game.add.graphics();
-        door.beginFill(0x000000, 0);
-        door.drawRect(450, 210, 250, 420);
-        door.inputEnabled = true;
-        door.events.onInputUp.add(this.changeState, this);
+        doorScene.changeText("The dial seems to be stuck... Choose another color.");
     },
 
     changeState: function() {
         //change states to openDoorState
         game.state.start('openDoorState', openDoorState);
     }
-
 };
