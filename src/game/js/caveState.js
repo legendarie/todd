@@ -1,5 +1,5 @@
 //establish the global variables
-var clickCount = 0;
+var clickCount;
 var textBar;
 var leftCave;
 var rightCave;
@@ -15,6 +15,8 @@ var caveState = {
         //declare caveScene to be an instance of a Scene, and load in the background image to the state
         caveScene = new Scene;
         caveScene.setBackground('cave', 'assets/caveStartbg.jpg');
+        //reset the global clickCount variable
+        clickCount = 0;
     },
 
     create: function() {
@@ -46,31 +48,37 @@ var caveState = {
                 caveScene.changeText("To the right, you can just barely make out a soft," +
                 " green glow.")
             } else {
-                //change the text in the text bar, then call the caveClicks function
+                //change the text in the text bar, then call the caveButtons function
                 caveScene.changeText("Which tunnel do you choose to follow?");
-                this.caveClicks();
+                this.caveButtons();
             }
         }
     },
 
-    caveClicks: function() {
+    /**All of the functions that create interactive buttons,
+     * which for this state are the two cave buttons that switch
+     * to two separate states*/
+
+    caveButtons: function() {
         //make the left tunnel clickable. If clicked, it will call the changeStatePuzzle
-        leftCave = caveScene.addButton(225, 250, 260, 300, 0);
+        leftCave = caveScene.addButton(225, 250, 260, 300, 0.2);
         leftCave.events.onInputUp.add(this.changeStatePuzzle, this);
 
         //make the right tunnel clickable. If clicked, it will call the changeStateHall function
-        rightCave = caveScene.addButton(625, 250, 260, 300, 0);
+        rightCave = caveScene.addButton(625, 250, 260, 300, 0.2);
         rightCave.events.onInputUp.add(this.changeStateHall, this);
-
     },
+
+    /**The functions that switch to the next state, of which
+     * there are two; one for each of the tunnels*/
 
     changeStatePuzzle: function() {
         //change states to the gear puzzle
-        game.state.start('sceneGearPuzzle', doorState);
+        game.state.start('doorState', doorState);
     },
 
     changeStateHall: function() {
         //change states to the algae hallway
-        game.state.start('sceneAlgaeHall', openDoorState);
+        game.state.start('openDoorState', openDoorState);
     }
 };

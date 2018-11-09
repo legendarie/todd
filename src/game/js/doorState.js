@@ -1,5 +1,5 @@
 //establish the global variables
-var clickCount = 0;
+var clickCount;
 var textBar;
 var blueDial;
 var brownDial;
@@ -11,11 +11,14 @@ let doorScene = null;
 //initialize the state
 var doorState = {
 
+    /**The initial functions to set up the scene for player interaction*/
+
     preload: function() {
         //declare doorScene to be an instance of a Scene, and load in the background image to the state
         doorScene = new Scene;
-        doorScene.setBackground('scene1bg', 'assets/doorbg.png');
-
+        doorScene.setBackground('theDoor', 'assets/theDoorbg.png');
+        //reset the global clickCount variable
+        clickCount = 0;
     },
 
     create: function() {
@@ -23,7 +26,7 @@ var doorState = {
         if (doorScene != null) {
 
             //load the background and scale it
-            doorScene.loadScene('scene1bg', 0.6);
+            doorScene.loadScene('theDoor', 0.6);
 
             //add the text bar (with all universal settings), with the first line of text
             doorScene.addTextBar("You awaken in a room with nothing but a door with a dial.");
@@ -34,6 +37,10 @@ var doorState = {
 
     },
 
+    /**All of the functions that change the text in the text box,
+     * including the initial changeText function, as well as the
+     * different messages for clicking on different parts of the dial*/
+
     changeText: function() {
         //only increment the click count twice
         if (clickCount < 2) {
@@ -41,15 +48,31 @@ var doorState = {
             if (clickCount === 1) {
                 doorScene.changeText("To what color do you turn the dial?")
             } else {
-                //change the text in the text bar, then call the dialClicks function
+                //change the text in the text bar, then call the dialButtons function
                 doorScene.changeText("Choose a color.");
-                clickCount = 0;
-                this.dialClicks();
+                this.dialButtons();
             }
         }
     },
 
-    dialClicks: function() {
+    blueMessage: function() {
+        //reset the text in the text box
+        doorScene.changeText("The door unlocks. Open the door.");
+
+        //create a button to change to the next scene
+        this.doorButton();
+    },
+
+    otherMessage: function() {
+        //reset the text in the text box
+        doorScene.changeText("The dial seems to be stuck... Choose another color.");
+    },
+
+    /**All of the functions that create interactive buttons,
+     * including the dial buttons and the door button, which
+     * calls the next state*/
+
+    dialButtons: function() {
         //make the blue part of the dial clickable. If clicked, it will call the blueMessage function
         blueDial = doorScene.addButton(540, 263, 60, 40, 0);
         blueDial.events.onInputUp.add(this.blueMessage, this);
@@ -68,19 +91,14 @@ var doorState = {
 
     },
 
-    blueMessage: function() {
-        //reset the text in the text box
-        doorScene.changeText("The door unlocks. Open the door.");
-
+    doorButton: function() {
         //make the door clickable. If the region is clicked, call the changeState function
         door = doorScene.addButton(450, 210, 250, 420, 0);
         door.events.onInputUp.add(this.changeState, this);
     },
 
-    otherMessage: function() {
-        //reset the text in the text box
-        doorScene.changeText("The dial seems to be stuck... Choose another color.");
-    },
+    /**The function that switches to the next state, of which
+     * there is only one*/
 
     changeState: function() {
         //change states to openDoorState
