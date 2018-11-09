@@ -1,6 +1,5 @@
 //establish the global variables
-var cave;
-var caveClickCount = 0;
+var clickCount = 0;
 var textBar;
 var leftCave;
 var rightCave;
@@ -15,8 +14,7 @@ var caveState = {
     preload: function() {
         //declare caveScene to be an instance of a Scene, and load in the background image to the state
         caveScene = new Scene;
-        caveScene.setBackground('cave', 'assets/cave.jpg');
-
+        caveScene.setBackground('cave', 'assets/caveStartbg.jpg');
     },
 
     create: function() {
@@ -33,19 +31,18 @@ var caveState = {
             //when the text bar is clicked, go to the changeText function
             textBar.events.onInputUp.add(this.changeText, this);
         }
-
     },
 
     changeText: function() {
         //only increment the click count four times
-        if (caveClickCount < 4) {
-            caveClickCount++;
-            if (caveClickCount === 1) {
+        if (clickCount < 4) {
+            clickCount++;
+            if (clickCount === 1) {
                 caveScene.changeText("Before you snake two dark tunnels.")
-            } else if (caveClickCount === 2) {
+            } else if (clickCount === 2) {
                 caveScene.changeText("To the left, you hear the rhythmic click" +
                 " of metal on metal.")
-            } else if (caveClickCount === 3) {
+            } else if (clickCount === 3) {
                 caveScene.changeText("To the right, you can just barely make out a soft," +
                 " green glow.")
             } else {
@@ -76,5 +73,4 @@ var caveState = {
         //change states to the algae hallway
         game.state.start('sceneAlgaeHall', openDoorState);
     }
-
-}
+};

@@ -7,10 +7,10 @@ var fightState = {
 
     preload: function () {
         // preload all of the images to be used as images or sprites in the game
-        game.load.image('bg', 'assets/background.jpg');
-        game.load.image('santa', 'assets/Picture1.png');
-        game.load.image('dotCandy', 'assets/DotCandy.png');
-        game.load.image('stripeCandy', 'assets/StripeCandy.png');
+        game.load.image('bg', 'assets/snowflakebg.jpg');
+        game.load.image('santa', 'assets/santa.png');
+        game.load.image('dotCandy', 'assets/dotCandy.png');
+        game.load.image('stripeCandy', 'assets/stripeCandy.png');
         game.load.image('slingshot', 'assets/slingshot.png');
 
     },

@@ -1,4 +1,3 @@
-var scene2bg;
 var textBar;
 var openDoor;
 let openDoorScene = null;
@@ -8,7 +7,7 @@ var openDoorState = {
     preload: function() {
         //declare openDoorScene to be an instance of a Scene, and load in the background image to the state
         openDoorScene = new Scene;
-        openDoorScene.setBackground('scene2bg', 'assets/scene2bg.png');
+        openDoorScene.setBackground('scene2bg', 'assets/openDoorbg.png');
 
     },
 

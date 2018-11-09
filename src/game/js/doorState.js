@@ -1,6 +1,6 @@
 //establish the global variables
-var scene1bg;
 var clickCount = 0;
+var textBar;
 var blueDial;
 var brownDial;
 var redDial;
@@ -14,7 +14,7 @@ var doorState = {
     preload: function() {
         //declare doorScene to be an instance of a Scene, and load in the background image to the state
         doorScene = new Scene;
-        doorScene.setBackground('scene1bg', 'assets/scene1bg.png');
+        doorScene.setBackground('scene1bg', 'assets/doorbg.png');
 
     },
 
@@ -43,6 +43,7 @@ var doorState = {
             } else {
                 //change the text in the text bar, then call the dialClicks function
                 doorScene.changeText("Choose a color.");
+                clickCount = 0;
                 this.dialClicks();
             }
         }
