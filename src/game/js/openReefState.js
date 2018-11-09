@@ -1,4 +1,4 @@
-var clickCount = 0;
+var clickCount;
 var textBar;
 var sign;
 var path;
@@ -11,6 +11,7 @@ var openReef = {
         //declare openReefScene to be an instance of a Scene, and load in the background image to the state
         openReefScene = new Scene;
         openReefScene.setBackground('destroyedReef', 'assets/destroyedReefbg.jpg');
+        clickCount = 0;
     },
 
     create: function() {
@@ -29,23 +30,25 @@ var openReef = {
     },
 
     changeText: function() {
-        //only increment the click count four times
-        if (clickCount < 4) {
+        //only increment the click count twice
+        if (clickCount < 2) {
             clickCount++;
             if (clickCount === 1) {
-                caveScene.changeText("Before you snake two dark tunnels.")
-            } else if (clickCount === 2) {
-                caveScene.changeText("To the left, you hear the rhythmic click" +
-                    " of metal on metal.")
-            } else if (clickCount === 3) {
-                caveScene.changeText("To the right, you can just barely make out a soft," +
-                    " green glow.")
+                caveScene.changeText("The water feels strangely cold.")
             } else {
-                //change the text in the text bar, then call the caveClicks function
-                caveScene.changeText("Which tunnel do you choose to follow?");
-                this.caveClicks();
+                caveScene.changeText("You take a good look at your surroundings.");
+                this.signButton();
+                this.pathButton();
             }
         }
+    },
+
+    signButton: function() {
+
+    },
+
+    pathButton: function() {
+
     }
 
 }

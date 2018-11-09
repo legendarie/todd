@@ -5,9 +5,6 @@ var leftCave;
 var rightCave;
 let caveScene = null;
 
-//!!There's some error going on where the third line of text is skipped when clickCount is used instead of caveClickCount,
-//so we should look into that.
-
 //initialize the state
 var caveState = {
 
@@ -30,6 +27,10 @@ var caveState = {
             caveScene.addTextBar("The entrance of the cave is dim," +
                 " but you can just make out your surroundings.");
 
+            //add a set of ellipses to the text box to indicate
+            //further messages
+            caveScene.addEllipses();
+
             //when the text bar is clicked, go to the changeText function
             textBar.events.onInputUp.add(this.changeText, this);
         }
@@ -50,6 +51,7 @@ var caveState = {
             } else {
                 //change the text in the text bar, then call the caveButtons function
                 caveScene.changeText("Which tunnel do you choose to follow?");
+                caveScene.removeEllipses();
                 this.caveButtons();
             }
         }
@@ -61,11 +63,11 @@ var caveState = {
 
     caveButtons: function() {
         //make the left tunnel clickable. If clicked, it will call the changeStatePuzzle
-        leftCave = caveScene.addButton(225, 250, 260, 300, 0.2);
+        leftCave = caveScene.addButton(225, 250, 260, 300, 0);
         leftCave.events.onInputUp.add(this.changeStatePuzzle, this);
 
         //make the right tunnel clickable. If clicked, it will call the changeStateHall function
-        rightCave = caveScene.addButton(625, 250, 260, 300, 0.2);
+        rightCave = caveScene.addButton(625, 250, 260, 300, 0);
         rightCave.events.onInputUp.add(this.changeStateHall, this);
     },
 

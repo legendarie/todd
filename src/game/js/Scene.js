@@ -3,6 +3,10 @@ var text;
 var textBar;
 var style;
 var button;
+var circle;
+var circle1;
+var circle2;
+var circle3;
 
 class Scene {
 
@@ -35,7 +39,7 @@ class Scene {
     }
 
     //change the text displayed in the text bar. Takes a string as its parameter
-    changeText(newText) {
+    changeText(newText, lastText) {
         text.kill();
         text = game.add.text(0, 0, newText, style);
         text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
@@ -50,5 +54,28 @@ class Scene {
         button.drawRect(x, y, length, width);
         button.inputEnabled = true;
         return button;
+    }
+
+    //uses "addCircle" to create an ellipsis, for use in indicating to the player that there is more text
+    //to read
+    addEllipses() {
+        circle1 = this.addCircle(1150, 130, 5, 5);
+        circle2 = this.addCircle(1165, 130, 5, 5);
+        circle3 = this.addCircle(1180, 130, 5, 5);
+    }
+
+    //adds a white circle to the canvas
+    addCircle(x, y, width, height) {
+        circle = game.add.graphics();
+        circle.beginFill(0x999999, 5.0);
+        circle.drawEllipse(x, y, width, height);
+        return circle;
+    }
+
+    //removes the ellipsis to indicate no further text
+    removeEllipses() {
+        circle1.kill();
+        circle2.kill();
+        circle3.kill();
     }
 }

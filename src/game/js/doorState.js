@@ -31,6 +31,10 @@ var doorState = {
             //add the text bar (with all universal settings), with the first line of text
             doorScene.addTextBar("You awaken in a room with nothing but a door with a dial.");
 
+            //add a set of ellipses to the text box to indicate
+            //further messages
+            doorScene.addEllipses();
+
             //when the text bar is clicked, go to the changeText function
             textBar.events.onInputUp.add(this.changeText, this);
         }
@@ -50,6 +54,7 @@ var doorState = {
             } else {
                 //change the text in the text bar, then call the dialButtons function
                 doorScene.changeText("Choose a color.");
+                doorScene.removeEllipses();
                 this.dialButtons();
             }
         }

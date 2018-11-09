@@ -23,6 +23,10 @@ var openDoorState = {
             //add the text bar (with all universal settings), with the first line of text
             openDoorScene.addTextBar("The room begins to fill with water.");
 
+            //add a set of ellipses to the text box to indicate
+            //further messages
+            openDoorScene.addEllipses();
+
             //when the text bar is clicked, go to the changeText function
             textBar.events.onInputUp.add(this.changeText, this);
         }
@@ -39,6 +43,7 @@ var openDoorState = {
             //reset the text  in the text box
             openDoorScene.changeText("The water is now above your head," +
                 " but for some reason, you can still breathe.");
+            openDoorScene.removeEllipses();
 
             //create a button to change to the next scene
             this.doorButton();
