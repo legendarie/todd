@@ -65,6 +65,6 @@ var openDoorState = {
      * there is only one*/
 
     changeState: function () {
-      game.state.start('caveState', caveState);
+      game.state.start('openReefState', openReefState);
     }
 };

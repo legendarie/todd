@@ -10,6 +10,8 @@ var circle3;
 
 class Scene {
 
+    /**Some general setup functions for loading and adding images to the game window*/
+
     //load the background into the state. Take an image and its path as parameters
     setBackground(background, backgroundPath) {
         game.load.image(background, backgroundPath);
@@ -20,6 +22,9 @@ class Scene {
         background = game.add.image(0, 0, background);
         background.scale.setTo(scale);
     }
+
+    /**Functions for adding and editing the text bar. addTextBar sets up the bar for the scene,
+     * while changeText allows it to be changed for further narration*/
 
     //add the text bar to the window with the appropriate settings. Takes a string as its parameter
     addTextBar(firstText) {
@@ -46,14 +51,29 @@ class Scene {
         text.setTextBounds(0, 40, 1200, 100);
     }
 
+    /**The function for adding a button to a scene. Used in-game to activate text sequences
+     * and call other states*/
+
     //adds an "invisible button" to the window. For convenience, it takes a parameter (number) for the opacity,
     //along with the x and y coordinates, the length, and the width
-    addButton(x, y, length, width, opacity) {
+    addButton(x, y, width, height, opacity) {
         button = game.add.graphics();
         button.beginFill(0x000000, opacity);
-        button.drawRect(x, y, length, width);
+        button.drawRect(x, y, width, height);
         button.inputEnabled = true;
         return button;
+    }
+
+    /**All functions having to do with ellipses. addCircle creates each individual
+     * circle shape, while addEllipses and removeEllipses deal with the pattern used
+     * in the text box*/
+
+    //adds a white circle to the canvas
+    addCircle(x, y, width, height) {
+        circle = game.add.graphics();
+        circle.beginFill(0x999999, 5.0);
+        circle.drawEllipse(x, y, width, height);
+        return circle;
     }
 
     //uses "addCircle" to create an ellipsis, for use in indicating to the player that there is more text
@@ -64,13 +84,6 @@ class Scene {
         circle3 = this.addCircle(1180, 130, 5, 5);
     }
 
-    //adds a white circle to the canvas
-    addCircle(x, y, width, height) {
-        circle = game.add.graphics();
-        circle.beginFill(0x999999, 5.0);
-        circle.drawEllipse(x, y, width, height);
-        return circle;
-    }
 
     //removes the ellipsis to indicate no further text
     removeEllipses() {
