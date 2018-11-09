@@ -2,6 +2,7 @@ var textBar;
 var openDoor;
 let openDoorScene = null;
 
+//initialize the state
 var openDoorState = {
 
     /**The initial functions to set up the scene for player interaction*/
@@ -10,6 +11,7 @@ var openDoorState = {
         //declare openDoorScene to be an instance of a Scene, and load in the background image to the state
         openDoorScene = new Scene;
         openDoorScene.setBackground('openDoor', 'assets/openDoorbg.png');
+        //reset the global clickCount variable
         clickCount = 0;
     },
 
@@ -40,12 +42,10 @@ var openDoorState = {
         if (clickCount < 1) {
             clickCount++;
             if (clickCount === 1) {
-            //reset the text  in the text box
+            //change the text  in the text bar, then create the door button
             openDoorScene.changeText("The water is now above your head," +
                 " but for some reason, you can still breathe.");
             openDoorScene.removeEllipses();
-
-            //create a button to change to the next scene
             this.doorButton();
             }
         }
@@ -65,6 +65,7 @@ var openDoorState = {
      * there is only one*/
 
     changeState: function () {
+        //change states to the open reef
       game.state.start('openReefState', openReefState);
     }
 };

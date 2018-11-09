@@ -52,7 +52,7 @@ var doorState = {
             if (clickCount === 1) {
                 doorScene.changeText("To what color do you turn the dial?")
             } else {
-                //change the text in the text bar, then call the dialButtons function
+                //change the text in the text bar, then create the dial buttons
                 doorScene.changeText("Choose a color.");
                 doorScene.removeEllipses();
                 this.dialButtons();
@@ -61,15 +61,13 @@ var doorState = {
     },
 
     blueMessage: function() {
-        //reset the text in the text box
+        //change the text in the text box, and create the door button
         doorScene.changeText("The door unlocks. Open the door.");
-
-        //create a button to change to the next scene
         this.doorButton();
     },
 
     otherMessage: function() {
-        //reset the text in the text box
+        //change the text in the text box
         doorScene.changeText("The dial seems to be stuck... Choose another color.");
     },
 
@@ -97,7 +95,7 @@ var doorState = {
     },
 
     doorButton: function() {
-        //make the door clickable. If the region is clicked, call the changeState function
+        //make the door clickable. If clicked, it will call the changeState function
         door = doorScene.addButton(450, 210, 250, 420, 0);
         door.events.onInputUp.add(this.changeState, this);
     },
@@ -106,7 +104,7 @@ var doorState = {
      * there is only one*/
 
     changeState: function() {
-        //change states to openDoorState
+        //change states to the open door
         game.state.start('openDoorState', openDoorState);
     }
 };

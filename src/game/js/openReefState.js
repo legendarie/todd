@@ -2,6 +2,7 @@ var clickCount;
 var textBar;
 var sign;
 var path;
+var alreadyBeen = false;    //a boolean variable to track whether the player has visited this screen before
 let openReefScene = null;
 
 //initialize the state
@@ -10,7 +11,7 @@ var openReefState = {
     preload: function() {
         //declare openReefScene to be an instance of a Scene, and load in the background image to the state
         openReefScene = new Scene;
-        openReefScene.setBackground('destroyedReefbg', 'assets/destroyedReefbg.png');
+        openReefScene.setBackground('openReefbg', 'assets/openReefbg.png');
         clickCount = 0;
     },
 
@@ -19,41 +20,67 @@ var openReefState = {
         if (openReefScene != null) {
 
             //load the background and scale it
-            openReefScene.loadScene('destroyedReefbg', 0.9);
+            openReefScene.loadScene('openReefbg', 0.9);
 
-            //add the text bar (with all universal settings), with the first line of text
-            openReefScene.addTextBar("You take your first step into a whole new world.");
+            //if the player hasn't been to this screen before,
+            if (alreadyBeen === false) {
+                //add the text bar (with all universal settings), with the first line of text
+                openReefScene.addTextBar("You take your first step into a whole new world.");
 
-            //add a set of ellipses to the text box to indicate
-            //further messages
-            openReefScene.addEllipses();
+                //add a set of ellipses to the text box to indicate
+                //further messages
+                openReefScene.addEllipses();
 
-            //when the text bar is clicked, go to the changeText function
-            textBar.events.onInputUp.add(this.changeText, this);
-        }
-    },
-
-    changeText: function() {
-        //only increment the click count twice
-        if (clickCount < 2) {
-            clickCount++;
-            if (clickCount === 1) {
-                openReefScene.changeText("The water feels strangely cold.")
+                //when the text bar is clicked, go to the changeText function
+                textBar.events.onInputUp.add(this.changeText, this);
             } else {
-                openReefScene.changeText("You take a good look at your surroundings.");
-                openReefScene.removeEllipses();
+                //if the player has already visited this screen, create the
+                //interactive buttons without the text bar descriptions
                 this.signButton();
                 this.pathButton();
             }
         }
     },
 
+    changeText: function() {
+        //if the player hasn't been to this screen before,
+        if (alreadyBeen === false) {
+            //only increment the click count twice
+            if (clickCount < 2) {
+                clickCount++;
+                if (clickCount === 1) {
+                    openReefScene.changeText("The water feels strangely cold.")
+                } else {
+                    //change the text in the text bar, then create the sign and path buttons
+                    openReefScene.changeText("You take a good look at your surroundings.");
+                    openReefScene.removeEllipses();
+                    alreadyBeen = true;
+                    this.signButton();
+                    this.pathButton();
+                }
+            }
+        }
+    },
+
     signButton: function() {
-        sign = openReefScene.addButton(300, 400, 50, 50, 0.2)
+        //make the sign clickable. If clicked, it will call the changeStateSign function
+        sign = openReefScene.addButton(300, 400, 50, 50, 0.2);
+        sign.events.onInputUp.add(this.changeStateSign, this);
     },
 
     pathButton: function() {
-        sign = openReefScene.addButton(450, 200, 300, 200, 0.2)
-    }
+        //make the path ahead clickable. If clicked, it will call the changeStateFork function
+        path = openReefScene.addButton(450, 200, 300, 200, 0.2);
+        path.events.onInputUp.add(this.changeStateFork, this);
+    },
 
-}
+    changeStateSign: function() {
+        //change states to signState
+        game.state.start('signState', signState);
+    },
+
+    changeStateFork: function() {
+        //change states to roadForkState
+        game.state.start('doorState', doorState);
+    }
+};

@@ -6,7 +6,7 @@ var rightCave;
 let caveScene = null;
 
 //initialize the state
-var caveState = {
+var caveStartState = {
 
     preload: function() {
         //declare caveScene to be an instance of a Scene, and load in the background image to the state
@@ -49,7 +49,7 @@ var caveState = {
                 caveScene.changeText("To the right, you can just barely make out a soft," +
                 " green glow.")
             } else {
-                //change the text in the text bar, then call the caveButtons function
+                //change the text in the text bar, then create the tunnel buttons
                 caveScene.changeText("Which tunnel do you choose to follow?");
                 caveScene.removeEllipses();
                 this.caveButtons();
@@ -62,7 +62,7 @@ var caveState = {
      * to two separate states*/
 
     caveButtons: function() {
-        //make the left tunnel clickable. If clicked, it will call the changeStatePuzzle
+        //make the left tunnel clickable. If clicked, it will call the changeStatePuzzle function
         leftCave = caveScene.addButton(225, 250, 260, 300, 0);
         leftCave.events.onInputUp.add(this.changeStatePuzzle, this);
 

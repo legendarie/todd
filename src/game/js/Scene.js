@@ -37,7 +37,7 @@ class Scene {
         //set the style of the font to be put in the text bar (this is used in multiple functions)
         style = {font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle"};
 
-        //add the text to the center of the text bar (set to whatever
+        //add the text to the center of the text bar
         text = game.add.text(0, 0, firstText, style);
         text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
         text.setTextBounds(0, 40, 1200, 100);
@@ -83,7 +83,6 @@ class Scene {
         circle2 = this.addCircle(1165, 130, 5, 5);
         circle3 = this.addCircle(1180, 130, 5, 5);
     }
-
 
     //removes the ellipsis to indicate no further text
     removeEllipses() {
