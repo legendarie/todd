@@ -13,6 +13,7 @@ var genericState = {
         //declare scene to be an instance of a Scene, and load in the background image to the state
         genericScene = new Scene;
         genericScene.setBackground('image', 'assets/image');
+
         //reset the global clickCount variable
         clickCount = 0;
     },
@@ -34,11 +35,9 @@ var genericState = {
             //when the text bar is clicked, go to the changeText function
             textBar.events.onInputUp.add(this.changeText, this);
         }
-
     },
 
-    /**All of the functions that change the text in the text box,
-     * including the initial changeText function, as well as...*/
+    /**All of the functions that change the text in the text box:*/
 
     changeText: function() {
         //only increment the click count so many times
@@ -48,15 +47,14 @@ var genericState = {
                 genericScene.changeText("Second Text.")
             } else {
                 //change the text in the text bar, then further the plot somehow
-                genericScene.changeText("Choose a color.");
+                genericScene.changeText("Third Text.");
                 genericScene.removeEllipses();
                 this.nextSceneButton();
             }
         }
     },
 
-    /**All of the functions that create interactive buttons,
-     * including the...*/
+    /**All of the functions that create interactive buttons:*/
 
     nextSceneButton: function() {
         //make something clickable. If the thing is clicked, call the changeState function

@@ -12,6 +12,7 @@ var caveStartState = {
         //declare caveScene to be an instance of a Scene, and load in the background image to the state
         caveScene = new Scene;
         caveScene.setBackground('cave', 'assets/caveStartbg.jpg');
+
         //reset the global clickCount variable
         clickCount = 0;
     },

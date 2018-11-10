@@ -17,6 +17,7 @@ var doorState = {
         //declare doorScene to be an instance of a Scene, and load in the background image to the state
         doorScene = new Scene;
         doorScene.setBackground('theDoor', 'assets/theDoorbg.png');
+
         //reset the global clickCount variable
         clickCount = 0;
     },
@@ -41,9 +42,10 @@ var doorState = {
 
     },
 
-    /**All of the functions that change the text in the text box,
-     * including the initial changeText function, as well as the
-     * different messages for clicking on different parts of the dial*/
+    /**All of the functions that change the text in the text box:
+     * changeText runs through the first three lines of text
+     * blueMessage displays when the blue panel is clicked
+     * otherMessage directs the player to try another dial color (red, white, brown panels)*/
 
     changeText: function() {
         //only increment the click count twice
@@ -71,9 +73,9 @@ var doorState = {
         doorScene.changeText("The dial seems to be stuck... Choose another color.");
     },
 
-    /**All of the functions that create interactive buttons,
-     * including the dial buttons and the door button, which
-     * calls the next state*/
+    /**All of the functions that create interactive buttons:
+     * dialButtons creates the different dial color options
+     * doorButton switches states to the open door*/
 
     dialButtons: function() {
         //make the blue part of the dial clickable. If clicked, it will call the blueMessage function
@@ -100,8 +102,7 @@ var doorState = {
         door.events.onInputUp.add(this.changeState, this);
     },
 
-    /**The function that switches to the next state, of which
-     * there is only one*/
+    /**The function that switches to the next state*/
 
     changeState: function() {
         //change states to the open door

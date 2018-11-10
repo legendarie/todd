@@ -31,7 +31,7 @@ class Scene {
         //add the text bar and make it interactive
         textBar = game.add.graphics();
         textBar.beginFill(0x000000, 0.2);
-        textBar.drawRect(0, 40, 1200, 100);
+        textBar.drawRect(0, 0, 1200, 100);
         textBar.inputEnabled = true;
 
         //set the style of the font to be put in the text bar (this is used in multiple functions)
@@ -40,7 +40,7 @@ class Scene {
         //add the text to the center of the text bar
         text = game.add.text(0, 0, firstText, style);
         text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-        text.setTextBounds(0, 40, 1200, 100);
+        text.setTextBounds(0, 0, 1200, 100);
     }
 
     //change the text displayed in the text bar. Takes a string as its parameter
@@ -48,7 +48,7 @@ class Scene {
         text.kill();
         text = game.add.text(0, 0, newText, style);
         text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-        text.setTextBounds(0, 40, 1200, 100);
+        text.setTextBounds(0, 0, 1200, 100);
     }
 
     /**The function for adding a button to a scene. Used in-game to activate text sequences
@@ -79,9 +79,9 @@ class Scene {
     //uses "addCircle" to create an ellipsis, for use in indicating to the player that there is more text
     //to read
     addEllipses() {
-        circle1 = this.addCircle(1150, 130, 5, 5);
-        circle2 = this.addCircle(1165, 130, 5, 5);
-        circle3 = this.addCircle(1180, 130, 5, 5);
+        circle1 = this.addCircle(1150, 90, 5, 5);
+        circle2 = this.addCircle(1165, 90, 5, 5);
+        circle3 = this.addCircle(1180, 90, 5, 5);
     }
 
     //removes the ellipsis to indicate no further text

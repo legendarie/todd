@@ -1,5 +1,5 @@
 //establish the global variables
-var sign;
+var back;
 let signScene = null;
 
 //initialize the state
@@ -25,17 +25,16 @@ var signState = {
         }
     },
 
-    /**All of the functions that create interactive buttons,
-     * which for the sign just returns to openReefState*/
+    /**All of the functions that create interactive buttons:
+     * backButton switches states to the first reef scene*/
 
     backButton: function() {
         //make the screen itself sclickable. If clicked, it will call the changeState function
-        thing = signScene.addButton(0, 0, 1500, 1000, 0);
-        thing.events.onInputUp.add(this.changeState, this);
+        back = signScene.addButton(0, 0, 1500, 1000, 0);
+        back.events.onInputUp.add(this.changeState, this);
     },
 
-    /**The function that switches to the next state, of which
-     * there is only one*/
+    /**The function that switches to the next state*/
 
     changeState: function() {
         //change states to the next state

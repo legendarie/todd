@@ -11,6 +11,7 @@ var openDoorState = {
         //declare openDoorScene to be an instance of a Scene, and load in the background image to the state
         openDoorScene = new Scene;
         openDoorScene.setBackground('openDoor', 'assets/openDoorbg.png');
+
         //reset the global clickCount variable
         clickCount = 0;
     },
@@ -34,8 +35,8 @@ var openDoorState = {
         }
     },
 
-    /**All of the functions that change the text in the text box,
-     * which for this state is just the changeText function*/
+    /**All of the functions that change the text in the text box:
+     * changeText runs through the first two lines of text*/
 
     changeText: function() {
         //make sure that the text and button additions occur only once
@@ -51,9 +52,8 @@ var openDoorState = {
         }
     },
 
-    /**All of the functions that create interactive buttons,
-     * which for this state is just the door button that calls
-     * the next state*/
+    /**All of the functions that create interactive buttons:
+     * doorButton switches states to the first reef scene*/
 
     doorButton: function() {
         //make the open door clickable. If the region is clicked, call the changeState function
@@ -61,8 +61,7 @@ var openDoorState = {
         openDoor.events.onInputUp.add(this.changeState, this);
     },
 
-    /**The function that switches to the next state, of which
-     * there is only one*/
+    /**The function that switches to the next state*/
 
     changeState: function () {
         //change states to the open reef

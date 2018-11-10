@@ -8,10 +8,14 @@ let openReefScene = null;
 //initialize the state
 var openReefState = {
 
+    /**The initial functions to set up the scene for player interaction*/
+
     preload: function() {
         //declare openReefScene to be an instance of a Scene, and load in the background image to the state
         openReefScene = new Scene;
         openReefScene.setBackground('openReefbg', 'assets/openReefbg.png');
+
+        //reset the global clickCount variable
         clickCount = 0;
     },
 
@@ -42,6 +46,9 @@ var openReefState = {
         }
     },
 
+    /**All of the functions that change the text in the text box:
+     * changeText runs through the first three lines of text*/
+
     changeText: function() {
         //if the player hasn't been to this screen before,
         if (alreadyBeen === false) {
@@ -62,6 +69,10 @@ var openReefState = {
         }
     },
 
+    /**All of the functions that create interactive buttons:
+     * signButton switches states to the sign
+     * pathButton switches states to the forked path*/
+
     signButton: function() {
         //make the sign clickable. If clicked, it will call the changeStateSign function
         sign = openReefScene.addButton(300, 400, 50, 50, 0.2);
@@ -74,6 +85,10 @@ var openReefState = {
         path.events.onInputUp.add(this.changeStateFork, this);
     },
 
+    /**The functions that switch to the next state, of which
+     * there are two; one for the sign, and one for the road,
+     * which progresses the story*/
+
     changeStateSign: function() {
         //change states to signState
         game.state.start('signState', signState);
@@ -81,6 +96,6 @@ var openReefState = {
 
     changeStateFork: function() {
         //change states to roadForkState
-        game.state.start('doorState', doorState);
+        game.state.start('roadForkWGState', roadForkWGState);
     }
 };
