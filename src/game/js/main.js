@@ -8,5 +8,6 @@ game.state.add('roadForkWGState', roadForkWGState);
 game.state.add('roadForkState', roadForkState);
 game.state.add('caveStartState', caveStartState);
 game.state.add('fightState', fightState);
+game.state.add('findingSanta', findingSanta);
 
-game.state.start('doorState');
+game.state.start('findingSanta');
