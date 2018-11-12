@@ -43,11 +43,11 @@ var openDoorState = {
         if (clickCount < 1) {
             clickCount++;
             if (clickCount === 1) {
-            //change the text  in the text bar, then create the door button
-            openDoorScene.changeText("The water is now above your head," +
-                " but for some reason, you can still breathe.");
-            openDoorScene.removeEllipses();
-            this.doorButton();
+                //change the text  in the text bar, then create the door button
+                openDoorScene.changeText("The water is now above your head," +
+                    " but for some reason, you can still breathe.");
+                openDoorScene.removeEllipses();
+                this.doorButton();
             }
         }
     },
