@@ -24,7 +24,7 @@ var openReefState = {
         if (openReefScene != null) {
 
             //load the background and scale it
-            openReefScene.loadScene('openReefbg', 0.9);
+            openReefScene.loadScene('openReefbg', 0.6);
 
             //if the player hasn't been to this screen before,
             if (alreadyBeen === false) {
