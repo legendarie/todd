@@ -1,7 +1,7 @@
+let count = 0;
+var originalX;
+var originalY;
 var candy;
-var santa;
-var background;
-var slingshot;
 
 var fightState = {
 
@@ -20,36 +20,67 @@ var fightState = {
         background = game.add.image(0, 0, 'bg');
         background.scale.setTo(0.5);
 
-        // randomly chooses between the two candy sprites and adds it to the world
-        var num = Math.random();
-        if (num < 0.5) {
-            candy = game.add.sprite(game.world.centerX, 650, 'dotCandy');
-            candy.scale.setTo(0.1);
-            candy.anchor.setTo(0.5, 1);
-        } else {
-            candy = game.add.sprite(game.world.centerX, 650, 'stripeCandy');
-            candy.scale.setTo(0.1);
-            candy.anchor.setTo(0.5, 1);
-        }
-
-        // add the slingshot to the bottom center of the window
-        slingshot = game.add.sprite(game.world.centerX, game.world.height, 'slingshot');
-        slingshot.scale.setTo(0.07);
-        slingshot.anchor.setTo(0.5);
-
-        // add the santa sprite to the middle of the world
-        santa = game.add.sprite(100, game.world.centerY, 'santa');
-        santa.anchor.setTo(0.5);
-
         // enables the arcade-style physics pre-loaded into Phaser
         game.physics.startSystem(Phaser.Physics.ARCADE);
+
+        this.createSlingshot();
+        this.createCandy();
+        this.createSanta();
+
+        if(count==3){
+            text = game.add.text(0,0,'you win!');
+            text.anchor.setTo(0.5);
+            text.position.setTo(game.world.width/2,game.world.height/2);
+        }
+
+        this.play();
+
+    },
+
+    createCandy: function() {
+        // randomly chooses between the two candy sprites and adds it to the world
+        // var num = Math.random();
+        // if (num < 0.5) {
+        candy = game.add.sprite(game.world.centerX, 550, 'dotCandy');
+        candy.scale.setTo(0.1);
+        candy.anchor.setTo(0.5, 1);
+        // } else {
+        //     candy = game.add.sprite(game.world.centerX, 550, 'stripeCandy');
+        //     candy.scale.setTo(0.1);
+        //     candy.anchor.setTo(0.5, 1);
+        // }
+        originalX = candy.x;
+        originalY = candy.y;
         game.physics.enable(candy);
-        // enables the santa sprite to be interacted with, but does not allow it to move through the world
+        candy.inputEnabled = true;
+        candy.events.onInputDown.add(candy.input.enableDrag(true),this);
+
+    },
+
+    createSlingshot: function() {
+        // add the slingshot to the bottom center of the window
+        slingshot = game.add.sprite(game.world.centerX, game.world.height-100, 'slingshot');
+        slingshot.scale.setTo(0.07);
+        slingshot.anchor.setTo(0.5);
+    },
+
+    createSanta: function() {
+        // add the santa sprite to the middle of the world
+        santa = game.add.sprite(0,0, 'santa');
+        santa.position.setTo(Math.floor(Math.random() * (game.world.width-santa.width)),Math.floor(Math.random() * (game.world.height-santa.height)));
+        santa.scale.setTo(0.5);
         game.physics.enable(santa);
         santa.body.immovable = true;
         santa.inputEnabled = true;
+        santa.events.onInputDown.add(santa.input.enableDrag(true), this);
 
-        santa.events.onInputDown.add(this.launch, this);
+    },
+
+    play: function() {
+        count++;
+        // candy.events.onInputDown.add(candy.input.enableDrag(true),this);
+        // candy.events.onInputUp.add(this.launch,this);
+
 
     },
 
@@ -58,9 +89,11 @@ var fightState = {
         // enables game physics to apply to the candy sprite, then sets its x and y velocity, the gravity
         // that will be applied to the sprite when it falls, and the x and y trajectory upon a bounce
         candy.body.collideWorldBounds = true;
-        candy.body.gravity.x = 100;
-        candy.body.velocity.x = game.rnd.integerInRange(-750, 750); // keeps updating
-        candy.body.velocity.y = game.rnd.integerInRange(-900,-100); // keeps updating
+        candy.body.gravity.y = 100;
+        distanceX = Math.abs(candy.x - originalX);
+        distanceY = Math.abs(candy.y - originalY);
+        candy.body.velocity.x = 1000*distanceX/600;
+        candy.body.velocity.y = 1000*distanceY/600;
         //this.candy.body.gravity.y = 100 + Math.random() * 100;
         candy.body.bounce.setTo(1, 1);
 
