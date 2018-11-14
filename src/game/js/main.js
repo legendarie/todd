@@ -10,4 +10,4 @@ game.state.add('caveStartState', caveStartState);
 game.state.add('fightState', fightState);
 game.state.add('findingSanta', findingSanta);
 
-game.state.start('findingSanta');
+game.state.start('ddorState');
