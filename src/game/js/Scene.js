@@ -63,6 +63,8 @@ class Scene {
         button.beginFill(0x000000, opacity);
         button.drawRect(x, y, width, height);
         button.inputEnabled = true;
+        button.input.useHandCursor = true;
+
         return button;
     }
 

@@ -26,14 +26,18 @@ var fightState = {
         this.createSlingshot();
         this.createCandy();
         this.createSanta();
+        // this.launch();
 
-        if(count==3){
-            text = game.add.text(0,0,'you win!');
-            text.anchor.setTo(0.5);
-            text.position.setTo(game.world.width/2,game.world.height/2);
-        }
+        // if(count==3){
+        //     text = game.add.text(0,0,'you win!');
+        //     text.anchor.setTo(0.5);
+        //     text.position.setTo(game.world.width/2,game.world.height/2);
+        // }
 
-        this.play();
+        // this.play();
+
+
+
 
     },
 
@@ -53,8 +57,10 @@ var fightState = {
         originalY = candy.y;
         game.physics.enable(candy);
         candy.inputEnabled = true;
-        candy.events.onInputDown.add(candy.input.enableDrag(true),this);
+        candy.input.enableDrag(true);
+        // candy.events.onInputDown.add(candy.input.enableDrag(true),this);
 
+        this.play();
     },
 
     createSlingshot: function() {
@@ -78,7 +84,7 @@ var fightState = {
 
     play: function() {
         count++;
-        // candy.events.onInputDown.add(candy.input.enableDrag(true),this);
+        this.launch();
         // candy.events.onInputUp.add(this.launch,this);
 
 
@@ -90,10 +96,10 @@ var fightState = {
         // that will be applied to the sprite when it falls, and the x and y trajectory upon a bounce
         candy.body.collideWorldBounds = true;
         candy.body.gravity.y = 100;
-        distanceX = Math.abs(candy.x - originalX);
-        distanceY = Math.abs(candy.y - originalY);
-        candy.body.velocity.x = 1000*distanceX/600;
-        candy.body.velocity.y = 1000*distanceY/600;
+        // distanceX = Math.abs(candy.x - originalX);
+        // distanceY = Math.abs(candy.y - originalY);
+        candy.body.velocity.x = 100;
+        candy.body.velocity.y = -100;
         //this.candy.body.gravity.y = 100 + Math.random() * 100;
         candy.body.bounce.setTo(1, 1);
 
