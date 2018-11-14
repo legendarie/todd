@@ -33,6 +33,7 @@ class Scene {
         textBar.beginFill(0x000000, 0.2);
         textBar.drawRect(0, 0, 1200, 100);
         textBar.inputEnabled = true;
+        textBar.input.useHandCursor = true;
 
         //set the style of the font to be put in the text bar (this is used in multiple functions)
         style = {font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle"};
@@ -41,6 +42,7 @@ class Scene {
         text = game.add.text(0, 0, firstText, style);
         text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
         text.setTextBounds(0, 0, 1200, 100);
+
     }
 
     //change the text displayed in the text bar. Takes a string as its parameter
@@ -61,6 +63,8 @@ class Scene {
         button.beginFill(0x000000, opacity);
         button.drawRect(x, y, width, height);
         button.inputEnabled = true;
+        button.input.useHandCursor = true;
+
         return button;
     }
 
