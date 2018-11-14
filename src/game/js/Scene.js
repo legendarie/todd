@@ -3,6 +3,8 @@ var text;
 var textBar;
 var style;
 var button;
+var choiceButton;
+var buttonText;
 var circle;
 var circle1;
 var circle2;
@@ -46,7 +48,7 @@ class Scene {
     }
 
     //change the text displayed in the text bar. Takes a string as its parameter
-    changeText(newText, lastText) {
+    changeText(newText) {
         text.kill();
         text = game.add.text(0, 0, newText, style);
         text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
@@ -67,6 +69,18 @@ class Scene {
 
         return button;
     }
+
+
+    //adds a visible button with some text describing the player's available choice(s)
+    // addChoice (x, y, width, height, choiceText) {
+    //     choiceButton = this.addButton(x, y, width, height, 0.2);
+    //     buttonText = game.add.text(0, 0, choiceText, style);
+    //     buttonText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+    //     buttonText.setTextBounds(x, y, width, height);
+    //
+    //     return choiceButton;
+    // }
+
 
     /**All functions having to do with ellipses. addCircle creates each individual
      * circle shape, while addEllipses and removeEllipses deal with the pattern used
