@@ -18,7 +18,7 @@ var signState = {
         if (signScene != null) {
 
             //load the background and scale it
-            signScene.loadScene('sign', 0.9);
+            signScene.loadScene('sign', 0.5);
 
             //add a button to the entire screen that returns to the open reef when clicked
             this.backButton();
