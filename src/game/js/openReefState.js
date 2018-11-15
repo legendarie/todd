@@ -75,13 +75,13 @@ var openReefState = {
 
     signButton: function() {
         //make the sign clickable. If clicked, it will call the changeStateSign function
-        sign = openReefScene.addButton(300, 400, 50, 50, 0.2);
+        sign = openReefScene.addButton(275, 450, 95, 105, 0);
         sign.events.onInputUp.add(this.changeStateSign, this);
     },
 
     pathButton: function() {
         //make the path ahead clickable. If clicked, it will call the changeStateFork function
-        path = openReefScene.addButton(450, 200, 300, 200, 0.2);
+        path = openReefScene.addButton(500, 250, 250, 200, 0);
         path.events.onInputUp.add(this.changeStateFork, this);
     },
 

@@ -7,7 +7,8 @@ game.state.add('signState', signState);
 game.state.add('roadForkWGState', roadForkWGState);
 game.state.add('roadForkState', roadForkState);
 game.state.add('caveStartState', caveStartState);
+game.state.add('gearPuzzleState', gearPuzzleState);
 game.state.add('fightState', fightState);
 game.state.add('findingSanta', findingSanta);
 
-game.state.start('fightState');
+game.state.start('doorState');

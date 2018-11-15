@@ -5,7 +5,7 @@ var thing;
 let genericScene = null;
 
 //initialize the state
-var genericState = {
+var stateTemplate = {
 
     /**The initial functions to set up the scene for player interaction*/
 

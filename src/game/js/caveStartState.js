@@ -77,7 +77,7 @@ var caveStartState = {
 
     changeStatePuzzle: function() {
         //change states to the gear puzzle
-        game.state.start('doorState', doorState);
+        game.state.start('gearPuzzleState', gearPuzzleState);
     },
 
     changeStateHall: function() {
