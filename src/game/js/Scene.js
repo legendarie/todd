@@ -10,6 +10,10 @@ var circle1;
 var circle2;
 var circle3;
 
+//Note: the "Button" class itself cannot be used to work with onInputUp events, since those only act on
+//graphics objects. Thus, while addButton returns the graphics object directly for easy interaction, addChoice
+//returns the Button object and requires the getButton() function to make the button clickable.
+
 class Scene {
 
     /**Some general setup functions for loading and adding images to the game window*/
@@ -61,25 +65,17 @@ class Scene {
     //adds an "invisible button" to the window. For convenience, it takes a parameter (number) for the opacity,
     //along with the x and y coordinates, the length, and the width
     addButton(x, y, width, height, opacity) {
-        button = game.add.graphics();
-        button.beginFill(0x000000, opacity);
-        button.drawRect(x, y, width, height);
-        button.inputEnabled = true;
-        button.input.useHandCursor = true;
-
+        button = new Button(x, y, width, height, opacity).getButton();
         return button;
     }
 
+    // adds a visible button with some text describing the player's available choice(s)
+    addChoice (x, y, width, height, choiceText) {
+        choiceButton = new Button(x, y, width, height, 0.2);
+        choiceButton.addText(choiceText);
 
-    //adds a visible button with some text describing the player's available choice(s)
-    // addChoice (x, y, width, height, choiceText) {
-    //     choiceButton = this.addButton(x, y, width, height, 0.2);
-    //     buttonText = game.add.text(0, 0, choiceText, style);
-    //     buttonText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-    //     buttonText.setTextBounds(x, y, width, height);
-    //
-    //     return choiceButton;
-    // }
+        return choiceButton;
+    }
 
 
     /**All functions having to do with ellipses. addCircle creates each individual
