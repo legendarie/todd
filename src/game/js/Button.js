@@ -1,10 +1,10 @@
-var x;
-var y;
-var width;
-var height;
-var opacity;
-var button;
-var buttonText;
+this.x;
+this.y;
+this.width;
+this.height;
+this.opacity;
+this.button;
+this.buttonText;
 
 class Button {
 
@@ -23,28 +23,37 @@ class Button {
 
     //adds the button to the window with the specified attributes
     add() {
-        button = game.add.graphics();
-        button.beginFill(0x000000, this.opacity);
-        button.drawRect(this.x, this.y, this.width, this.height);
-        button.inputEnabled = true;
-        button.input.useHandCursor = true;
+        this.button = game.add.graphics();
+        this.button.beginFill(0x000000, this.opacity);
+        this.button.drawRect(this.x, this.y, this.width, this.height);
+        this.button.inputEnabled = true;
+        this.button.input.useHandCursor = true;
     }
 
     //adds text to the center of the button
     addText(text) {
-        buttonText = game.add.text(0, 0, text, style);
-        buttonText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-        buttonText.setTextBounds(this.x, this.y, this.width, this.height);
+        this.buttonText = game.add.text(0, 0, text, style);
+        this.buttonText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+        this.buttonText.setTextBounds(this.x, this.y, this.width, this.height);
+    }
+
+    /**The kill function removes the button and any text on it*/
+
+    kill() {
+        this.button.kill();
+        if (this.buttonText !== null) {
+            this.buttonText.kill();
+        }
     }
 
     /**Getter functions*/
 
     getButton() {
-        return button;
+        return this.button;
     }
 
     getText() {
-        return buttonText;
+        return this.buttonText;
     }
 
 }
