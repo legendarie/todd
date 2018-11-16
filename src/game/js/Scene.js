@@ -29,6 +29,19 @@ class Scene {
         background.scale.setTo(scale);
     }
 
+    //load the sprite image into the state. Take an image and its path as parameters
+    setSprite(sprite, spritePath) {
+        game.load.image(sprite, spritePath);
+    }
+
+    //add the sprite to the game. Take the coordinates, image, and scale as parameters
+    addSprite(x, y, sprite, scale) {
+        sprite = game.add.sprite(x, y, sprite);
+        sprite.scale.setTo(scale);
+
+        return sprite;
+    }
+
     /**Functions for adding and editing the text bar. addTextBar sets up the bar for the scene,
      * while changeText allows it to be changed for further narration*/
 

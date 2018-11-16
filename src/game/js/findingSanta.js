@@ -1,26 +1,30 @@
 var distX;
 var distY;
 var diag;
+var santa;
+var santaSound;
+let findScene = null;
 
 
 var findingSanta = {
+
     preload: function() {
-        game.load.image('santa','assets/santa.png');
+        findScene = new Scene;
+        findScene.setBackground('bg', 'assets/snowflakebg.jpg');
+        findScene.setSprite('santa', 'assets/santa.png');
         game.load.audio('hohoho','assets/hohoho.mp3');
-        game.load.image('bg','assets/snowflakebg.jpg')
     },
 
     create: function() {
         diag = Math.sqrt(Math.pow(game.world.width,2) + Math.pow(game.world.width,2));
 
-        //set background color to white
-        bg = game.add.image(0,0,'bg');
-        bg.scale.setTo(0.5);
+        //set background image to the snowflake background image
+        findScene.loadScene('bg', 0.5);
 
         //initialize santa
-        santa = game.add.sprite(0,0,'santa');
-        santa.scale.setTo(0.3);
-        santa.position.setTo(Math.floor(Math.random() * (game.world.width-santa.width)),Math.floor(Math.random() * (game.world.height-santa.height)));
+        santa = findScene.addSprite(0, 0, 'santa', 0.3);
+        santa.position.setTo(Math.floor(Math.random() * (game.world.width-santa.width)),
+            Math.floor(Math.random() * (game.world.height-santa.height)));
         santa.alpha = 0;
 
         //implement game.physics to move santa
@@ -50,7 +54,7 @@ var findingSanta = {
         //distance between mouse and santa
         distX = game.input.mousePointer.x - santa.x;
         distY = game.input.mousePointer.y - santa.y;
-        distLinear = Math.sqrt(Math.pow(distX,2)+Math.pow(distY,2));
+        var distLinear = Math.sqrt(Math.pow(distX,2)+Math.pow(distY,2));
 
         //change santa's volume according to the distance between the mouse and santa
         santaSound.volume = 0.1 + 5*Math.pow((1 - distLinear/diag),2);
