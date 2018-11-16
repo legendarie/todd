@@ -163,7 +163,7 @@ var gearPuzzleState = {
                                 if (pullLever1Done != null) {
                                     if (gear3Done != null) {
                                         if (removeRockDone != null) {
-                                            //check window for lever
+                                            this.pullLever2Choice();
                                         } else {
                                             this.pullLever1Choice();
                                             this.removeRockChoice();
@@ -182,7 +182,7 @@ var gearPuzzleState = {
                             }
                         } else {
                             this.gear1Choice();
-                            this.window2Choice();
+                            this.window1Choice();
                         }
                     }
                     this.followWireChoice();
@@ -265,7 +265,7 @@ var gearPuzzleState = {
                             }
                         } else {
                             this.gear1Choice();
-                            this.window2Choice();
+                            this.window1Choice();
                         }
                     }
                     this.testWireChoice();
@@ -352,7 +352,7 @@ var gearPuzzleState = {
                             }
                         } else {
                             this.gear1Choice();
-                            this.window2Choice();
+                            this.window1Choice();
                         }
                     }
                     this.tripWireChoice();
@@ -825,7 +825,7 @@ var gearPuzzleState = {
                     gearPuzzleScene.changeText("You hear a loud clanging noise, like metal hitting wood.")
                 } else {
                     //change the text in the text bar, then create the choice buttons
-                    gearPuzzleScene.changeText("What do you want to do?");
+                    gearPuzzleScene.changeText("--Demo End--");
                     gearPuzzleScene.removeEllipses();
                     pullLever2Done = true;
                 }
