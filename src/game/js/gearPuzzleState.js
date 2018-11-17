@@ -12,13 +12,23 @@ var gear1Button;
 var gear2Button;
 var removeRockButton;
 var checkGearsButton;
-var gear3Button;
-var window3Button;
+var jamCheckButton;
+var switchSearchButton;
 var window1Button;
 var boardButton;
 var window2Button;
 var pullLever1Button;
 var pullLever2Button;
+var checkGears2Button;
+var checkWindowButton;
+var grabToolButton;
+var window3Button;
+var window4Button;
+var cutWireWellButton;
+var cutWireButton;
+var cutSafeButton;
+var cutDangerButton;
+var followWire2Button;
 
 //booleans to check whether an option has been completed or not
 var changeTextDone;
@@ -29,13 +39,26 @@ var gear1Done;
 var gear2Done;
 var removeRockDone;
 var checkGearsDone;
-var gear3Done;
-var window3Done;
+var jamCheckDone;
+var switchSearchDone;
 var window1Done;
 var boardKnockDone;
 var window2Done;
 var pullLever1Done;
 var pullLever2Done;
+var checkGears2Done;
+var checkWindowDone;
+var grabToolDone;
+var window3Done;
+var window4Done;
+var cutWireWellDone;
+var cutWireDone;
+var cutSafeDone;
+var cutDangerDone;
+var followWire2Done;
+
+//the button to switch between scenes
+var openDoor;
 
 //the Scene object variable
 let gearPuzzleScene = null;
@@ -133,17 +156,30 @@ var gearPuzzleState = {
                     gearPuzzleScene.removeEllipses();
                     doorDone = true;
                     if (pullLever2Done != null) {
-                        //stuff after the machine is activated
+                        this.checkGears2Choice();
+                        if (checkWindowDone != null) {
+                            if (grabToolDone != null) {
+                                if (window3Done != null) {
+                                    this.window4Choice();
+                                } else {
+                                    this.window3Choice();
+                                }
+                            } else {
+                                this.grabToolChoice();
+                            }
+                        } else {
+                            this.checkWindowChoice();
+                        }
                     } else {
                         if (window1Done != null) {
                             if (gear2Done != null) {
                                 if (removeRockDone != null) {
                                     if (checkGearsDone != null) {
-                                        if (window3Done != null) {
+                                        if (switchSearchDone != null) {
                                             this.pullLever2Choice();
                                             this.checkGearsChoice();
                                         } else {
-                                            this.window3Choice();
+                                            this.switchSearchChoice();
                                             this.checkGearsChoice();
                                         }
                                     } else {
@@ -161,7 +197,7 @@ var gearPuzzleState = {
                         } else if (gear1Done != null) {
                             if (window2Done != null) {
                                 if (pullLever1Done != null) {
-                                    if (gear3Done != null) {
+                                    if (jamCheckDone != null) {
                                         if (removeRockDone != null) {
                                             this.pullLever2Choice();
                                         } else {
@@ -170,7 +206,7 @@ var gearPuzzleState = {
                                         }
                                     } else {
                                         this.pullLever1Choice();
-                                        this.gear3Choice();
+                                        this.jamCheckChoice();
                                     }
                                 } else {
                                     this.pullLever1Choice();
@@ -185,7 +221,11 @@ var gearPuzzleState = {
                             this.window1Choice();
                         }
                     }
-                    this.followWireChoice();
+                    if (grabToolDone != null) {
+                        this.cutWireChoice();
+                    } else {
+                        this.followWireChoice();
+                    }
                 }
             }
         }
@@ -215,60 +255,77 @@ var gearPuzzleState = {
                     gearPuzzleScene.changeText("What do you want to do?");
                     gearPuzzleScene.removeEllipses();
                     followWireDone = true;
-                    if (pullLever2Done != null) {
-                        //stuff after the machine is activated
+                    if (followWire2Done != null) {
+                        this.cutWireChoice();
                     } else {
-                        if (window1Done != null) {
-                            if (gear2Done != null) {
-                                if (removeRockDone != null) {
-                                    if (checkGearsDone != null) {
-                                        if (window3Done != null) {
-                                            this.pullLever2Choice();
-                                            this.checkGearsChoice();
+                        if (pullLever2Done != null) {
+                            this.checkGears2Choice();
+                            if (checkWindowDone != null) {
+                                if (grabToolDone != null) {
+                                    if (window3Done != null) {
+                                        this.window4Choice();
+                                    } else {
+                                        this.window3Choice();
+                                    }
+                                } else {
+                                    this.grabToolChoice();
+                                }
+                            } else {
+                                this.checkWindowChoice();
+                            }
+                        } else {
+                            if (window1Done != null) {
+                                if (gear2Done != null) {
+                                    if (removeRockDone != null) {
+                                        if (checkGearsDone != null) {
+                                            if (switchSearchDone != null) {
+                                                this.pullLever2Choice();
+                                                this.checkGearsChoice();
+                                            } else {
+                                                this.switchSearchChoice();
+                                                this.checkGearsChoice();
+                                            }
                                         } else {
-                                            this.window3Choice();
+                                            this.boardKnockChoice();
                                             this.checkGearsChoice();
                                         }
                                     } else {
                                         this.boardKnockChoice();
-                                        this.checkGearsChoice();
+                                        this.removeRockChoice();
                                     }
                                 } else {
                                     this.boardKnockChoice();
-                                    this.removeRockChoice();
+                                    this.gear2Choice();
                                 }
-                            } else {
-                                this.boardKnockChoice();
-                                this.gear2Choice();
-                            }
-                        } else if (gear1Done != null) {
-                            if (window2Done != null) {
-                                if (pullLever1Done != null) {
-                                    if (gear3Done != null) {
-                                        if (removeRockDone != null) {
-                                            //check window for lever
+                            } else if (gear1Done != null) {
+                                if (window2Done != null) {
+                                    if (pullLever1Done != null) {
+                                        if (jamCheckDone != null) {
+                                            if (removeRockDone != null) {
+                                                //check window for lever
+                                            } else {
+                                                this.pullLever1Choice();
+                                                this.removeRockChoice();
+                                            }
                                         } else {
                                             this.pullLever1Choice();
-                                            this.removeRockChoice();
+                                            this.jamCheckChoice();
                                         }
                                     } else {
                                         this.pullLever1Choice();
-                                        this.gear3Choice();
+                                        this.gear1Choice()
                                     }
                                 } else {
-                                    this.pullLever1Choice();
-                                    this.gear1Choice()
+                                    this.window2Choice();
+                                    this.gear1Choice();
                                 }
                             } else {
-                                this.window2Choice();
                                 this.gear1Choice();
+                                this.window1Choice();
                             }
-                        } else {
-                            this.gear1Choice();
-                            this.window1Choice();
                         }
+                        this.testWireChoice();
                     }
-                    this.testWireChoice();
                 }
             }
         }
@@ -303,17 +360,30 @@ var gearPuzzleState = {
                     gearPuzzleScene.removeEllipses();
                     testWireDone = true;
                     if (pullLever2Done != null) {
-                        //stuff after the machine is activated
+                        this.checkGears2Choice();
+                        if (checkWindowDone != null) {
+                            if (grabToolDone != null) {
+                                if (window3Done != null) {
+                                    this.window4Choice();
+                                } else {
+                                    this.window3Choice();
+                                }
+                            } else {
+                                this.grabToolChoice();
+                            }
+                        } else {
+                            this.checkWindowChoice();
+                        }
                     } else {
                         if (window1Done != null) {
                             if (gear2Done != null) {
                                 if (removeRockDone != null) {
                                     if (checkGearsDone != null) {
-                                        if (window3Done != null) {
+                                        if (switchSearchDone != null) {
                                             this.pullLever2Choice();
                                             this.checkGearsChoice();
                                         } else {
-                                            this.window3Choice();
+                                            this.switchSearchChoice();
                                             this.checkGearsChoice();
                                         }
                                     } else {
@@ -331,7 +401,7 @@ var gearPuzzleState = {
                         } else if (gear1Done != null) {
                             if (window2Done != null) {
                                 if (pullLever1Done != null) {
-                                    if (gear3Done != null) {
+                                    if (jamCheckDone != null) {
                                         if (removeRockDone != null) {
                                             //check window for lever
                                         } else {
@@ -340,7 +410,7 @@ var gearPuzzleState = {
                                         }
                                     } else {
                                         this.pullLever1Choice();
-                                        this.gear3Choice();
+                                        this.jamCheckChoice();
                                     }
                                 } else {
                                     this.pullLever1Choice();
@@ -533,10 +603,10 @@ var gearPuzzleState = {
                     if (pullLever1Done != null) {
                         this.pullLever2Choice();
                     } else {
-                        if (window3Done != null) {
+                        if (switchSearchDone != null) {
                             this.pullLever2Choice();
                         } else {
-                            this.window3Choice();
+                            this.switchSearchChoice();
                         }
                     }
                     if (doorDone != null) {
@@ -549,18 +619,18 @@ var gearPuzzleState = {
         }
     },
 
-    gear3Text() {
+    jamCheckText() {
         clickCount = 0;
         this.removeButtons();
         gearPuzzleScene.addEllipses();
-        gear3Done = false;
+        jamCheckDone = false;
         gearPuzzleScene.changeText("You can't see any problems with the gears in the wall.");
-        textBar.events.onInputUp.add(this.gear3MoreText, this);
+        textBar.events.onInputUp.add(this.jamCheckMoreText, this);
     },
 
-    gear3MoreText() {
-        //make sure gear3MoreText isn't called accidentally
-        if (gear3Done !== true) {
+    jamCheckMoreText() {
+        //make sure jamCheckMoreText isn't called accidentally
+        if (jamCheckDone !== true) {
             //only increment the click count six times
             if (clickCount < 6) {
                 clickCount++;
@@ -571,14 +641,14 @@ var gearPuzzleState = {
                 } else if (clickCount === 3) {
                     gearPuzzleScene.changeText("Following the orientation of the gears, you find something in the corner.")
                 } else if (clickCount === 4) {
-                    gearPuzzleScene.changeText("It looks like a component to the press machine mechanism.")
+                    gearPuzzleScene.changeText("It looks like a component of one of the mechanisms.")
                 } else if (clickCount === 5) {
                     gearPuzzleScene.changeText("A stone is stuck in the gears.")
                 } else {
                     //change the text in the text bar, then create the choice buttons
                     gearPuzzleScene.changeText("What do you want to do?");
                     gearPuzzleScene.removeEllipses();
-                    gear3Done = true;
+                    jamCheckDone = true;
                     this.removeRockChoice();
                     this.pullLever1Choice();
                     if (doorDone != null) {
@@ -591,18 +661,18 @@ var gearPuzzleState = {
         }
     },
 
-    window3Text() {
+    switchSearchText() {
         clickCount = 0;
         this.removeButtons();
         gearPuzzleScene.addEllipses();
-        window3Done = false;
-        gearPuzzleScene.changeText("You don't see any way of turning the machine on from in this room.");
-        textBar.events.onInputUp.add(this.window3MoreText, this);
+        switchSearchDone = false;
+        gearPuzzleScene.changeText("You don't see any way of turning the machine on from inside this room.");
+        textBar.events.onInputUp.add(this.switchSearchMoreText, this);
     },
 
-    window3MoreText() {
-        //make sure window1MoreText isn't called accidentally
-        if (window3Done !== true) {
+    switchSearchMoreText() {
+        //make sure switchSearchMoreText isn't called accidentally
+        if (switchSearchDone !== true) {
             //only increment the click count four times
             if (clickCount < 4) {
                 clickCount++;
@@ -616,7 +686,7 @@ var gearPuzzleState = {
                     //change the text in the text bar, then create the choice buttons
                     gearPuzzleScene.changeText("What do you want to do?");
                     gearPuzzleScene.removeEllipses();
-                    window3Done = true;
+                    switchSearchDone = true;
                     this.checkGearsChoice();
                     this.pullLever2Choice();
                     if (doorDone != null) {
@@ -724,7 +794,7 @@ var gearPuzzleState = {
     },
 
     window2MoreText() {
-        //make sure window1MoreText isn't called accidentally
+        //make sure window2MoreText isn't called accidentally
         if (window2Done !== true) {
             //only increment the click count eight times
             if (clickCount < 8) {
@@ -770,7 +840,7 @@ var gearPuzzleState = {
     },
 
     pullLever1MoreText() {
-        //make sure boardKnockMoreText isn't called accidentally
+        //make sure pullLever1MoreText isn't called accidentally
         if (pullLever1Done !== true) {
             //only increment the click count twice
             if (clickCount < 2) {
@@ -782,10 +852,10 @@ var gearPuzzleState = {
                     gearPuzzleScene.changeText("What do you want to do?");
                     gearPuzzleScene.removeEllipses();
                     pullLever1Done = true;
-                    if (gear3Done != null) {
+                    if (jamCheckDone != null) {
                         this.removeRockChoice();
                     } else {
-                        this.gear3Choice();
+                        this.jamCheckChoice();
                     }
                     this.pullLever1Choice();
                     if (doorDone != null) {
@@ -825,10 +895,295 @@ var gearPuzzleState = {
                     gearPuzzleScene.changeText("You hear a loud clanging noise, like metal hitting wood.")
                 } else {
                     //change the text in the text bar, then create the choice buttons
-                    gearPuzzleScene.changeText("--Demo End--");
+                    gearPuzzleScene.changeText("What do you want to do?");
                     gearPuzzleScene.removeEllipses();
                     pullLever2Done = true;
+                    this.checkWindowChoice();
+                    this.checkGears2Choice();
+                    if (doorDone != null) {
+                        this.followWireChoice();
+                    } else {
+                        this.doorChoice();
+                    }
                 }
+            }
+        }
+    },
+
+    checkGears2Text() {
+        clickCount = 0;
+        this.removeButtons();
+        gearPuzzleScene.addEllipses();
+        checkGears2Done = false;
+        gearPuzzleScene.changeText("Several of the mechanisms in the wall are running.");
+        textBar.events.onInputUp.add(this.checkGears2MoreText, this);
+    },
+
+    checkGears2MoreText() {
+        //make sure checkGears2MoreText isn't called accidentally
+        if (checkGears2Done !== true) {
+            //only increment the click count twice
+            if (clickCount < 2) {
+                clickCount++;
+                if (clickCount === 1) {
+                    gearPuzzleScene.changeText("The water thrums with clicks, hisses, and an incessant pounding.")
+                } else {
+                    //change the text in the text bar, then create the choice buttons
+                    gearPuzzleScene.changeText("What do you want to do?");
+                    gearPuzzleScene.removeEllipses();
+                    checkGears2Done = true;
+                    this.checkGears2Choice();
+                    if (checkWindowDone != null) {
+                        if (grabToolDone != null) {
+                            if (window3Done != null) {
+                                this.window4Choice();
+                            } else {
+                                this.window3Choice();
+                            } if (doorDone != null) {
+                                if (testWireDone != null) {
+                                    this.cutWireWellChoice();
+                                } else {
+                                    this.cutWireChoice();
+                                }
+                            } else {
+                                this.doorChoice();
+                            }
+                        } else {
+                            this.grabToolChoice();
+                            if (doorDone != null) {
+                                this.followWireChoice();
+                            } else {
+                                this.doorChoice();
+                            }
+                        }
+                    } else {
+                        this.checkWindowChoice();
+                        if (doorDone != null) {
+                            this.followWireChoice();
+                        } else {
+                            this.doorChoice();
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    checkWindowText() {
+        clickCount = 0;
+        this.removeButtons();
+        gearPuzzleScene.addEllipses();
+        checkWindowDone = false;
+        gearPuzzleScene.changeText("It looks like several tools have been knocked off of the board above.");
+        textBar.events.onInputUp.add(this.checkWindowMoreText, this);
+    },
+
+    checkWindowMoreText() {
+        //make sure checkWindowMoreText isn't called accidentally
+        if (checkWindowDone !== true) {
+            //only increment the click count three times
+            if (clickCount < 3) {
+                clickCount++;
+                if (clickCount === 1) {
+                    gearPuzzleScene.changeText("They're strewn across the floor of the next room.")
+                } else if (clickCount === 2) {
+                    gearPuzzleScene.changeText("Cutters balance precariously on the edge of the sill below the window.")
+                } else {
+                    //change the text in the text bar, then create the choice buttons
+                    gearPuzzleScene.changeText("What do you want to do?");
+                    gearPuzzleScene.removeEllipses();
+                    checkWindowDone = true;
+                    this.checkGears2Choice();
+                    this.grabToolChoice();
+                    if (doorDone != null) {
+                        this.followWireChoice();
+                    } else {
+                        this.doorChoice();
+                    }
+                }
+            }
+        }
+    },
+
+    grabToolText() {
+        clickCount = 0;
+        this.removeButtons();
+        gearPuzzleScene.addEllipses();
+        grabToolDone = false;
+        gearPuzzleScene.changeText("You reach out and grab the cutters before they can fall off the shelf.");
+        textBar.events.onInputUp.add(this.grabToolMoreText, this);
+    },
+
+    grabToolMoreText() {
+        //make sure grabToolMoreText isn't called accidentally
+        if (grabToolDone !== true) {
+            //only increment the click count three times
+            if (clickCount < 3) {
+                clickCount++;
+                if (clickCount === 1) {
+                    gearPuzzleScene.changeText("You open and close them a few times.")
+                } else if (clickCount === 2) {
+                    gearPuzzleScene.changeText("They're definitely still sharp.")
+                } else {
+                    //change the text in the text bar, then create the choice buttons
+                    gearPuzzleScene.changeText("What do you want to do?");
+                    gearPuzzleScene.removeEllipses();
+                    grabToolDone = true;
+                    this.checkGears2Choice();
+                    this.window3Choice();
+                    if (doorDone != null) {
+                        if (testWireDone != null) {
+                            this.cutWireWellChoice();
+                        } else {
+                            this.cutWireChoice();
+                        }
+                    } else {
+                        this.doorChoice();
+                    }
+                }
+            }
+        }
+    },
+
+    window3Text() {
+        clickCount = 0;
+        this.removeButtons();
+        gearPuzzleScene.addEllipses();
+        window3Done = false;
+        gearPuzzleScene.changeText("Nothing else through the window is within reach.");
+        textBar.events.onInputUp.add(this.window3MoreText, this);
+    },
+
+    window3MoreText() {
+        //make sure checkWindowMoreText isn't called accidentally
+        if (window3Done !== true) {
+            //only increment the click count twice
+            if (clickCount < 2) {
+                clickCount++;
+                if (clickCount === 1) {
+                    gearPuzzleScene.changeText("...You think you see someone standing just around the corner.")
+                } else {
+                    //change the text in the text bar, then create the choice buttons
+                    gearPuzzleScene.changeText("What do you want to do?");
+                    gearPuzzleScene.removeEllipses();
+                    window3Done = true;
+                    this.checkGears2Choice();
+                    this.window4Choice();
+                    if (doorDone != null) {
+                        if (testWireDone != null) {
+                            this.cutWireWellChoice();
+                        } else {
+                            this.cutWireChoice();
+                        }
+                    } else {
+                        this.doorChoice();
+                    }
+                }
+            }
+        }
+    },
+
+    window4Text() {
+        clickCount = 0;
+        this.removeButtons();
+        gearPuzzleScene.addEllipses();
+        window4Done = false;
+        gearPuzzleScene.changeText("Nothing else through the window is within reach.");
+        textBar.events.onInputUp.add(this.window4MoreText, this);
+    },
+
+    window4MoreText() {
+        //make sure window4MoreText isn't called accidentally
+        if (window4Done !== true) {
+            //only increment the click count once
+            if (clickCount < 1) {
+                clickCount++;
+                if (clickCount === 1) {
+                    gearPuzzleScene.changeText("What do you want to do?");
+                    gearPuzzleScene.removeEllipses();
+                    window4Done = true;
+                    this.checkGears2Choice();
+                    this.window4Choice();
+                    if (doorDone != null) {
+                        if (testWireDone != null) {
+                            this.cutWireWellChoice();
+                        } else {
+                            this.cutWireChoice();
+                        }
+                    } else {
+                        this.doorChoice();
+                    }
+                }
+            }
+        }
+    },
+
+    cutWireText() {
+        this.removeButtons();
+        gearPuzzleScene.changeText("Where?");
+        this.cutWireDangerChoice();
+        if (doorDone != null) {
+            if (followWireDone != null) {
+                this.cutWireSafeChoice();
+            } else {
+                this.followWire2Choice();
+            }
+        }
+    },
+
+    cutWireDangerText() {
+        clickCount = 0;
+        this.removeButtons();
+        gearPuzzleScene.addEllipses();
+        gearPuzzleScene.changeText("You snip the wire in front of the bars.");
+        textBar.events.onInputUp.add(this.cutWireDangerMoreText, this);
+    },
+
+    cutWireDangerMoreText() {
+        //only increment the click count five times
+        if (clickCount < 5) {
+            clickCount++;
+            if (clickCount === 1) {
+                gearPuzzleScene.changeText("...")
+            } else if (clickCount === 2) {
+                gearPuzzleScene.changeText("Something creaks above you.")
+            } else if (clickCount === 3) {
+                gearPuzzleScene.changeText("You look up to see a panel of jagged spikes swinging towards your face")
+            } else if (clickCount === 4) {
+                gearPuzzleScene.changeText("Whoops.")
+            } else {
+                //restart the scene: not implemented for now
+            }
+        }
+    },
+
+    cutWireWellText() {
+        clickCount = 0;
+        this.removeButtons();
+        gearPuzzleScene.addEllipses();
+        cutWireWellDone = false;
+        gearPuzzleScene.changeText("You use the cutters to snip the wire over by the contraption.");
+        textBar.events.onInputUp.add(this.cutWireWellMoreText, this);
+    },
+
+    cutWireWellMoreText() {
+        //only increment the click count seven times
+        if (clickCount < 7) {
+            clickCount++;
+            if (clickCount === 1) {
+                gearPuzzleScene.changeText("With a loud creak, something engages above your head.");
+            } else if (clickCount === 2) {
+                gearPuzzleScene.changeText("A huge hammer inlaid with spikes swings down from the ceiling of the cave.");
+            } else if (clickCount === 3) {
+                gearPuzzleScene.changeText("It rams into the bars with an awful squealing of metal.");
+            } else if (clickCount === 4) {
+                gearPuzzleScene.changeText("The trap disengages and slowly reels back up into the shadows.");
+            } else if (clickCount === 5) {
+                gearPuzzleScene.changeText("It leaves a gaping hole in the bars over the doorway.")
+            } else if (clickCount === 6) {
+                gearPuzzleScene.changeText("You wonder what you'd have done had this room been competently designed.");
+                gearPuzzleScene.removeEllipses();
+                this.openDoorButton();
             }
         }
     },
@@ -890,16 +1245,16 @@ var gearPuzzleState = {
         checkGearsButton.getButton().events.onInputUp.add(this.checkGearsText, this);
     },
 
-    gear3Choice() {
+    jamCheckChoice() {
         //presents the option to check the gears after finding the lever (and not the rock)
-        gear3Button = gearPuzzleScene.addChoice(100, 500, 325, 100, "Check for jams");
-        gear3Button.getButton().events.onInputUp.add(this.gear3Text, this);
+        jamCheckButton = gearPuzzleScene.addChoice(100, 500, 325, 100, "Check for jams");
+        jamCheckButton.getButton().events.onInputUp.add(this.jamCheckText, this);
     },
 
-    window3Choice() {
+    switchSearchChoice() {
         //presents the opportunity to look for a way to turn on the machine after unclogging the gears
-        window3Button = gearPuzzleScene.addChoice(775, 500, 400, 100, "Search for an on switch");
-        window3Button.getButton().events.onInputUp.add(this.window3Text, this);
+        switchSearchButton = gearPuzzleScene.addChoice(775, 500, 400, 100, "Search for an on switch");
+        switchSearchButton.getButton().events.onInputUp.add(this.switchSearchText, this);
     },
 
     window1Choice() {
@@ -932,10 +1287,71 @@ var gearPuzzleState = {
         pullLever2Button.getButton().events.onInputUp.add(this.pullLever2Text, this);
     },
 
-    nextSceneButton: function() {
+    checkGears2Choice() {
+        //presents the option to check the gears after activating the press machine
+        pullLever2Button = gearPuzzleScene.addChoice(100, 500, 325, 100, "Check the gears");
+        pullLever2Button.getButton().events.onInputUp.add(this.checkGears2Text, this);
+    },
+
+    checkWindowChoice() {
+        //presents the option to check the window after activating the press machine
+        checkWindowButton = gearPuzzleScene.addChoice(775, 500, 325, 100, "Check the window");
+        checkWindowButton.getButton().events.onInputUp.add(this.checkWindowText, this);
+    },
+
+    grabToolChoice() {
+        //presents the option to grab the fallen wire cutters
+        grabToolButton = gearPuzzleScene.addChoice(775, 500, 325, 100, "Grab the cutters");
+        grabToolButton.getButton().events.onInputUp.add(this.grabToolText, this);
+    },
+
+    window3Choice() {
+        //presents the option to check the window after grabbing the cutters
+        window3Button = gearPuzzleScene.addChoice(775, 500, 325, 100, "Look in the window");
+        window3Button.getButton().events.onInputUp.add(this.window3Text, this);
+    },
+
+    window4Choice() {
+        //presents the choice to check the window again (but no one is there...)
+        window4Button = gearPuzzleScene.addChoice(775, 500, 325, 100, "Look in the window");
+        window4Button.getButton().events.onInputUp.add(this.window4Text, this);
+    },
+
+    cutWireWellChoice() {
+        //presents the option to cut the wire where needed (if wire was tested beforehand) --> only option when it appears
+        cutWireWellButton = gearPuzzleScene.addChoice(450, 500, 300, 100, "Cut the wire");
+        cutWireWellButton.getButton().events.onInputUp.add(this.cutWireWellText, this);
+    },
+
+    cutWireChoice() {
+        //presents the option to cut the wire without knowledge of where (if wire was not tested beforehand)
+        cutWireButton = gearPuzzleScene.addChoice(450, 500, 300, 100, "Cut the wire");
+        cutWireButton.getButton().events.onInputUp.add(this.cutWireText, this);
+    },
+
+    cutWireSafeChoice() {
+        //presents the option to cut the wire by the wall (and not die) --> one of two options with cutWireDangerChoice
+        cutSafeButton = gearPuzzleScene.addChoice(650, 500, 300, 100, "By the wall");
+        cutSafeButton.getButton().events.onInputUp.add(this.cutWireWellText, this);
+    },
+
+    cutWireDangerChoice() {
+        //presents the option to cut the wire by the bars (and die via trap) --> one of two options with cutWireSafeChoice or followWireChoice
+        cutDangerButton = gearPuzzleScene.addChoice(275, 500, 300, 100, "By the bars");
+        cutDangerButton.getButton().events.onInputUp.add(this.cutWireDangerText, this);
+    },
+
+    followWire2Choice() {
+        //presents the option to follow the wire if not already done by the time the cutters were found
+        followWire2Done = true;
+        followWire2Button = gearPuzzleScene.addChoice(650, 500, 300, 100, "Follow the wire");
+        followWire2Button.getButton().events.onInputUp.add(this.followWireText, this)
+    },
+
+    openDoorButton: function() {
         //make something clickable. If the thing is clicked, call the changeState function
-        thing = gearPuzzleScene.addButton(450, 210, 250, 420, 0.2);
-        thing.events.onInputUp.add(this.changeState, this);
+        openDoor = gearPuzzleScene.addButton(460, 210, 250, 252, 0);
+        openDoor.events.onInputUp.add(this.changeState, this);
     },
 
     /**A (very repetitive) function that removes the choice buttons from the window.
@@ -982,14 +1398,14 @@ var gearPuzzleState = {
                 checkGearsButton.kill();
             }
         }
-        if (gear3Button != null) {
-            if (gear3Button.getButton() != null) {
-                gear3Button.kill();
+        if (jamCheckButton != null) {
+            if (jamCheckButton.getButton() != null) {
+                jamCheckButton.kill();
             }
         }
-        if (window3Button != null) {
-            if (window3Button.getButton() != null) {
-                window3Button.kill();
+        if (switchSearchButton != null) {
+            if (switchSearchButton.getButton() != null) {
+                switchSearchButton.kill();
             }
         }
         if (window1Button != null) {
@@ -1015,6 +1431,56 @@ var gearPuzzleState = {
         if (pullLever2Button != null) {
             if (pullLever2Button.getButton() != null) {
                 pullLever2Button.kill();
+            }
+        }
+        if (checkGears2Button != null) {
+            if (checkGears2Button.getButton() != null) {
+                checkGears2Button.kill();
+            }
+        }
+        if (checkWindowButton != null) {
+            if (checkWindowButton.getButton() != null) {
+                checkWindowButton.kill();
+            }
+        }
+        if (grabToolButton != null) {
+            if (grabToolButton.getButton() != null) {
+                grabToolButton.kill();
+            }
+        }
+        if (window3Button != null) {
+            if (window3Button.getButton() != null) {
+                window3Button.kill();
+            }
+        }
+        if (window4Button != null) {
+            if (window4Button.getButton() != null) {
+                window4Button.kill();
+            }
+        }
+        if (cutWireWellButton != null) {
+            if (cutWireWellButton.getButton() != null) {
+                cutWireWellButton.kill();
+            }
+        }
+        if (cutWireButton != null) {
+            if (cutWireButton.getButton() != null) {
+                cutWireButton.kill();
+            }
+        }
+        if (cutSafeButton != null) {
+            if (cutSafeButton.getButton() != null) {
+                cutSafeButton.kill();
+            }
+        }
+        if (cutDangerButton != null) {
+            if (cutDangerButton.getButton() != null) {
+                cutDangerButton.kill();
+            }
+        }
+        if (followWire2Button != null) {
+            if (followWire2Button.getButton() != null) {
+                followWire2Button.kill();
             }
         }
     },
