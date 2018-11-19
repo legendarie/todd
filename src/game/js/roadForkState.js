@@ -90,7 +90,7 @@ var roadForkState = {
             } else if (clickCount === 13) {
                 convo1Scene.changeText("\"Go find that monster and take 'em down for me, will ya?\"");
                 convo1Scene.removeEllipses();
-                slingshot.events.onInputUp.add(this.takeSlingshot(), this);
+                slingshot.events.onInputUp.add(this.takeSlingshot, this);
             }
         }
     },
@@ -100,15 +100,18 @@ var roadForkState = {
 
         convo1Scene.changeText("\"Thanks a million, buddy. Good luck out there.\"");
 
-        wormHole = convo1Scene.addButton(300, 200, 100, 100, 0.2);
-        cliffRoad = convo1Scene.addButton(700, 300, 300, 200, 0.2);
+        wormHole = convo1Scene.addButton(470, 210, 170, 120, 0);
+        cliffRoad = convo1Scene.addButton(850, 250, 200, 200, 0);
+
+        wormHole.events.onInputUp.add(this.goToWorm, this);
+        cliffRoad.events.onInputUp.add(this.goToPath, this);
     },
 
     goToWorm: function() {
-
+        game.state.start('wormState');
     },
 
     goToPath: function() {
-
+        game.state.start('outsideCaveState');
     }
 };
