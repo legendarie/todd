@@ -22,7 +22,7 @@ var roadForkWGState = {
         if (rfWGScene != null) {
 
             //load the background and scale it
-            rfWGScene.loadScene('roadForkWGbg', 0.9);
+            rfWGScene.loadScene('roadForkWGbg', 0.55);
 
             //add the text bar (with all universal settings), with the first line of text
             rfWGScene.addTextBar("Following the road, you come across a fork.");
@@ -36,7 +36,7 @@ var roadForkWGState = {
 
     wiseGuyButton: function() {
         //make Wise Guy clickable. If clicked, call the changeState function
-        sneakyWG = rfWGScene.addButton(200, 400, 140, 100, 0.2);
+        sneakyWG = rfWGScene.addButton(450, 390, 185, 110, 0);
         sneakyWG.events.onInputUp.add(this.changeState, this);
     },
 

@@ -1,11 +1,3 @@
-this.x;
-this.y;
-this.width;
-this.height;
-this.opacity;
-this.button;
-this.buttonText;
-
 class Button {
 
     /**The constructor sets up all needed variables and calls the separate "add" function*/

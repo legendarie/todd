@@ -36,6 +36,16 @@ class Scene {
 
     //add the sprite to the game. Take the coordinates, image, and scale as parameters
     addSprite(x, y, sprite, scale) {
+        //add the sprite and make it interactive
+        sprite = game.add.sprite(x, y, sprite);
+        sprite.scale.setTo(scale);
+        sprite.inputEnabled = true;
+        sprite.input.useHandCursor = true;
+
+        return sprite;
+    }
+
+    addStaticSprite(x, y, sprite, scale) {
         sprite = game.add.sprite(x, y, sprite);
         sprite.scale.setTo(scale);
 
