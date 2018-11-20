@@ -1,10 +1,13 @@
 let count = 0;
+let lives = 5;
 var originalX;
 var originalY;
 var candy;
 var santa;
 var numCollision;
 var slingShot;
+var snow;
+
 
 var fightState = {
 
@@ -15,10 +18,10 @@ var fightState = {
         game.load.image('dotCandy', 'assets/dotCandy.png');
         game.load.image('stripeCandy', 'assets/stripeCandy.png');
         game.load.image('slingshot', 'assets/slingshot.png');
-
+        game.load.image('snowFlakes', 'assets/snowflake.png');
     },
 
-    create: function() {
+    create: function () {
         // adds the background to the game world
         background = game.add.image(0, 0, 'bg');
         background.scale.setTo(0.5);
@@ -28,21 +31,15 @@ var fightState = {
         this.createSlingshot();
         this.createCandy();
         this.createSanta();
+        this.createSnow();
         numCollision = 0;
+
+        text = game.add.text(lives, 0, 0);
 
     },
 
-    reset: function() {
-        santa.destroy();
-        candy.destroy();
-        slingShot.destroy();
-        this.createSlingshot();
-        this.createCandy();
-        this.createSanta();
-        numCollision = 0;
-    },
 
-    createCandy: function() {
+    createCandy: function () {
         // randomly chooses between the two candy sprites and adds it to the world
         var num = Math.random();
         if (num < 0.5) {
@@ -63,38 +60,44 @@ var fightState = {
         this.play();
     },
 
-    createSlingshot: function() {
+    createSlingshot: function () {
         // add the slingshot to the bottom center of the window
-        slingshot = game.add.sprite(game.world.centerX, game.world.height-100, 'slingshot');
+        slingshot = game.add.sprite(game.world.centerX, game.world.height - 100, 'slingshot');
         slingshot.scale.setTo(0.07);
         slingshot.anchor.setTo(0.5);
     },
 
-    createSanta: function() {
+    createSanta: function () {
         // add the santa sprite to the middle of the world
-        santa = game.add.sprite(0,0, 'santa');
-        santa.position.setTo(Math.floor(Math.random() * (game.world.width-santa.width)),Math.floor(Math.random() * (game.world.height-santa.height)));
+        santa = game.add.sprite(0, 0, 'santa');
+        santa.position.setTo(Math.floor(Math.random() * (game.world.width - santa.width)), Math.floor(Math.random() * (game.world.height - santa.height)));
         santa.scale.setTo(0.5);
         game.physics.enable(santa);
         santa.body.collideWorldBounds = true;
-        santa.body.bounce.setTo(0.6,0.6);
-        santa.inputEnabled = true;
-        santa.events.onInputDown.add(santa.input.enableDrag(true), this);
-
+        santa.body.bounce.setTo(0.6, 0.6);
     },
 
-    // createLine: function() {
-    //
-    // },
+    createSnow: function () {
+        snow = game.add.emitter(game.world.centerX, 0, 50); //x coordinate, y coordinate, number of particles
+        snow.makeParticles('snowFlakes', 100, 50, true);
+        snow.maxParticleScale = 0.3;
+        snow.minParticleScale = 0.1;
+        snow.setYSpeed(20, 100);
+        snow.width = game.world.width * 1.5;
+        snow.minRotation = 0;
+        snow.maxRotation = 40;
+        snow.start(false, 7000, 100);
+    },
 
-    play: function() {
+
+    play: function () {
         count++;
-        candy.events.onInputUp.add(this.launch,this);
+        candy.events.onInputUp.add(this.launch, this);
 
 
     },
 
-    launch: function() {
+    launch: function () {
 
         // enables game physics to apply to the candy sprite, then sets its x and y velocity, the gravity
         // that will be applied to the sprite when it falls, and the x and y trajectory upon a bounce
@@ -104,23 +107,39 @@ var fightState = {
         distanceY = (candy.y - originalY);
 
         candy.body.gravity.y = 100;
-        candy.body.velocity.x = -5*distanceX;
-        candy.body.velocity.y = -5*distanceY;
+        candy.body.velocity.x = -5 * distanceX;
+        candy.body.velocity.y = -5 * distanceY;
         candy.body.bounce.setTo(.8, .8);
 
     },
 
-    incrementCollision: function() {
+    incrementCollision: function () {
         numCollision++;
     },
 
+    restart: function () {
+        count = count + 1;
+        candy.destroy();
+        this.createCandy();
+        if (count >= 7) {
+            game.state.start('doorState', doorState);
+        }
 
-    update: function() {
+    },
+
+    hitSnow: function () {
+        lives--;
+        candy.kill();
+        this.createCandy();
+        if (lives <= 0) {
+            game.state.start('doorState', doorState);
+        }
+    },
+
+
+    update: function () {
         // as the game is running, the candy and santa are allowed to interact (to bounce off one another)
-        game.physics.arcade.collide(candy, santa, this.reset);
-        // if(numCollision == 3) {
-        //     this.create();
-        // }
+        game.physics.arcade.collide(candy, santa, this.restart, null, this);
+        game.physics.arcade.collide(candy, snow, this.hitSnow, null, this);
     }
-
-};
+}
