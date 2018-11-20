@@ -138,6 +138,7 @@ var gearPuzzleState = {
         doorDone = false;
         gearPuzzleScene.changeText("The bars are much too heavy to lift.");
         textBar.events.onInputUp.add(this.doorMoreText, this);
+        textBar.events.onInputUp.remove(this.doorMoreText, this);
     },
 
     doorMoreText() {
@@ -343,7 +344,7 @@ var gearPuzzleState = {
     testWireMoreText() {
         //make sure testWireMoreText isn't called accidentally
         if (testWireDone !== true) {
-            //only increment the click count three times
+            //only increment the click count five times
             if (clickCount < 5) {
                 clickCount++;
                 if (clickCount === 1) {

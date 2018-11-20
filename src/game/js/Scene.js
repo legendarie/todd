@@ -4,7 +4,6 @@ var textBar;
 var style;
 var button;
 var choiceButton;
-var buttonText;
 var circle;
 var circle1;
 var circle2;
