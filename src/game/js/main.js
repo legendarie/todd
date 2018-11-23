@@ -15,4 +15,4 @@ game.state.add('gearPuzzleState2', gearPuzzleState2);
 game.state.add('fightState', fightState);
 game.state.add('findingSanta', findingSanta);
 
-game.state.start('gearPuzzleState');
+game.state.start('gearPuzzleState2');

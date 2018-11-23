@@ -28,10 +28,18 @@ class Button {
         this.buttonText.setTextBounds(this.x, this.y, this.width, this.height);
     }
 
+    addLabel() {
+        if (this.buttonLabel != null) {
+            this.addText(this.buttonLabel);
+        }
+    }
+
     /**The kill function removes the button and any text on it*/
 
     kill() {
-        this.button.kill();
+        if (this.button != null) {
+            this.button.kill();
+        }
         if (this.buttonText != null) {
             this.buttonText.kill();
         }

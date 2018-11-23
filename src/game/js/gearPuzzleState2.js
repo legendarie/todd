@@ -73,11 +73,13 @@ var gearPuzzleState2 = {
             //further messages
             gearPuzzleScene2.addEllipses();
 
-            //create all of the buttons
+            //create all of the buttons and their button links
             this.createButtons();
+            this.setNewButtons();
 
-            //initialize the button choice manager for the puzzle
-            buttonManager = new ButtonManager(null, doorButtonr, null);
+            //initialize the button choice manager and button list for the puzzle
+            buttonManager = new ButtonManager(null, null, null);
+            puzzleButtonList = new ButtonList();
 
             //when the text bar is clicked, go to the changeText function
             textBar.events.onInputUp.add(this.changeText, this);
@@ -99,20 +101,14 @@ var gearPuzzleState2 = {
                 gearPuzzleScene2.changeText("What do you want to do?");
                 gearPuzzleScene2.removeEllipses();
                 textBar.events.onInputUp.remove(this.changeText, this);
-                this.makeDoorButton();
+                this.makeButton(doorButtonr);
             }
         }
     },
 
-    makeDoorButton: function () {
-        doorButtonr.add();
-        doorButtonr.reset();
-        doorButtonr.getButton().events.onInputUp.add(this.clickDoor, this);
-    },
-
-    clickDoor: function() {
-        clickedButton = doorButtonr;
-        this.beginScript();
+    makeButton: function (button) {
+        button.position();
+        button.getButton().events.onInputUp.add(this.beginScript, this);
     },
 
     beginScript() {
@@ -127,7 +123,7 @@ var gearPuzzleState2 = {
             gearPuzzleScene2.changeText("" + clickedButton.next());
         } else {
             gearPuzzleScene2.changeText("What do you want to do?");
-            buttonManager.setMiddleButton(doorButtonr);
+            buttonManager.getNewButtons();
             this.addButtons();
             textBar.events.onInputUp.remove(this.runScript, this);
         }
@@ -135,26 +131,19 @@ var gearPuzzleState2 = {
 
     addButtons() {
         if (buttonManager.getLeftButton() != null) {
-            buttonManager.getLeftButton().reset();
-            buttonManager.getLeftButton().add()
+            this.makeButton(buttonManager.getLeftButton())
         }
         if (buttonManager.getRightButton() != null) {
-            buttonManager.getRightButton().reset();
-            buttonManager.getRightButton().add()
+            this.makeButton(buttonManager.getRightButton())
         }
         if (buttonManager.getMiddleButton() != null) {
-            buttonManager.getMiddleButton().reset();
-            buttonManager.getMiddleButton().add()
+            this.makeButton(buttonManager.getMiddleButton())
         }
     },
 
-    makeFollowWireButton: function() {
-
-    },
-
-    createButtons: function() {
+    createButtons: function () {
         doorButtonr = new CBDoor(450, 500);
-        // followWireButtonr
+        followWireButtonr = new CBFollowWire(450, 500);
         // testWireButtonr
         // tripWireButtonr
         // gear1Buttonr
@@ -180,9 +169,9 @@ var gearPuzzleState2 = {
         // followWire2Buttonr
     },
 
-    removeButtons: function() {
+    removeButtons: function () {
         doorButtonr.kill();
-        // followWireButtonr.kill();
+        followWireButtonr.kill();
         // testWireButtonr.kill();
         // tripWireButtonr.kill();
         // gear1Buttonr.kill();
@@ -206,5 +195,33 @@ var gearPuzzleState2 = {
         // cutSafeButtonr.kill();
         // cutDangerButtonr.kill();
         // followWire2Buttonr.kill();
+    },
+
+    setNewButtons: function () {
+        doorButtonr.setNewMiddleButton(followWireButtonr);
+        followWireButtonr.setNewMiddleButton(doorButtonr);
+        // testWireButtonr
+        // tripWireButtonr
+        // gear1Buttonr
+        // gear2Buttonr
+        // removeRockButtonr
+        // checkGearsButtonr
+        // jamCheckButtonr
+        // switchSearchButtonr
+        // window1Buttonr
+        // boardButtonr
+        // window2Buttonr
+        // pullLever1Buttonr
+        // pullLever2Buttonr
+        // checkGears2Buttonr
+        // checkWindowButtonr
+        // grabToolButtonr
+        // window3Buttonr
+        // window4Buttonr
+        // cutWireWellButtonr
+        // cutWireButtonr
+        // cutSafeButtonr
+        // cutDangerButtonr
+        // followWire2Buttonr
     }
 };

@@ -37,6 +37,20 @@ class ChoiceButton extends Button {
         this.spot = 0;
     }
 
+    position() {
+        this.addFull();
+        this.reset();
+        this.button.events.onInputUp.add(this.click, this)
+    }
+
+    //an empty function for use by child classes
+    addFull() {
+    }
+
+    click() {
+        clickedButton = this;
+    }
+
     /**Getters and setters*/
 
     getSpot() {

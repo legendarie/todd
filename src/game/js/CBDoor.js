@@ -11,16 +11,8 @@ class CBDoor extends ChoiceButton {
             "It trails off to your right."]);
     }
 
-    add() {
-        this.button = game.add.graphics();
-        this.button.beginFill(0x000000, this.opacity);
-        this.button.drawRect(this.x, this.y, this.width, this.height);
-        this.button.inputEnabled = true;
-        this.button.input.useHandCursor = true;
+    addFull() {
+        this.add();
         this.addText("Check the bars")
-    }
-
-    click() {
-        clickedButton = this;
     }
 }

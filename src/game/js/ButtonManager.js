@@ -9,33 +9,29 @@ class ButtonManager {
 
     //sets any new buttons to their proper positions
     getNewButtons() {
-        let newLeft = this.clickedButton.getNewLeftButton();
-        let newRight = this.clickedButton.getNewRightButton();
-        let newMiddle = this.clickedButton.getNewMiddleButton();
+        let newLeft = clickedButton.getNewLeftButton();
+        let newRight = clickedButton.getNewRightButton();
+        let newMiddle = clickedButton.getNewMiddleButton();
         if (newLeft != null) {
             this.leftButton = newLeft;
-            this.clickedButton.removeLeftButton(); //may want to remove this line if we want choice loops
+            clickedButton.removeLeftButton(); //may want to remove this line if we want choice loops
         }
         if (newRight != null) {
             this.rightButton = newRight;
-            this.clickedButton.removeRightButton(); //may want to remove this line if we want choice loops
+            clickedButton.removeRightButton(); //may want to remove this line if we want choice loops
         }
         if (newMiddle != null) {
             this.middleButton = newMiddle;
-            this.clickedButton.removeMiddleButton(); //may want to remove this line if we want choice loops
+            clickedButton.removeMiddleButton(); //may want to remove this line if we want choice loops
         }
     }
 
     //convenient way to call the next line for a script
     runScript() {
-        this.clickedButton.next();
+        clickedButton.next();
     }
 
     /**Getters and setters*/
-
-    setClickedButton(button) {
-        this.clickedButton = button;
-    }
 
     setLeftButton(button) {
         this.leftButton = button;
