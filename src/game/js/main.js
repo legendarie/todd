@@ -11,7 +11,8 @@ game.state.add('wormState', wormState);  //doesn't exist yet
 game.state.add('yaDeadState', yaDeadState); //doesn't exist yet
 game.state.add('caveStartState', caveStartState);
 game.state.add('gearPuzzleState', gearPuzzleState);
+game.state.add('gearPuzzleState2', gearPuzzleState2);
 game.state.add('fightState', fightState);
 game.state.add('findingSanta', findingSanta);
 
-game.state.start('fightState');
+game.state.start('gearPuzzleState');

@@ -138,7 +138,6 @@ var gearPuzzleState = {
         doorDone = false;
         gearPuzzleScene.changeText("The bars are much too heavy to lift.");
         textBar.events.onInputUp.add(this.doorMoreText, this);
-        textBar.events.onInputUp.remove(this.doorMoreText, this);
     },
 
     doorMoreText() {
@@ -1200,152 +1199,152 @@ var gearPuzzleState = {
 
     doorChoice() {
         //presents the option to look at the barred doorway
-        doorButton = gearPuzzleScene.addChoice(450, 500, 300, 100, "Check the bars");
+        doorButton = gearPuzzleScene.addChoiceButton(450, 500, 300, 100, "Check the bars");
         doorButton.getButton().events.onInputUp.add(this.doorText, this);
     },
 
     followWireChoice() {
         //presents the option to follow the tripwire
-        followWireButton = gearPuzzleScene.addChoice(450, 500, 300, 100, "Follow the wire");
+        followWireButton = gearPuzzleScene.addChoiceButton(450, 500, 300, 100, "Follow the wire");
         followWireButton.getButton().events.onInputUp.add(this.followWireText, this);
     },
 
     testWireChoice() {
         //presents the option to try and trip the wire
-        testWireButton = gearPuzzleScene.addChoice(450, 500, 300, 100, "Test the wire");
+        testWireButton = gearPuzzleScene.addChoiceButton(450, 500, 300, 100, "Test the wire");
         testWireButton.getButton().events.onInputUp.add(this.testWireText, this);
     },
 
     tripWireChoice() {
         //presents the option to activate a deathtrap
-        tripWireButton = gearPuzzleScene.addChoice(450, 500, 300, 100, "Trip the wire");
+        tripWireButton = gearPuzzleScene.addChoiceButton(450, 500, 300, 100, "Trip the wire");
         tripWireButton.getButton().events.onInputUp.add(this.tripWireText, this);
     },
 
     gear1Choice() {
         //presents the first choice available for investigating the gears
-        gear1Button = gearPuzzleScene.addChoice(100, 500, 325, 100, "Investigate the gears");
+        gear1Button = gearPuzzleScene.addChoiceButton(100, 500, 325, 100, "Investigate the gears");
         gear1Button.getButton().events.onInputUp.add(this.gear1Text, this);
     },
 
     gear2Choice() {
         //presents the second choice for investigating the gears (if you look through the window first)
-        gear2Button = gearPuzzleScene.addChoice(100, 500, 325, 100, "Investigate the gears");
+        gear2Button = gearPuzzleScene.addChoiceButton(100, 500, 325, 100, "Investigate the gears");
         gear2Button.getButton().events.onInputUp.add(this.gear2Text, this);
     },
 
     removeRockChoice() {
         //presents the option to dislodge the stone stuck in the gears
-        removeRockButton = gearPuzzleScene.addChoice(100, 500, 325, 100, "Remove the rock");
+        removeRockButton = gearPuzzleScene.addChoiceButton(100, 500, 325, 100, "Remove the rock");
         removeRockButton.getButton().events.onInputUp.add(this.removeRockText, this);
     },
 
     checkGearsChoice() {
         //presents the option to check the running gears
-        checkGearsButton = gearPuzzleScene.addChoice(100, 500, 325, 100, "Check the gears");
+        checkGearsButton = gearPuzzleScene.addChoiceButton(100, 500, 325, 100, "Check the gears");
         checkGearsButton.getButton().events.onInputUp.add(this.checkGearsText, this);
     },
 
     jamCheckChoice() {
         //presents the option to check the gears after finding the lever (and not the rock)
-        jamCheckButton = gearPuzzleScene.addChoice(100, 500, 325, 100, "Check for jams");
+        jamCheckButton = gearPuzzleScene.addChoiceButton(100, 500, 325, 100, "Check for jams");
         jamCheckButton.getButton().events.onInputUp.add(this.jamCheckText, this);
     },
 
     switchSearchChoice() {
         //presents the opportunity to look for a way to turn on the machine after unclogging the gears
-        switchSearchButton = gearPuzzleScene.addChoice(775, 500, 400, 100, "Search for an on switch");
+        switchSearchButton = gearPuzzleScene.addChoiceButton(775, 500, 400, 100, "Search for an on switch");
         switchSearchButton.getButton().events.onInputUp.add(this.switchSearchText, this);
     },
 
     window1Choice() {
         //presents the first choice available for looking through the window
-        window1Button = gearPuzzleScene.addChoice(775, 500, 325, 100, "Look in the window");
+        window1Button = gearPuzzleScene.addChoiceButton(775, 500, 325, 100, "Look in the window");
         window1Button.getButton().events.onInputUp.add(this.window1Text, this);
     },
 
     boardKnockChoice() {
         //presents the option to knock at the tool board through the window
-        boardButton = gearPuzzleScene.addChoice(775, 500, 325, 100, "Knock on the board");
+        boardButton = gearPuzzleScene.addChoiceButton(775, 500, 325, 100, "Knock on the board");
         boardButton.getButton().events.onInputUp.add(this.boardKnockText, this);
     },
 
     window2Choice() {
         //presents the second choice for looking through the window (if the gears were investigated first)
-        window2Button = gearPuzzleScene.addChoice(775, 500, 325, 100, "Look in the window");
+        window2Button = gearPuzzleScene.addChoiceButton(775, 500, 325, 100, "Look in the window");
         window2Button.getButton().events.onInputUp.add(this.window2Text, this);
     },
 
     pullLever1Choice() {
         //presents the option to (unsuccessfully) pull the lever with the stone not yet discovered
-        pullLever1Button = gearPuzzleScene.addChoice(775, 500, 325, 100, "Pull the lever");
+        pullLever1Button = gearPuzzleScene.addChoiceButton(775, 500, 325, 100, "Pull the lever");
         pullLever1Button.getButton().events.onInputUp.add(this.pullLever1Text, this);
     },
 
     pullLever2Choice() {
         //presents the option to pull the lever after dislodging the stone
-        pullLever2Button = gearPuzzleScene.addChoice(775, 500, 325, 100, "Pull the lever");
+        pullLever2Button = gearPuzzleScene.addChoiceButton(775, 500, 325, 100, "Pull the lever");
         pullLever2Button.getButton().events.onInputUp.add(this.pullLever2Text, this);
     },
 
     checkGears2Choice() {
         //presents the option to check the gears after activating the press machine
-        pullLever2Button = gearPuzzleScene.addChoice(100, 500, 325, 100, "Check the gears");
+        pullLever2Button = gearPuzzleScene.addChoiceButton(100, 500, 325, 100, "Check the gears");
         pullLever2Button.getButton().events.onInputUp.add(this.checkGears2Text, this);
     },
 
     checkWindowChoice() {
         //presents the option to check the window after activating the press machine
-        checkWindowButton = gearPuzzleScene.addChoice(775, 500, 325, 100, "Check the window");
+        checkWindowButton = gearPuzzleScene.addChoiceButton(775, 500, 325, 100, "Check the window");
         checkWindowButton.getButton().events.onInputUp.add(this.checkWindowText, this);
     },
 
     grabToolChoice() {
         //presents the option to grab the fallen wire cutters
-        grabToolButton = gearPuzzleScene.addChoice(775, 500, 325, 100, "Grab the cutters");
+        grabToolButton = gearPuzzleScene.addChoiceButton(775, 500, 325, 100, "Grab the cutters");
         grabToolButton.getButton().events.onInputUp.add(this.grabToolText, this);
     },
 
     window3Choice() {
         //presents the option to check the window after grabbing the cutters
-        window3Button = gearPuzzleScene.addChoice(775, 500, 325, 100, "Look in the window");
+        window3Button = gearPuzzleScene.addChoiceButton(775, 500, 325, 100, "Look in the window");
         window3Button.getButton().events.onInputUp.add(this.window3Text, this);
     },
 
     window4Choice() {
         //presents the choice to check the window again (but no one is there...)
-        window4Button = gearPuzzleScene.addChoice(775, 500, 325, 100, "Look in the window");
+        window4Button = gearPuzzleScene.addChoiceButton(775, 500, 325, 100, "Look in the window");
         window4Button.getButton().events.onInputUp.add(this.window4Text, this);
     },
 
     cutWireWellChoice() {
         //presents the option to cut the wire where needed (if wire was tested beforehand) --> only option when it appears
-        cutWireWellButton = gearPuzzleScene.addChoice(450, 500, 300, 100, "Cut the wire");
+        cutWireWellButton = gearPuzzleScene.addChoiceButton(450, 500, 300, 100, "Cut the wire");
         cutWireWellButton.getButton().events.onInputUp.add(this.cutWireWellText, this);
     },
 
     cutWireChoice() {
         //presents the option to cut the wire without knowledge of where (if wire was not tested beforehand)
-        cutWireButton = gearPuzzleScene.addChoice(450, 500, 300, 100, "Cut the wire");
+        cutWireButton = gearPuzzleScene.addChoiceButton(450, 500, 300, 100, "Cut the wire");
         cutWireButton.getButton().events.onInputUp.add(this.cutWireText, this);
     },
 
     cutWireSafeChoice() {
         //presents the option to cut the wire by the wall (and not die) --> one of two options with cutWireDangerChoice
-        cutSafeButton = gearPuzzleScene.addChoice(650, 500, 300, 100, "By the wall");
+        cutSafeButton = gearPuzzleScene.addChoiceButton(650, 500, 300, 100, "By the wall");
         cutSafeButton.getButton().events.onInputUp.add(this.cutWireWellText, this);
     },
 
     cutWireDangerChoice() {
         //presents the option to cut the wire by the bars (and die via trap) --> one of two options with cutWireSafeChoice or followWireChoice
-        cutDangerButton = gearPuzzleScene.addChoice(275, 500, 300, 100, "By the bars");
+        cutDangerButton = gearPuzzleScene.addChoiceButton(275, 500, 300, 100, "By the bars");
         cutDangerButton.getButton().events.onInputUp.add(this.cutWireDangerText, this);
     },
 
     followWire2Choice() {
         //presents the option to follow the wire if not already done by the time the cutters were found
         followWire2Done = true;
-        followWire2Button = gearPuzzleScene.addChoice(650, 500, 300, 100, "Follow the wire");
+        followWire2Button = gearPuzzleScene.addChoiceButton(650, 500, 300, 100, "Follow the wire");
         followWire2Button.getButton().events.onInputUp.add(this.followWireText, this)
     },
 

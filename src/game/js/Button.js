@@ -8,7 +8,6 @@ class Button {
         this.width = width;
         this.height = height;
         this.opacity = opacity;
-        this.add()
     }
 
     /**All functions that add objects to the window*/
@@ -33,9 +32,16 @@ class Button {
 
     kill() {
         this.button.kill();
-        if (this.buttonText !== null) {
+        if (this.buttonText != null) {
             this.buttonText.kill();
         }
+    }
+
+    revive() {
+        if (this.buttonLabel !== null) {
+            this.addText(this.buttonLabel)
+        }
+        this.add();
     }
 
     /**Getter functions*/
@@ -46,6 +52,34 @@ class Button {
 
     getText() {
         return this.buttonText;
+    }
+
+    setLabel(label) {
+        this.buttonLabel = label;
+    }
+
+    getLabel() {
+        return this.buttonLabel;
+    }
+
+    getX() {
+        return this.x;
+    }
+
+    getY() {
+        return this.y;
+    }
+
+    getWidth() {
+        return this.width;
+    }
+
+    getHeight() {
+        return this.height;
+    }
+
+    getOpacity() {
+        return this.opacity;
     }
 
 }

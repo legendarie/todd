@@ -2,6 +2,7 @@ var background;
 var text;
 var textBar;
 var style;
+var fullButton;
 var button;
 var choiceButton;
 var circle;
@@ -10,7 +11,7 @@ var circle2;
 var circle3;
 
 //Note: the "Button" class itself cannot be used to work with onInputUp events, since those only act on
-//graphics objects. Thus, while addButton returns the graphics object directly for easy interaction, addChoice
+//graphics objects. Thus, while addButton returns the graphics object directly for easy interaction, addChoiceButton
 //returns the Button object and requires the getButton() function to make the button clickable.
 
 class Scene {
@@ -87,18 +88,21 @@ class Scene {
     //adds an "invisible button" to the window. For convenience, it takes a parameter (number) for the opacity,
     //along with the x and y coordinates, the length, and the width
     addButton(x, y, width, height, opacity) {
-        button = new Button(x, y, width, height, opacity).getButton();
+        fullButton = new Button(x, y, width, height, opacity);
+        fullButton.add();
+        button = fullButton.getButton();
+
         return button;
     }
 
     // adds a visible button with some text describing the player's available choice(s)
-    addChoice (x, y, width, height, choiceText) {
-        choiceButton = new Button(x, y, width, height, 0.2);
+    addChoiceButton(x, y, width, height, choiceText) {
+        choiceButton = new ChoiceButton(x, y, width, height, 0.2);
+        choiceButton.add();
         choiceButton.addText(choiceText);
 
         return choiceButton;
     }
-
 
     /**All functions having to do with ellipses. addCircle creates each individual
      * circle shape, while addEllipses and removeEllipses deal with the pattern used
