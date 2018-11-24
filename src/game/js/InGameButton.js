@@ -1,18 +1,21 @@
 //This class is an example of a specific child of the ChoiceButton class that each button could be,
 //but I don't know how helpful it is.
-class CBDoor extends ChoiceButton {
+class InGameButton extends ChoiceButton {
 
     constructor(x, y) {
         super(x, y, 325, 100, 0.2);
         this.x = x;
         this.y = y;
-        this.setScript(["The bars are much too heavy to lift.",
-            "Upon closer inspection, you see a wire running across the floor.",
-            "It trails off to your right."]);
+    }
+
+    position() {
+        this.addFull();
+        this.reset();
+        this.button.events.onInputUp.add(this.click, this)
     }
 
     addFull() {
         this.add();
-        this.addText("Check the bars")
+        this.addLabel();
     }
 }

@@ -1,9 +1,10 @@
 //My attempt at a rewrite.
 var clickCount;
 var textBar;
-var puzzleButtonList;
 var buttonManager;
 var clickedButton;
+var endsBranch;
+var deadEnd;
 
 //must rewrite with clickedButton variable!!
 
@@ -75,11 +76,11 @@ var gearPuzzleState2 = {
 
             //create all of the buttons and their button links
             this.createButtons();
+            this.setScripts();
             this.setNewButtons();
 
             //initialize the button choice manager and button list for the puzzle
             buttonManager = new ButtonManager(null, null, null);
-            puzzleButtonList = new ButtonList();
 
             //when the text bar is clicked, go to the changeText function
             textBar.events.onInputUp.add(this.changeText, this);
@@ -114,6 +115,7 @@ var gearPuzzleState2 = {
     beginScript() {
         this.removeButtons();
         clickedButton.getButton().events.onInputUp.remove(this.beginScript, this);
+        gearPuzzleScene2.addEllipses();
         gearPuzzleScene2.changeText("" + clickedButton.next());
         textBar.events.onInputUp.add(this.runScript, this);
     },
@@ -122,9 +124,21 @@ var gearPuzzleState2 = {
         if (clickedButton.getSpot() < clickedButton.scriptLength()) {
             gearPuzzleScene2.changeText("" + clickedButton.next());
         } else {
-            gearPuzzleScene2.changeText("What do you want to do?");
-            buttonManager.getNewButtons();
-            this.addButtons();
+            gearPuzzleScene2.removeEllipses();
+            endsBranch = clickedButton.isEndButton();
+            if (endsBranch === false) {
+                gearPuzzleScene2.changeText("What do you want to do?");
+                buttonManager.getNewButtons();
+                this.addButtons();
+            } else {
+                deadEnd = clickedButton.isDeath();
+                if (deadEnd = true) {
+                    game.state.start('gearPuzzleState2', gearPuzzleState2);
+                }
+                else {
+                    //the ending to the scene goes here
+                }
+            }
             textBar.events.onInputUp.remove(this.runScript, this);
         }
     },
@@ -142,10 +156,10 @@ var gearPuzzleState2 = {
     },
 
     createButtons: function () {
-        doorButtonr = new CBDoor(450, 500);
-        followWireButtonr = new CBFollowWire(450, 500);
-        // testWireButtonr
-        // tripWireButtonr
+        doorButtonr = new InGameButton(450, 500);
+        followWireButtonr = new InGameButton(450, 500);
+        testWireButtonr = new InGameButton(450, 500);
+        tripWireButtonr = new InGameButton(450, 500);
         // gear1Buttonr
         // gear2Buttonr
         // removeRockButtonr
@@ -169,11 +183,34 @@ var gearPuzzleState2 = {
         // followWire2Buttonr
     },
 
+    setScripts: function() {
+        doorButtonr.setScript(["The bars are much too heavy to lift.",
+            "Upon closer inspection, you see a wire running across the floor.",
+            "It trails off to your right."]);
+        doorButtonr.setLabel("Check the bars");
+        followWireButtonr.setScript(["The wire runs up to a delicate-looking contraption that runs up the wall.",
+            "It disappears into the ceiling.",
+            "You can't tell what it does, and you're not sure you want to know."]);
+        followWireButtonr.setLabel("Follow the wire");
+        testWireButtonr.setScript(["You pluck the wire.",
+            "...",
+            "Nothing happens.",
+            "It looks like interacting with this part of the wire won't do anything.",
+            "That is, unless you can find some way to sever it."]);
+        testWireButtonr.setLabel("Test the wire");
+        tripWireButtonr.setScript(["You head over to the bars and give the tripwire a hearty kick.",
+            "...",
+            "Something creaks above you.",
+            "You look up to see a panel of jagged spikes swinging towards your face.",
+            "So that's what it does."]);
+        tripWireButtonr.setLabel("Trip the wire")
+    },
+
     removeButtons: function () {
         doorButtonr.kill();
         followWireButtonr.kill();
-        // testWireButtonr.kill();
-        // tripWireButtonr.kill();
+        testWireButtonr.kill();
+        tripWireButtonr.kill();
         // gear1Buttonr.kill();
         // gear2Buttonr.kill();
         // removeRockButtonr.kill();
@@ -199,9 +236,9 @@ var gearPuzzleState2 = {
 
     setNewButtons: function () {
         doorButtonr.setNewMiddleButton(followWireButtonr);
-        followWireButtonr.setNewMiddleButton(doorButtonr);
-        // testWireButtonr
-        // tripWireButtonr
+        followWireButtonr.setNewMiddleButton(testWireButtonr);
+        testWireButtonr.setNewMiddleButton(tripWireButtonr);
+        tripWireButtonr.setToDeath();
         // gear1Buttonr
         // gear2Buttonr
         // removeRockButtonr

@@ -1,5 +1,6 @@
 //This class is an extension of button with some helpful stuff for holding the script.
 //Probably the only useful thing I made in all of this.
+
 class ChoiceButton extends Button {
 
     /**The constructor sets up the ChoiceButton object with an empty array for the
@@ -11,6 +12,9 @@ class ChoiceButton extends Button {
         this.script = [];
         this.spot = 0;
         this.buttonList = {leftButton: null, rightButton: null, middleButton: null}
+        this.alreadyClicked = false;
+        this.endButton = false;
+        this.death = false;
     }
 
     //adds a line of dialogue to the button's script (which runs in the text box)
@@ -27,28 +31,42 @@ class ChoiceButton extends Button {
         }
     }
 
-
     //returns the number of objects (lines) in the script array
     scriptLength() {
         return this.script.length
     }
 
+    //sets the spot for the script to 0, so if the button is clicked again, it runs through the script again
     reset() {
         this.spot = 0;
     }
 
-    position() {
-        this.addFull();
-        this.reset();
-        this.button.events.onInputUp.add(this.click, this)
-    }
-
-    //an empty function for use by child classes
-    addFull() {
-    }
-
+    //sets this button to "has been clicked"
     click() {
         clickedButton = this;
+        this.alreadyClicked = true;
+    }
+
+    //a check for whether this button has been clicked
+    beenClicked() {
+        return this.alreadyClicked;
+    }
+
+    //a check for whether this button ends a choice branch
+    isEndButton() {
+        return this.endButton;
+    }
+
+    //a check for whether this button leads to the player dying
+    isDeath() {
+        return this.death;
+    }
+
+    //sets all of the buttons to an essentially non-existent state (for the end of a choice branch)
+    removeButtons() {
+        this.setNewLeftButton(new Button(0, 0, 0, 0, 0));
+        this.setNewRightButton(new Button(0, 0, 0, 0, 0));
+        this.setNewMiddleButton(new Button(0, 0, 0, 0, 0));
     }
 
     /**Getters and setters*/
@@ -114,5 +132,16 @@ class ChoiceButton extends Button {
 
     getButtonList() {
         return this.buttonList;
+    }
+
+    //sets the button to be the end of a choice branch
+    setToEnd() {
+        this.endButton = true;
+    }
+
+    //sets the button to be a "dead end" in the choice branch (you die)
+    setToDeath() {
+        this.setToEnd();
+        this.death = true;
     }
 }
