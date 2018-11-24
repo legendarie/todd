@@ -126,8 +126,10 @@ class Scene {
 
     //removes the ellipsis to indicate no further text
     removeEllipses() {
-        circle1.kill();
-        circle2.kill();
-        circle3.kill();
+        if (circle1 != null) {
+            circle1.kill();
+            circle2.kill();
+            circle3.kill();
+        }
     }
 }

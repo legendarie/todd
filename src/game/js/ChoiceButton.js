@@ -64,9 +64,9 @@ class ChoiceButton extends Button {
 
     //sets all of the buttons to an essentially non-existent state (for the end of a choice branch)
     removeButtons() {
-        this.setNewLeftButton(new Button(0, 0, 0, 0, 0));
-        this.setNewRightButton(new Button(0, 0, 0, 0, 0));
-        this.setNewMiddleButton(new Button(0, 0, 0, 0, 0));
+        this.removeLeftButton();
+        this.removeRightButton();
+        this.removeMiddleButton();
     }
 
     /**Getters and setters*/

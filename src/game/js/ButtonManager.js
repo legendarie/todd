@@ -1,4 +1,4 @@
-//This class is trying to track the buttons that are supposed to appear on each screen
+//This class tracks the buttons that are supposed to appear after each choice
 class ButtonManager {
 
     constructor(leftButton, middleButton, rightButton) {
