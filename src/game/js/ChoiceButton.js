@@ -1,6 +1,9 @@
 //This class is an extension of button with some helpful stuff for holding the script.
 //Probably the only useful thing I made in all of this.
 
+//a button for the button manager to check for so it can set its own slots to null
+var nothingButton = new Button(0, 0, 0, 0);
+
 class ChoiceButton extends Button {
 
     /**The constructor sets up the ChoiceButton object with an empty array for the
@@ -15,6 +18,7 @@ class ChoiceButton extends Button {
         this.alreadyClicked = false;
         this.endButton = false;
         this.death = false;
+        this.irregularLines = false;
     }
 
     //adds a line of dialogue to the button's script (which runs in the text box)
@@ -52,6 +56,11 @@ class ChoiceButton extends Button {
         return this.alreadyClicked;
     }
 
+    //a check for whether "What do you want to do?" should be added to the end of the script
+    isIrregular() {
+        return this.irregularLines;
+    }
+
     //a check for whether this button ends a choice branch
     isEndButton() {
         return this.endButton;
@@ -62,7 +71,7 @@ class ChoiceButton extends Button {
         return this.death;
     }
 
-    //sets all of the buttons to an essentially non-existent state (for the end of a choice branch)
+    //sets all of the buttons to null (for the end of a choice branch)
     removeButtons() {
         this.removeLeftButton();
         this.removeRightButton();
@@ -98,6 +107,11 @@ class ChoiceButton extends Button {
         this.buttonList.leftButton = null;
     }
 
+    //a function to let the button manager know it should set its left button to null
+    setNothingLeft() {
+        this.buttonList.leftButton = nothingButton;
+    }
+
     setNewRightButton(newRightButton) {
         this.buttonList.rightButton = newRightButton;
     }
@@ -110,6 +124,11 @@ class ChoiceButton extends Button {
 
     removeRightButton() {
         this.buttonList.rightButton = null;
+    }
+
+    //a function to let the button manager know it should set its right button to null
+    setNothingRight() {
+        this.buttonList.rightButton = nothingButton;
     }
 
     setNewMiddleButton(newMiddleButton) {
@@ -126,12 +145,22 @@ class ChoiceButton extends Button {
         this.buttonList.middleButton = null;
     }
 
+    //a function to let the button manager know it should set its middle button to null
+    setNothingMiddle() {
+        this.buttonList.middleButton = nothingButton;
+    }
+
     setButtonList(list) {
         this.buttonList = list;
     }
 
     getButtonList() {
         return this.buttonList;
+    }
+
+    //marks the button as not including the normal "What do you want to do?" at the end of the script
+    setToIrregular() {
+        this.irregularLines = true;
     }
 
     //sets the button to be the end of a choice branch

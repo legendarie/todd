@@ -13,16 +13,25 @@ class ButtonManager {
         let newRight = clickedButton.getNewRightButton();
         let newMiddle = clickedButton.getNewMiddleButton();
         if (newLeft != null) {
-            this.leftButton = newLeft;
-            clickedButton.removeLeftButton(); //may want to remove this line if we want choice loops
+            if (newLeft === nothingButton) {
+                this.removeLeftButton();
+            } else {
+                this.leftButton = newLeft;
+            }
         }
         if (newRight != null) {
-            this.rightButton = newRight;
-            clickedButton.removeRightButton(); //may want to remove this line if we want choice loops
+            if (newRight === nothingButton) {
+                this.removeRightButton();
+            } else {
+                this.rightButton = newRight;
+            }
         }
         if (newMiddle != null) {
-            this.middleButton = newMiddle;
-            clickedButton.removeMiddleButton(); //may want to remove this line if we want choice loops
+            if (newMiddle === nothingButton) {
+                this.removeMiddleButton();
+            } else {
+                this.middleButton = newMiddle;
+            }
         }
     }
 

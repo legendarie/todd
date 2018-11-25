@@ -11,5 +11,4 @@ var yaDeadState = {
     create: function() {
         yaDeadScene.loadScene('youDied', 2.3);
     }
-
 };
