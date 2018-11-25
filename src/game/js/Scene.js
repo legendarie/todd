@@ -27,6 +27,9 @@ class Scene {
     loadScene(background, scale) {
         background = game.add.image(0, 0, background);
         background.scale.setTo(scale);
+        background.inputEnabled = true;
+
+        return background;
     }
 
     //load the sprite image into the state. Take an image and its path as parameters
