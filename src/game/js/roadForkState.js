@@ -6,13 +6,13 @@ var slingshot;
 var back;
 var wormHole;
 var cliffRoad;
-var alreadyBeen = false;
+var alreadyBeen = false;     //boolean to keep track of whether the player has been in this state before
 let convo1Scene = null;
 
 //initialize the state
 var roadForkState = {
 
-    /**The initial functions to set up the scene for player interaction*/
+    /** The initial function to set up the scene for player interaction */
 
     preload: function() {
         //declare convo1Scene to be an instance of a Scene, and load in the background image to the state
@@ -28,6 +28,11 @@ var roadForkState = {
         //reset the global clickCount variable
         clickCount = 0;
     },
+
+    /** This function checks to see if the player has already been to this state, and creates the scene accordingly.
+     * If the player has not been here, it adds the background and the Wise Guy sprite, who begins speaking to the
+     * player, and begins their long conversation. If the player has been here, it only adds the background, and
+     * omits the Wise Guy sprite. It then moves on to the pathChoice function. */
 
     create: function() {
         //check to make sure convo1Scene is not null
@@ -63,8 +68,8 @@ var roadForkState = {
         }
     },
 
-    /**All of the functions that change the text in the text box:
-     * changeText runs through Wise Guy's lines of speech*/
+    /** All of the functions that change the text in the text box:
+     * changeText runs through Wise Guy's lines of speech */
 
     changeText: function() {
         //clickCount keeps track of how many times the textBar is clicked, and changes the text accordingly.
@@ -107,6 +112,8 @@ var roadForkState = {
         }
     },
 
+    /** In this function, the player takes the slingshot from Wise Guy, and their conversation ends. */
+
     takeSlingshot: function() {
 
         //remove the slingshot from the scene
@@ -119,6 +126,9 @@ var roadForkState = {
         textBar.events.onInputUp.add(this.pathChoice, this);
 
     },
+
+    /** The player is now given a choice of the path they would like to take: to the left to the worm cave,
+     * or to the right to the road that bends around the cliff */
 
     pathChoice: function() {
 
@@ -140,9 +150,13 @@ var roadForkState = {
         cliffRoad.events.onInputUp.add(this.goToPath, this);
     },
 
+    /** If the player selects the wormHole button, the game state changes to the wormState */
+
     goToWorm: function() {
         game.state.start('wormState');
     },
+
+    /** If the player selects the cliffRoad button, the game state changes to the outsideCaveState */
 
     goToPath: function() {
         game.state.start('outsideCaveState');

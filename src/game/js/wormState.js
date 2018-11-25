@@ -5,6 +5,8 @@ let wormScene = null;
 
 var wormState = {
 
+    /** The initial function to set up the scene for player interaction */
+
     preload: function() {
 
         //create a new instance of Scene
@@ -19,6 +21,9 @@ var wormState = {
 
     },
 
+    /** Adds the visuals to the state. caveButton is created over the mouth of the cave. When the player clicks
+     * this button, the state calls the enterCave function */
+
     create: function() {
 
         //load the first background into the scene
@@ -32,6 +37,8 @@ var wormState = {
         caveButton.events.onInputUp.add(this.enterCave, this);
 
     },
+
+    /** The player enters the dark cave, and text is added */
 
     enterCave: function() {
 
@@ -50,6 +57,9 @@ var wormState = {
         textBar.events.onInputUp.add(this.caveText, this);
 
     },
+
+    /** This function goes through the story text in the cave, then the view exits the cave when wormEyeOpen
+     * is called */
 
     caveText: function() {
         //text sequence for this part of the scene
@@ -71,6 +81,8 @@ var wormState = {
         }
     },
 
+    /** The player now sees that the cave was really a worm. The worm has its eye open and teeth have appeared */
+
     wormEyeOpen: function() {
 
         //remove the text bar
@@ -79,30 +91,45 @@ var wormState = {
         //change the background to the worm with the open eye
         var openEyebg = wormScene.loadScene('openEye', 0.75);
 
+        //create the hand cursor over the background so the player knows it's interactable
+        openEyebg.input.useHandCursor = true;
+
         //clicking on the background changes the function
         //openEyeButton = wormScene.addButton(0, 0, 1200, 690, 0);
         openEyebg.events.onInputUp.add(this.wormWhump, this);
 
     },
 
+    /** The worm closes its mouth, and the player is eaten */
+
     wormWhump: function() {
 
         //change the background to the worm with its mouth closed
         var closedMouthbg = wormScene.loadScene('wormBite', 0.75);
+
+        //create the hand cursor over the background so the player knows it's interactable
+        closedMouthbg.input.useHandCursor = true;
 
         //clicking on the background changes the function
         closedMouthbg.events.onInputUp.add(this.smilingWorm, this);
 
     },
 
+    /** The worm is happy with this turn of events. The state is then changed to the death screen */
+
     smilingWorm: function() {
 
         //change the background to the smiling worm
         var happyWorm = wormScene.loadScene('happyWorm', 0.72);
 
+        //create the hand cursor over the background so the player knows it's interactable
+        happyWorm.input.useHandCursor = true;
+
         //clicking on the background changes the state
         happyWorm.events.onInputUp.add(this.changeState, this);
     },
+
+    /** Change the game state to the death scene */
 
     changeState: function() {
         game.state.start('yaDeadState');
