@@ -1,7 +1,6 @@
 var clickCount;
 var textBar;
 var caveButton;
-var openEyeButton;
 let wormScene = null;
 
 var wormState = {

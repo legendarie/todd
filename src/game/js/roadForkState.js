@@ -6,6 +6,7 @@ var slingshot;
 var back;
 var wormHole;
 var cliffRoad;
+var alreadyBeen = false;
 let convo1Scene = null;
 
 //initialize the state
@@ -35,20 +36,30 @@ var roadForkState = {
             //load the background and scale it
             convo1Scene.loadScene('roadForkbg', 0.55);
 
-            //add Wise Guy (santa placeholder)
-            wiseGuy = convo1Scene.addStaticSprite(350, 200, 'wiseGuy', 1);
-            //wiseGuy = game.add.image(350, 200, 'wiseGuy');
-            //wiseGuy.scale.setTo(1.0);
+            //if the player has not been here before,
+            if (alreadyBeen === false) {
 
-            //add the text bar (with all universal settings), with the first line of text
-            convo1Scene.addTextBar("\"Sup.\"");
+                //indicate that the player has now been to this scene
+                alreadyBeen = true;
 
-            //add a set of ellipses to the text box to indicate
-            //further messages
-            convo1Scene.addEllipses();
+                //add Wise Guy (santa placeholder)
+                wiseGuy = convo1Scene.addStaticSprite(350, 200, 'wiseGuy', 1);
 
-            //when the text bar is clicked, go to the changeText function
-            textBar.events.onInputUp.add(this.changeText, this);
+                //add the text bar (with all universal settings), with the first line of text
+                convo1Scene.addTextBar("\"Sup.\"");
+
+                //add a set of ellipses to the text box to indicate
+                //further messages
+                convo1Scene.addEllipses();
+
+                //when the text bar is clicked, go to the changeText function
+                textBar.events.onInputUp.add(this.changeText, this);
+
+            } else if (alreadyBeen === true) {
+                //if the player has been here before, then they skip the conversation with Wise Guy,
+                //and move straight to the path choice.
+                this.pathChoice();
+            }
         }
     },
 
@@ -56,15 +67,13 @@ var roadForkState = {
      * changeText runs through Wise Guy's lines of speech*/
 
     changeText: function() {
-        //only increment the click count twice
+        //clickCount keeps track of how many times the textBar is clicked, and changes the text accordingly.
         if (clickCount < 13) {
             clickCount++;
             if (clickCount === 1) {
                 convo1Scene.changeText("\"You're a T.O.D.D. aren't you?\"")
             } else if (clickCount === 2) {
-                //change the text in the text bar, then further the plot somehow
                 convo1Scene.changeText("\"Yeah, you have to be. I'd recognize that stubborn expression anywhere.\"");
-                //convo1Scene.removeEllipses();
             } else if (clickCount === 3) {
                 convo1Scene.changeText("\"You've come to defeat it, huh? That thing that's been " +
                     "terrorizing the place?\"");
@@ -84,26 +93,50 @@ var roadForkState = {
                 convo1Scene.changeText("\"Regardless, I'm here to help. Here. I picked up something for you.\"");
             } else if (clickCount === 11) {
                 convo1Scene.changeText("He pulls a slingshot out from... well, you'd prefer not to know where.");
+                //add the slingshot to the scene
                 slingshot = convo1Scene.addSprite(300, 300, 'slingshot', 0.07);
             } else if (clickCount === 12) {
                 convo1Scene.changeText("It actually looks decent. Maybe this guy isn't just a random weirdo after all.");
             } else if (clickCount === 13) {
                 convo1Scene.changeText("\"Go find that monster and take 'em down for me, will ya?\"");
+                //remove ellipses to indicate there is no more text
                 convo1Scene.removeEllipses();
+                //when the slingshot is clicked, move to takeSlingshot function
                 slingshot.events.onInputUp.add(this.takeSlingshot, this);
             }
         }
     },
 
     takeSlingshot: function() {
+
+        //remove the slingshot from the scene
         slingshot.kill();
 
+        //add Wise Guy's last piece of dialogue
         convo1Scene.changeText("\"Thanks a million, buddy. Good luck out there.\"");
 
+        //when the textBar is clicked, change to pathChoice function
+        textBar.events.onInputUp.add(this.pathChoice, this);
+
+    },
+
+    pathChoice: function() {
+
+        //remove Wise Guy from the scene (if he was there)
+        wiseGuy.kill();
+
+        //remove the textBar and its text from the scene (if they are there)
+        textBar.kill();
+        text.kill();
+
+        //add buttons over the worm cave and the road by the cliff
         wormHole = convo1Scene.addButton(470, 210, 170, 120, 0);
         cliffRoad = convo1Scene.addButton(850, 250, 200, 200, 0);
 
+        //if wormHole is clicked, change game state to wormState
         wormHole.events.onInputUp.add(this.goToWorm, this);
+
+        //if cliffRoad is clicked, change game state to outsideCaveState
         cliffRoad.events.onInputUp.add(this.goToPath, this);
     },
 
