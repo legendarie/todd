@@ -1,4 +1,5 @@
 var background;
+var hiddenButton;
 var text;
 var textBar;
 var style;
@@ -23,7 +24,7 @@ class Scene {
         game.load.image(background, backgroundPath);
     }
 
-    //add and scale the background. Take an image and a number as parameters
+    //add and scale the background. Take an image and a number as parameters. Make it interactable
     loadScene(background, scale) {
         background = game.add.image(0, 0, background);
         background.scale.setTo(scale);
@@ -37,7 +38,9 @@ class Scene {
         game.load.image(sprite, spritePath);
     }
 
-    //add the sprite to the game. Take the coordinates, image, and scale as parameters
+    //add the sprite to the game. Take the coordinates, image, and scale as parameters.
+    //This type of sprite is also interactable, and when the player hovers their mouse over it, the hand
+    //cursor appears
     addSprite(x, y, sprite, scale) {
         //add the sprite and make it interactive
         sprite = game.add.sprite(x, y, sprite);
@@ -48,6 +51,8 @@ class Scene {
         return sprite;
     }
 
+    //add the sprite to the game. Take the coordinates image, and scale as parameters.
+    //This type of sprite is not interactable
     addStaticSprite(x, y, sprite, scale) {
         sprite = game.add.sprite(x, y, sprite);
         sprite.scale.setTo(scale);
@@ -70,10 +75,12 @@ class Scene {
         //set the style of the font to be put in the text bar (this is used in multiple functions)
         style = {font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle"};
 
-        //add the text to the center of the text bar
+        //add the text to the center of the text bar and add a slight shadow underneath the text
         text = game.add.text(0, 0, firstText, style);
         text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
         text.setTextBounds(0, 0, 1200, 100);
+
+        return textBar;
 
     }
 
@@ -105,6 +112,17 @@ class Scene {
         choiceButton.addText(choiceText);
 
         return choiceButton;
+    }
+
+    //adds a button that does not have the hand cursor when the player hovers their mouse over the button
+    //(hence a hidden button)
+    addHiddenButton(x, y, width, height, opacity) {
+        hiddenButton = new Button(x, y, width, height, opacity);
+        hiddenButton.add();
+        button = hiddenButton.getButton();
+        button.input.useHandCursor = false;
+
+        return button
     }
 
     /**All functions having to do with ellipses. addCircle creates each individual
