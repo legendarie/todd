@@ -10,9 +10,9 @@ game.state.add('wormState', wormState);  //doesn't exist yet
 //game.state.add('outsideCaveState', outsideCaveState); //doesn't exist yet
 game.state.add('yaDeadState', yaDeadState); //doesn't exist yet
 game.state.add('caveStartState', caveStartState);
-game.state.add('oldPuzzleState', oldPuzzleState);
 game.state.add('gearPuzzleState', gearPuzzleState);
+game.state.add('penguinPuzzleState', penguinPuzzleState);
 game.state.add('fightState', fightState);
 game.state.add('findingSanta', findingSanta);
 
-game.state.start('gearPuzzleState');
+game.state.start('penguinPuzzleState');

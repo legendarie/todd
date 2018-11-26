@@ -14,7 +14,9 @@ class ChoiceButton extends Button {
         super(x, y, width, height, opacity);
         this.script = [];
         this.spot = 0;
-        this.buttonList = {leftButton: null, rightButton: null, middleButton: null}
+        this.buttonList = {leftButton: null, rightButton: null, middleButton: null,
+                topLeftButton: null, topRightButton: null, bottomLeftButton: null,
+                bottomRightButton: null};
         this.alreadyClicked = false;
         this.endButton = false;
         this.death = false;
@@ -148,6 +150,74 @@ class ChoiceButton extends Button {
     //a function to let the button manager know it should set its middle button to null
     setNothingMiddle() {
         this.buttonList.middleButton = nothingButton;
+    }
+
+    setNewTopLeftButton(button) {
+        this.buttonList.topLeftButton = button;
+    }
+
+    getNewTopLeftButton() {
+        return this.buttonList.topLeftButton;
+    }
+
+    removeTopLeftButton() {
+        this.buttonList.topLeftButton = null;
+    }
+
+    //a function to let the button manager know it should set its top left button to null
+    setNothingTopLeft() {
+        this.buttonList.topLeftButton = nothingButton;
+    }
+
+    setNewTopRightButton(button) {
+        this.buttonList.topRightButton = button;
+    }
+
+    getNewTopRightButton() {
+        return this.buttonList.topRightButton;
+    }
+
+    removeTopRightButton() {
+        this.buttonList.topRightButton = null;
+    }
+
+    //a function to let the button manager know it should set its top right button to null
+    setNothingTopRight() {
+        this.buttonList.topRightButton = nothingButton;
+    }
+
+    setNewBottomLeftButton(button) {
+        this.buttonList.bottomLeftButton = button;
+    }
+
+    getNewBottomLeftButton() {
+        return this.buttonList.bottomLeftButton;
+    }
+
+    removeBottomLeftButton() {
+        this.buttonList.bottomLeftButton = null;
+    }
+
+    //a function to let the button manager know it should set its bottom left button to null
+    setNothingBottomLeft() {
+        this.buttonList.bottomLeftButton = nothingButton;
+    }
+
+    setNewBottomRightButton(button) {
+        this.buttonList.bottomRightButton = button;
+    }
+
+    getNewBottomRightButton() {
+        return this.buttonList.bottomRightButton;
+    }
+
+    removeBottomRightButton() {
+        this.buttonList.bottomRightButton = null;
+    }
+
+    //a function to let the button manager know it should set its bottom right button to null
+    setNothingBottomRight() {
+        this.buttonList.bottomRightButton = nothingButton;
     }
 
     setButtonList(list) {
