@@ -190,6 +190,11 @@ var kitchenState = {
         textBar.kill();
         text.kill();
 
+        //if the player happens to click on the cabinet after the kitchenButton and finalDoorButton appear,
+        //remove the buttons from the scene
+        kitchenButton.kill();
+        finalDoorButton.kill();
+
         //reset the clickCount to 0
         clickCount = 0;
 
