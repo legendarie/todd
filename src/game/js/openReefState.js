@@ -1,3 +1,4 @@
+//establish global variables
 var clickCount;
 var textBar;
 var sign;
