@@ -360,7 +360,6 @@ var gearPuzzleState = {
         gear1Button.setNewRightButton(window2Button);
         gear2Button.setNewLeftButton(removeRockButton);
         removeRockButton.setNewLeftButton(checkGearsButton);
-        checkGearsButton.setNewRightButton(switchSearchButton);
         jamCheckButton.setNewLeftButton(removeRockButton);
         switchSearchButton.setNewRightButton(pullLever2Button);
         window1Button.setNewLeftButton(gear2Button);
@@ -384,6 +383,9 @@ var gearPuzzleState = {
         //use a few checks to assign new choices depending on what the player clicks first
         if (window2Button.beenClicked() === true) {
             removeRockButton.setNewRightButton(pullLever2Button);
+        }
+        if (gear2Button.beenClicked() === true) {
+            checkGearsButton.setNewRightButton(switchSearchButton);
         }
         if ((followWireButton.beenClicked() === true) || (followWire2Button.beenClicked() === true)) {
             cutWireButton.setNewLeftButton(cutDangerButton);

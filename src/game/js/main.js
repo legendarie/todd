@@ -15,4 +15,4 @@ game.state.add('penguinPuzzleState', penguinPuzzleState);
 game.state.add('fightState', fightState);
 game.state.add('findingSanta', findingSanta);
 
-game.state.start('penguinPuzzleState');
+game.state.start('gearPuzzleState');
