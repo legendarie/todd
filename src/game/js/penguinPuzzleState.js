@@ -26,6 +26,7 @@ var checkWater2Button;
 var checkWater3Button;
 var readNoteButton;
 var readNoteButton2;
+var contemplateButton;
 var heapButton;
 var heap2Button;
 var reachButton;
@@ -34,6 +35,7 @@ var grabPipeButton;
 var grabPipe2Button;
 var meltIceButton;
 var turnOnButton;
+var lookPanelButton;
 var penguinButton;
 var penguin2Button;
 var penguin3Button;
@@ -62,9 +64,10 @@ var turnDown2Button;
 var turnDownPermButton;
 var crossColdButton;
 var crossCold2Button;
+var grabPickButton;
+var givePickButton;
 var grabKeyButton;
 var penguinAttackButton;
-var penguinFallButton;
 
 //the scene variable
 var penguinPuzzleScene = null;
@@ -115,6 +118,7 @@ var penguinPuzzleState = {
             // //remove this when penguinPuzzleScene is hooked up to the rest of the game
             // buttonManager = new ButtonManager();
 
+            //if the player hasn't died in this game, start it from the beginning
             if (this.hasDied !== true) {
                 //create all of the buttons and their button links
                 this.createButtons();
@@ -129,6 +133,7 @@ var penguinPuzzleState = {
                 //when the text bar is clicked, go to the changeText function
                 textBar.events.onInputUp.add(this.changeText, this);
             } else {
+                //if the player has died, skip the opening text and load the last choices used
                 if (buttonManager.getTopLeftButton() != null) {
                     this.makeButton(buttonManager.getTopLeftButton());
                 }
@@ -145,6 +150,13 @@ var penguinPuzzleState = {
         }
     },
 
+    /**All of the functions that have to do with the text in the text box:
+     * changeText runs through the first five lines of text
+     * beginScript displays the first line of a button's script when it's clicked, and calls runScript
+     * runScript runs through the entire script of a button, makes checks for changes or certain criteria,
+     * and displays the next buttons to appear
+     * setScripts sets the scripts and labels for each button*/
+
     changeText: function () {
         //only increment the click count four times
         if (clickCount < 4) {
@@ -160,18 +172,13 @@ var penguinPuzzleState = {
                 penguinPuzzleScene.changeText("What do you want to do?");
                 penguinPuzzleScene.removeEllipses();
                 textBar.events.onInputUp.remove(this.changeText, this);
+
                 this.makeButton(doorButton);
                 this.makeButton(heapButton);
                 this.makeButton(wallButton);
                 this.makeButton(penguinButton);
             }
         }
-    },
-
-    makeButton: function (button) {
-        //position the button in the window and begin reading through the script lines
-            button.position();
-            button.getButton().events.onInputUp.add(this.beginScript, this);
     },
 
     beginScript() {
@@ -204,9 +211,7 @@ var penguinPuzzleState = {
                     penguinAttackButton.events.onInputUp.add(this.fallScene, this);
                 } else {
                     //if not, check to make sure the button needs the normal end-of-script question
-                    if (clickedButton.isIrregular() !== true) {
-                        penguinPuzzleScene.changeText("What do you want to do?");
-                    }
+                    penguinPuzzleScene.changeText("What do you want to do?");
                     this.setButtonChanges();
                     buttonManager.getNewButtons();
                     clickedButton.removeButtons();
@@ -221,6 +226,7 @@ var penguinPuzzleState = {
                     game.state.start('yaDeadState', yaDeadState);
                 }
                 else {
+                    //if it's the end of the scene ("winning"), load the button over the door
                     openDoor = penguinPuzzleScene.addButton(540, 210, 175, 252, 0);
                     openDoor.events.onInputUp.add(this.changeState, this);
                 }
@@ -228,93 +234,6 @@ var penguinPuzzleState = {
             //always remove the listener
             textBar.events.onInputUp.remove(this.runScript, this);
         }
-    },
-
-    addButtons() {
-        //check for any new buttons and assign them to the appropriate button slots in the manager
-        if (buttonManager.getTopLeftButton() != null) {
-            this.makeButton(buttonManager.getTopLeftButton())
-        }
-        if (buttonManager.getTopRightButton() != null) {
-            this.makeButton(buttonManager.getTopRightButton())
-        }
-        if (buttonManager.getBottomLeftButton() != null) {
-            this.makeButton(buttonManager.getBottomLeftButton())
-        }
-        if (buttonManager.getBottomRightButton() != null) {
-            this.makeButton(buttonManager.getBottomRightButton())
-        }
-        if (buttonManager.getMiddleButton() != null) {
-            this.makeButton(buttonManager.getMiddleButton())
-        }
-    },
-
-    attackScene: function() {
-        penguinAttackButton.events.onInputUp.remove(this.attackScene, this);
-        penguinAttackButton = penguinPuzzleScene.addButton(0, 0, 1000, 1000, 0);
-        penguinAttackButton.events.onInputUp.add(this.fallScene, this);
-    },
-
-    fallScene: function() {
-        penguinAttackButton.kill();
-        penguinPuzzleScene.loadScene('sunkPenguinbg', 0.32);
-        penguinPuzzleScene.addTextBar("");
-        buttonManager.setBottomLeftButton(turnDownPermButton);
-        buttonManager.setBottomRightButton(crossWarmButton);
-        this.makeButton(crossWarmButton);
-        this.makeButton(turnDownPermButton);
-    },
-
-    createButtons: function () {
-        //initialize all buttons so they can be recognized by other functions
-        doorButton = new InGameButton(LEFTXP, HIGHYP);
-        examineLakeButton = new InGameButton(LEFTXP, HIGHYP);
-        examineLake2Button = new InGameButton(LEFTXP, HIGHYP);
-        checkAgainButton = new InGameButton(LEFTXP, HIGHYP);
-        paranoiaButton = new InGameButton(LEFTXP, HIGHYP);
-        crossDangerButton = new InGameButton(LEFTXP, HIGHYP);
-        checkWaterButton = new InGameButton(LEFTXP, HIGHYP);
-        checkWater2Button = new InGameButton(LEFTXP, HIGHYP);
-        checkWater3Button = new InGameButton(LEFTXP, HIGHYP);
-        readNoteButton = new InGameButton(LEFTXP, HIGHYP);
-        readNoteButton2 = new InGameButton(LEFTXP, HIGHYP);
-        heapButton = new InGameButton(RIGHTXP, HIGHYP);
-        heap2Button = new InGameButton(RIGHTXP, HIGHYP);
-        reachButton = new InGameButton(RIGHTXP, HIGHYP);
-        extendButton = new InGameButton(RIGHTXP, HIGHYP);
-        grabPipeButton = new InGameButton(RIGHTXP, HIGHYP);
-        grabPipe2Button = new InGameButton(RIGHTXP, HIGHYP);
-        meltIceButton = new InGameButton(RIGHTXP, HIGHYP);
-        turnOnButton = new InGameButton(RIGHTXP, HIGHYP);
-        penguinButton = new InGameButton(LEFTXP, LOWYP);
-        penguin2Button = new InGameButton(LEFTXP, LOWYP);
-        penguin3Button = new InGameButton(LEFTXP, LOWYP);
-        crossButton = new InGameButton(LEFTXP, LOWYP);
-        crossSafeButton = new InGameButton(LEFTXP, LOWYP);
-        wallButton = new InGameButton(RIGHTXP, LOWYP);
-        pickaxeButton = new InGameButton(RIGHTXP, LOWYP);
-        climbButton = new InGameButton(RIGHTXP, LOWYP);
-        examineRoomButton = new InGameButton(RIGHTXP, LOWYP);
-        followCordButton = new InGameButton(RIGHTXP, LOWYP);
-        followCord2Button = new InGameButton(RIGHTXP, LOWYP);
-        tryKeyButton = new InGameButton(RIGHTXP, LOWYP);
-        lookLockButton  = new InGameButton(RIGHTXP, LOWYP);
-        unlockPanelButton = new InGameButton(RIGHTXP, LOWYP);
-        openDrawerButton = new InGameButton(RIGHTXP, LOWYP);
-        cutLockButton = new InGameButton(RIGHTXP, LOWYP);
-        touchButton = new InGameButton(RIGHTXP, LOWYP);
-        touch2Button = new InGameButton(RIGHTXP, LOWYP);
-        useDialButton = new InGameButton(RIGHTXP, LOWYP);
-        turnUpButton = new InGameButton(RIGHTXP, LOWYP);
-        turnUp2Button = new InGameButton(RIGHTXP, LOWYP);
-        turnUp3Button = new InGameButton(RIGHTXP, LOWYP);
-        crossWarmButton = new InGameButton(RIGHTXP, LOWYP);
-        turnDownButton = new InGameButton(LEFTXP, LOWYP);
-        turnDown2Button = new InGameButton(LEFTXP, LOWYP);
-        turnDownPermButton = new InGameButton(LEFTXP, LOWYP);
-        crossColdButton = new InGameButton(LEFTXP, LOWYP);
-        crossCold2Button = new InGameButton(MIDDLEXP, MIDDLEYP);
-        grabKeyButton = new InGameButton(MIDDLEXP, MIDDLEYP);
     },
 
     setScripts: function() {
@@ -362,6 +281,12 @@ var penguinPuzzleState = {
         readNoteButton.setLabel("Read note");
         readNoteButton2.setScript(['"He wants something in return"']);
         readNoteButton2.setLabel("Read note");
+        contemplateButton.setScript(["You take a moment to contemplate your existence.",
+            "...",
+            ".....",
+            ".......",
+            "You feel a little bit better."]);
+        contemplateButton.setLabel("Contemplate life");
         heapButton.setScript(["A pile of snow and clothes is heaped on the cave floor.",
             "You can see a scarf and a still-smoking tobacco pipe.",
             "You decide not to get too much closer."]);
@@ -409,6 +334,8 @@ var penguinPuzzleState = {
         turnOnButton.setScript(["You press a conspicuous red button.",
             "The panel begins to hum softly."]);
         turnOnButton.setLabel("Turn panel on");
+        lookPanelButton.setScript(["The panel buzzes with energy."]);
+        lookPanelButton.setLabel("Look at panel");
         penguinButton.setScript(["You cautiously observe the penguin from a distance.",
             "It seems like it's fast asleep.",
             "You can hear it snoring softly."]);
@@ -525,12 +452,62 @@ var penguinPuzzleState = {
             "It looks like it's been unlocked this whole time.",
             "Welp."]);
         crossCold2Button.setLabel("Exit room");
+        grabPickButton.setScript(["You pull as hard as you can on the cutters handle.",
+            "Suddenly, you feel an overwhelming force yank on the other end.",
+            "You're tugged through the air and into the heap of snow.",
+            "You feel yourself being smothered.",
+            "Snow and ice pile up around you until you're completely cocooned.",
+            "At the very least, you make a nice snowman."]);
+        grabPickButton.setLabel("Pull the pickaxe");
+        givePickButton.setScript(["You let go of the cutters handle.",
+            "...",
+            "The heap snuffles.",
+            "It raises the pickaxe and bats the pipe across the snow towards you.",
+            "It lands near your feet.",
+            "The snow pile goes still."]);
+        givePickButton.setLabel("Release the pickaxe");
         grabKeyButton.setScript(["As you lean in towards the penguin, you hear a weird clicking sound.",
             "You catch a whiff of something oily.",
             "...You think you see a second pair of eyes hidden in its feathers.",
             "Hoo boy.",
             "You snatch the key and retreat to the cave entrance."]);
         grabKeyButton.setLabel("Grab the key");
+    },
+
+    /**All of the functions that have to do with the choicebuttons:
+     * makeButton takes a button and sets it as clickable, as prepares to run the script
+     * addButtons adds the choice buttons stored in the buttonManager to the window
+     * removeButtons kills any buttons on the screen
+     * createButtons initializes the button variables with their x/y values for later use
+     * setNewButtons sets up what buttons each choice button changes when clicked
+     * setButtonChanges is a check that's run before the buttons are displayed,
+     * which tracks certain choices and changes the game's reaction based on the player's actions
+     * attackScene begins the penguin attack cutscene
+     * fallScene ends the penguin attack cutscene*/
+
+    makeButton: function (button) {
+        //position the button in the window and begin reading through the script lines
+        button.position();
+        button.getButton().events.onInputUp.add(this.beginScript, this);
+    },
+
+    addButtons() {
+        //check for any new buttons and assign them to the appropriate button slots in the manager
+        if (buttonManager.getTopLeftButton() != null) {
+            this.makeButton(buttonManager.getTopLeftButton())
+        }
+        if (buttonManager.getTopRightButton() != null) {
+            this.makeButton(buttonManager.getTopRightButton())
+        }
+        if (buttonManager.getBottomLeftButton() != null) {
+            this.makeButton(buttonManager.getBottomLeftButton())
+        }
+        if (buttonManager.getBottomRightButton() != null) {
+            this.makeButton(buttonManager.getBottomRightButton())
+        }
+        if (buttonManager.getMiddleButton() != null) {
+            this.makeButton(buttonManager.getMiddleButton())
+        }
     },
 
     removeButtons: function () {
@@ -552,8 +529,65 @@ var penguinPuzzleState = {
         }
     },
 
+    createButtons: function () {
+        //initialize all buttons so they can be recognized by other functions
+        doorButton = new InGameButton(LEFTXP, HIGHYP);
+        examineLakeButton = new InGameButton(LEFTXP, HIGHYP);
+        examineLake2Button = new InGameButton(LEFTXP, HIGHYP);
+        checkAgainButton = new InGameButton(LEFTXP, HIGHYP);
+        paranoiaButton = new InGameButton(LEFTXP, HIGHYP);
+        crossDangerButton = new InGameButton(LEFTXP, HIGHYP);
+        checkWaterButton = new InGameButton(LEFTXP, HIGHYP);
+        checkWater2Button = new InGameButton(LEFTXP, HIGHYP);
+        checkWater3Button = new InGameButton(LEFTXP, HIGHYP);
+        readNoteButton = new InGameButton(LEFTXP, HIGHYP);
+        readNoteButton2 = new InGameButton(LEFTXP, HIGHYP);
+        contemplateButton = new InGameButton(LEFTXP, HIGHYP);
+        heapButton = new InGameButton(RIGHTXP, HIGHYP);
+        heap2Button = new InGameButton(RIGHTXP, HIGHYP);
+        reachButton = new InGameButton(RIGHTXP, HIGHYP);
+        extendButton = new InGameButton(RIGHTXP, HIGHYP);
+        grabPipeButton = new InGameButton(RIGHTXP, HIGHYP);
+        grabPipe2Button = new InGameButton(RIGHTXP, HIGHYP);
+        meltIceButton = new InGameButton(RIGHTXP, HIGHYP);
+        turnOnButton = new InGameButton(RIGHTXP, HIGHYP);
+        lookPanelButton = new InGameButton(RIGHTXP, HIGHYP);
+        penguinButton = new InGameButton(LEFTXP, LOWYP);
+        penguin2Button = new InGameButton(LEFTXP, LOWYP);
+        penguin3Button = new InGameButton(LEFTXP, LOWYP);
+        crossButton = new InGameButton(LEFTXP, LOWYP);
+        crossSafeButton = new InGameButton(LEFTXP, LOWYP);
+        wallButton = new InGameButton(RIGHTXP, LOWYP);
+        pickaxeButton = new InGameButton(RIGHTXP, LOWYP);
+        climbButton = new InGameButton(RIGHTXP, LOWYP);
+        examineRoomButton = new InGameButton(RIGHTXP, LOWYP);
+        followCordButton = new InGameButton(RIGHTXP, LOWYP);
+        followCord2Button = new InGameButton(RIGHTXP, LOWYP);
+        tryKeyButton = new InGameButton(RIGHTXP, LOWYP);
+        lookLockButton  = new InGameButton(RIGHTXP, LOWYP);
+        unlockPanelButton = new InGameButton(RIGHTXP, LOWYP);
+        openDrawerButton = new InGameButton(RIGHTXP, LOWYP);
+        cutLockButton = new InGameButton(RIGHTXP, LOWYP);
+        touchButton = new InGameButton(RIGHTXP, LOWYP);
+        touch2Button = new InGameButton(RIGHTXP, LOWYP);
+        useDialButton = new InGameButton(RIGHTXP, LOWYP);
+        turnUpButton = new InGameButton(RIGHTXP, LOWYP);
+        turnUp2Button = new InGameButton(RIGHTXP, LOWYP);
+        turnUp3Button = new InGameButton(RIGHTXP, LOWYP);
+        crossWarmButton = new InGameButton(RIGHTXP, LOWYP);
+        turnDownButton = new InGameButton(LEFTXP, LOWYP);
+        turnDown2Button = new InGameButton(LEFTXP, LOWYP);
+        turnDownPermButton = new InGameButton(LEFTXP, LOWYP);
+        crossColdButton = new InGameButton(LEFTXP, LOWYP);
+        crossCold2Button = new InGameButton(MIDDLEXP, MIDDLEYP);
+        grabPickButton = new InGameButton(LEFTXP, MIDDLEYP);
+        givePickButton = new InGameButton(RIGHTXP, MIDDLEYP);
+        grabKeyButton = new InGameButton(MIDDLEXP, MIDDLEYP);
+    },
+
     setNewButtons: function () {
         //set the initial button links for the choices
+        //also set if the button is a death ending or the winning ending
         doorButton.setToDeath();
         examineLakeButton.setNewTopLeftButton(checkAgainButton);
         checkAgainButton.setNewTopLeftButton(paranoiaButton);
@@ -566,10 +600,14 @@ var penguinPuzzleState = {
         reachButton.setNewBottomRightButton(examineRoomButton);
         reachButton.setNewBottomLeftButton(penguin2Button);
         extendButton.setNewTopRightButton(grabPipeButton);
-        grabPipeButton.setToIrregular();
+        grabPipeButton.setNothingTopLeft();
+        grabPipeButton.setNothingTopRight();
+        grabPipeButton.setNewBottomLeftButton(grabPickButton);
+        grabPipeButton.setNewBottomRightButton(givePickButton);
         grabPipe2Button.setNewTopRightButton(meltIceButton);
         meltIceButton.setNewTopRightButton(turnOnButton);
         turnOnButton.setNewBottomRightButton(cutLockButton);
+        turnOnButton.setNewTopRightButton(lookPanelButton);
         penguin2Button.setNewBottomLeftButton(crossButton);
         crossButton.setNewTopLeftButton(crossDangerButton);
         crossButton.setNewBottomLeftButton(crossSafeButton);
@@ -612,6 +650,11 @@ var penguinPuzzleState = {
         turnDownPermButton.setNothingBottomRight();
         crossColdButton.setToEnd();
         crossCold2Button.setToEnd();
+        grabPickButton.setToDeath();
+        givePickButton.setNewTopLeftButton(contemplateButton);
+        givePickButton.setNewTopRightButton(meltIceButton);
+        givePickButton.setNewBottomLeftButton(penguin3Button);
+        givePickButton.setNewBottomRightButton(cutLockButton);
         grabKeyButton.setNothingMiddle();
         grabKeyButton.setNewTopLeftButton(examineLake2Button);
         grabKeyButton.setNewTopRightButton(reachButton);
@@ -669,6 +712,7 @@ var penguinPuzzleState = {
         }
         if (cutLockCheck !== true) {
             if (cutLockButton.beenClicked() === true) {
+                givePickButton.setNewBottomRightButton(touchButton);
                 turnOnButton.setNewBottomRightButton(useDialButton);
                 cutLockCheck = true;
             }
@@ -680,6 +724,30 @@ var penguinPuzzleState = {
             }
         }
     },
+
+    attackScene: function() {
+        //a special scene pulling up a screen-wide button that clicks through a "cutscene"
+        penguinAttackButton.events.onInputUp.remove(this.attackScene, this);
+        penguinAttackButton = penguinPuzzleScene.addButton(0, 0, 1000, 1000, 0);
+        penguinAttackButton.events.onInputUp.add(this.fallScene, this);
+    },
+
+    fallScene: function() {
+        //the second part of the cutscene that continues the choice branch
+        penguinAttackButton.kill();
+        penguinPuzzleScene.loadScene('sunkPenguinbg', 0.32);
+        penguinPuzzleScene.addTextBar("");
+
+        //set the next choices available
+        buttonManager.setBottomLeftButton(turnDownPermButton);
+        buttonManager.setBottomRightButton(crossWarmButton);
+
+        //add the buttons to the window
+        this.makeButton(crossWarmButton);
+        this.makeButton(turnDownPermButton);
+    },
+
+    /**The function that switches to the next state*/
 
     changeState: function() {
         //change states to the next state

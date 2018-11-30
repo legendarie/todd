@@ -105,6 +105,13 @@ var gearPuzzleState = {
         }
     },
 
+    /**All of the functions that have to do with the text in the text box:
+     * changeText runs through the first five lines of text
+     * beginScript displays the first line of a button's script when it's clicked, and calls runScript
+     * runScript runs through the entire script of a button, makes checks for changes or certain criteria,
+     * and displays the next buttons to appear
+     * setScripts sets the scripts and labels for each button*/
+
     changeText: function () {
         //only increment the click count four times
         if (clickCount < 4) {
@@ -124,14 +131,6 @@ var gearPuzzleState = {
                 this.makeButton(gear1Button);
                 this.makeButton(window1Button);
             }
-        }
-    },
-
-    makeButton: function (button) {
-        //position the button in the window and begin reading through the script lines
-        if (button != null) {
-            button.position();
-            button.getButton().events.onInputUp.add(this.beginScript, this);
         }
     },
 
@@ -187,48 +186,6 @@ var gearPuzzleState = {
             //always remove the listener
             textBar.events.onInputUp.remove(this.runScript, this);
         }
-    },
-
-    addButtons() {
-        //check for any new buttons and assign them to the appropriate button slots in the manager
-        if (buttonManager.getLeftButton() != null) {
-            this.makeButton(buttonManager.getLeftButton())
-        }
-        if (buttonManager.getRightButton() != null) {
-            this.makeButton(buttonManager.getRightButton())
-        }
-        if (buttonManager.getMiddleButton() != null) {
-            this.makeButton(buttonManager.getMiddleButton())
-        }
-    },
-
-    createButtons: function () {
-        //initialize all buttons so they can be recognized by other functions
-        barButton = new InGameButton(MIDDLEXG, REGYG);
-        followWireButton = new InGameButton(MIDDLEXG, REGYG);
-        testWireButton = new InGameButton(MIDDLEXG, REGYG);
-        tripWireButton = new InGameButton(MIDDLEXG, REGYG);
-        cutWireButton = new InGameButton(MIDDLEXG, REGYG);
-        cutWireWellButton = new InGameButton(MIDDLEXG, REGYG);
-        gear1Button = new InGameButton(LEFTXG, REGYG);
-        gear2Button = new InGameButton(LEFTXG, REGYG);
-        removeRockButton = new InGameButton(LEFTXG, REGYG);
-        checkGearsButton = new InGameButton(LEFTXG, REGYG);
-        checkGears2Button = new InGameButton(LEFTXG, REGYG);
-        jamCheckButton = new InGameButton(LEFTXG, REGYG);
-        window1Button = new InGameButton(RIGHTXG, REGYG);
-        window2Button = new InGameButton(RIGHTXG, REGYG);
-        window3Button = new InGameButton(RIGHTXG, REGYG);
-        window4Button = new InGameButton(RIGHTXG, REGYG);
-        boardButton = new InGameButton(RIGHTXG, REGYG);
-        switchSearchButton = new InGameButton(RIGHTXG, REGYG);
-        pullLever1Button = new InGameButton(RIGHTXG, REGYG);
-        pullLever2Button = new InGameButton(RIGHTXG, REGYG);
-        checkWindowButton = new InGameButton(RIGHTXG, REGYG);
-        grabToolButton = new InGameButton(RIGHTXG, REGYG);
-        cutDangerButton = new InGameButton(DUOLEFTXG, REGYG);
-        cutSafeButton = new InGameButton(DUORIGHTXG, REGYG);
-        followWire2Button = new InGameButton(DUORIGHTXG, REGYG);
     },
 
     setScripts: function() {
@@ -357,6 +314,36 @@ var gearPuzzleState = {
         followWire2Button.setLabel("Follow the wire");
     },
 
+    /**All of the functions that have to do with the choicebuttons:
+     * makeButton takes a button and sets it as clickable, as prepares to run the script
+     * addButtons adds the choice buttons stored in the buttonManager to the window
+     * removeButtons kills any buttons on the screen
+     * createButtons initializes the button variables with their x/y values for later use
+     * setNewButtons sets up what buttons each choice button changes when clicked
+     * setButtonChanges is a check that's run before the buttons are displayed,
+     * which tracks certain choices and changes the game's reaction based on the player's actions*/
+
+    makeButton: function (button) {
+        //position the button in the window and begin reading through the script lines
+        if (button != null) {
+            button.position();
+            button.getButton().events.onInputUp.add(this.beginScript, this);
+        }
+    },
+
+    addButtons() {
+        //check for any new buttons and assign them to the appropriate button slots in the manager
+        if (buttonManager.getLeftButton() != null) {
+            this.makeButton(buttonManager.getLeftButton())
+        }
+        if (buttonManager.getRightButton() != null) {
+            this.makeButton(buttonManager.getRightButton())
+        }
+        if (buttonManager.getMiddleButton() != null) {
+            this.makeButton(buttonManager.getMiddleButton())
+        }
+    },
+
     removeButtons: function () {
         //remove the button choices on the screen
         if (buttonManager.getLeftButton() != null) {
@@ -368,6 +355,35 @@ var gearPuzzleState = {
         if (buttonManager.getRightButton() != null) {
             buttonManager.getRightButton().kill();
         }
+    },
+
+    createButtons: function () {
+        //initialize all buttons so they can be recognized by other functions
+        barButton = new InGameButton(MIDDLEXG, REGYG);
+        followWireButton = new InGameButton(MIDDLEXG, REGYG);
+        testWireButton = new InGameButton(MIDDLEXG, REGYG);
+        tripWireButton = new InGameButton(MIDDLEXG, REGYG);
+        cutWireButton = new InGameButton(MIDDLEXG, REGYG);
+        cutWireWellButton = new InGameButton(MIDDLEXG, REGYG);
+        gear1Button = new InGameButton(LEFTXG, REGYG);
+        gear2Button = new InGameButton(LEFTXG, REGYG);
+        removeRockButton = new InGameButton(LEFTXG, REGYG);
+        checkGearsButton = new InGameButton(LEFTXG, REGYG);
+        checkGears2Button = new InGameButton(LEFTXG, REGYG);
+        jamCheckButton = new InGameButton(LEFTXG, REGYG);
+        window1Button = new InGameButton(RIGHTXG, REGYG);
+        window2Button = new InGameButton(RIGHTXG, REGYG);
+        window3Button = new InGameButton(RIGHTXG, REGYG);
+        window4Button = new InGameButton(RIGHTXG, REGYG);
+        boardButton = new InGameButton(RIGHTXG, REGYG);
+        switchSearchButton = new InGameButton(RIGHTXG, REGYG);
+        pullLever1Button = new InGameButton(RIGHTXG, REGYG);
+        pullLever2Button = new InGameButton(RIGHTXG, REGYG);
+        checkWindowButton = new InGameButton(RIGHTXG, REGYG);
+        grabToolButton = new InGameButton(RIGHTXG, REGYG);
+        cutDangerButton = new InGameButton(DUOLEFTXG, REGYG);
+        cutSafeButton = new InGameButton(DUORIGHTXG, REGYG);
+        followWire2Button = new InGameButton(DUORIGHTXG, REGYG);
     },
 
     setNewButtons: function () {
@@ -432,6 +448,8 @@ var gearPuzzleState = {
             }
         }
     },
+
+    /**The function that switches to the next state*/
 
     changeState: function() {
         //change states to the next state

@@ -46,10 +46,10 @@ class Button {
     }
 
     revive() {
+        this.add();
         if (this.buttonLabel !== null) {
             this.addText(this.buttonLabel)
         }
-        this.add();
     }
 
     /**Getter functions*/
