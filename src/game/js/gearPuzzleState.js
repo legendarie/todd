@@ -405,19 +405,19 @@ var gearPuzzleState = {
 
     setButtonChanges: function() {
         //use a few checks to assign new choices depending on what the player clicks first
-        if (window2Check === false) {
+        if (window2Check !== true) {
             if (window2Button.beenClicked() === true) {
                 removeRockButton.setNewRightButton(pullLever2Button);
                 window2Check = true;
             }
         }
-        if (gear2Check === false) {
+        if (gear2Check !== true) {
             if (gear2Button.beenClicked() === true) {
                 checkGearsButton.setNewRightButton(switchSearchButton);
                 gear2Check = true;
             }
         }
-        if (followWireCheck === false) {
+        if (followWireCheck !== true) {
             if ((followWireButton.beenClicked() === true) || (followWire2Button.beenClicked() === true)) {
                 cutWireButton.setNewLeftButton(cutDangerButton);
                 cutWireButton.setNewRightButton(cutSafeButton);
@@ -425,7 +425,7 @@ var gearPuzzleState = {
                 followWireCheck = true;
             }
         }
-        if (testWireCheck === false) {
+        if (testWireCheck !== true) {
             if (testWireButton.beenClicked() === true) {
                 grabToolButton.setNewMiddleButton(cutWireWellButton);
                 testWireCheck = true;

@@ -6,6 +6,8 @@ var examineRoomCheck = false;
 var grabKeyCheck = false;
 var followCordCheck = false;
 var readNoteCheck = false;
+var cutLockCheck = false;
+var turnOnCheck = false;
 
 //variables for checks in gearPuzzleState
 var window2Check = false;
@@ -92,6 +94,16 @@ class ButtonManager {
     }
 
     /**Getters and setters*/
+
+    removeButtons() {
+        this.removeLeftButton();
+        this.removeRightButton();
+        this.removeMiddleButton();
+        this.removeTopLeftButton();
+        this.removeTopRightButton();
+        this.removeBottomLeftButton();
+        this.removeBottomRightButton();
+    }
 
     setLeftButton(button) {
         this.leftButton = button;

@@ -12,6 +12,7 @@ const RIGHTXP = 650;
 const LOWYP = 550;
 const HIGHYP = 425;
 const MIDDLEYP = 500;
+const VERYHIGHYP = 400;
 
 //variables for all buttons
 var doorButton;
@@ -31,6 +32,8 @@ var reachButton;
 var extendButton;
 var grabPipeButton;
 var grabPipe2Button;
+var meltIceButton;
+var turnOnButton;
 var penguinButton;
 var penguin2Button;
 var penguin3Button;
@@ -49,7 +52,19 @@ var openDrawerButton;
 var cutLockButton;
 var touchButton;
 var touch2Button;
+var useDialButton;
+var turnUpButton;
+var turnUp2Button;
+var turnUp3Button;
+var crossWarmButton;
+var turnDownButton;
+var turnDown2Button;
+var turnDownPermButton;
+var crossColdButton;
+var crossCold2Button;
 var grabKeyButton;
+var penguinAttackButton;
+var penguinFallButton;
 
 //the scene variable
 var penguinPuzzleScene = null;
@@ -63,6 +78,7 @@ var penguinPuzzleState = {
         //declare penguinPuzzleScene to be an instance of a Scene, and load in the background image to the state
         penguinPuzzleScene = new Scene;
         penguinPuzzleScene.setBackground('penguinPuzzlebg', 'assets/penguinPuzzlebg.png');
+        penguinPuzzleScene.setBackground('sunkPenguinbg', 'assets/sunkPenguinbg.png');
 
         //reset the global clickCount variable
         clickCount = 0;
@@ -73,7 +89,15 @@ var penguinPuzzleState = {
         if (penguinPuzzleScene != null) {
 
             //load the background and scale it
-            penguinPuzzleScene.loadScene('penguinPuzzlebg', 0.32);
+            if (turnUp2Button != null) {
+                if (turnUp2Button.beenClicked() === true) {
+                    penguinPuzzleScene.loadScene('sunkPenguinbg', 0.32);
+                } else {
+                    penguinPuzzleScene.loadScene('penguinPuzzlebg', 0.32)
+                }
+            } else {
+                penguinPuzzleScene.loadScene('penguinPuzzlebg', 0.32)
+            }
 
             //add a set of ellipses to the text box to indicate
             //further messages
@@ -87,16 +111,16 @@ var penguinPuzzleState = {
                 penguinPuzzleScene.removeEllipses();
             }
 
-            //create all of the buttons and their button links
-            this.createButtons();
-            this.setScripts();
-            this.setNewButtons();
-
             // //initialize the button choice manager and button list for the puzzle
             // //remove this when penguinPuzzleScene is hooked up to the rest of the game
             // buttonManager = new ButtonManager();
 
             if (this.hasDied !== true) {
+                //create all of the buttons and their button links
+                this.createButtons();
+                this.setScripts();
+                this.setNewButtons();
+
                 buttonManager.setTopLeftButton(doorButton);
                 buttonManager.setTopRightButton(heapButton);
                 buttonManager.setBottomLeftButton(penguinButton);
@@ -160,14 +184,7 @@ var penguinPuzzleState = {
         if (clickedButton.scriptLength() > 1) {
             penguinPuzzleScene.addEllipses();
         }
-        if (clickedButton.isIrregular() === true) {
-            this.setButtonChanges();
-            buttonManager.getNewButtons();
-            clickedButton.removeButtons();
-            this.addButtons();
-        } else {
-            textBar.events.onInputUp.add(this.runScript, this);
-        }
+        textBar.events.onInputUp.add(this.runScript, this);
     },
 
     runScript() {
@@ -180,22 +197,31 @@ var penguinPuzzleState = {
             endsBranch = clickedButton.isEndButton();
             if (endsBranch === false) {
                 //if it isn't, assign any new buttons and add them to the window
-                //check to make sure the button needs the normal end-of-script question
-                penguinPuzzleScene.changeText("What do you want to do?");
-                this.setButtonChanges();
-                buttonManager.getNewButtons();
-                clickedButton.removeButtons();
-                this.addButtons();
+                //check to see if the clickedButton is turnUp2Button
+                if (clickedButton === turnUp2Button) {
+                    buttonManager.removeButtons();
+                    penguinAttackButton = penguinPuzzleScene.addButton(0, 0, 1000, 1000, 0);
+                    penguinAttackButton.events.onInputUp.add(this.fallScene, this);
+                } else {
+                    //if not, check to make sure the button needs the normal end-of-script question
+                    if (clickedButton.isIrregular() !== true) {
+                        penguinPuzzleScene.changeText("What do you want to do?");
+                    }
+                    this.setButtonChanges();
+                    buttonManager.getNewButtons();
+                    clickedButton.removeButtons();
+                    this.addButtons();
+                }
             } else {
-                //if it is, check if it's a death
+                //if it is a branch end, check if it's a death
                 deadEnd = clickedButton.isDeath();
                 if (deadEnd === true) {
-                    //if it is, enter the "You Died" screen
+                    //if it is a death, enter the "You Died" screen
                     this.hasDied = true;
                     game.state.start('yaDeadState', yaDeadState);
                 }
                 else {
-                    openDoor = penguinPuzzleScene.addButton(460, 210, 250, 252, 0);
+                    openDoor = penguinPuzzleScene.addButton(540, 210, 175, 252, 0);
                     openDoor.events.onInputUp.add(this.changeState, this);
                 }
             }
@@ -223,6 +249,22 @@ var penguinPuzzleState = {
         }
     },
 
+    attackScene: function() {
+        penguinAttackButton.events.onInputUp.remove(this.attackScene, this);
+        penguinAttackButton = penguinPuzzleScene.addButton(0, 0, 1000, 1000, 0);
+        penguinAttackButton.events.onInputUp.add(this.fallScene, this);
+    },
+
+    fallScene: function() {
+        penguinAttackButton.kill();
+        penguinPuzzleScene.loadScene('sunkPenguinbg', 0.32);
+        penguinPuzzleScene.addTextBar("");
+        buttonManager.setBottomLeftButton(turnDownPermButton);
+        buttonManager.setBottomRightButton(crossWarmButton);
+        this.makeButton(crossWarmButton);
+        this.makeButton(turnDownPermButton);
+    },
+
     createButtons: function () {
         //initialize all buttons so they can be recognized by other functions
         doorButton = new InGameButton(LEFTXP, HIGHYP);
@@ -242,6 +284,8 @@ var penguinPuzzleState = {
         extendButton = new InGameButton(RIGHTXP, HIGHYP);
         grabPipeButton = new InGameButton(RIGHTXP, HIGHYP);
         grabPipe2Button = new InGameButton(RIGHTXP, HIGHYP);
+        meltIceButton = new InGameButton(RIGHTXP, HIGHYP);
+        turnOnButton = new InGameButton(RIGHTXP, HIGHYP);
         penguinButton = new InGameButton(LEFTXP, LOWYP);
         penguin2Button = new InGameButton(LEFTXP, LOWYP);
         penguin3Button = new InGameButton(LEFTXP, LOWYP);
@@ -260,6 +304,16 @@ var penguinPuzzleState = {
         cutLockButton = new InGameButton(RIGHTXP, LOWYP);
         touchButton = new InGameButton(RIGHTXP, LOWYP);
         touch2Button = new InGameButton(RIGHTXP, LOWYP);
+        useDialButton = new InGameButton(RIGHTXP, LOWYP);
+        turnUpButton = new InGameButton(RIGHTXP, LOWYP);
+        turnUp2Button = new InGameButton(RIGHTXP, LOWYP);
+        turnUp3Button = new InGameButton(RIGHTXP, LOWYP);
+        crossWarmButton = new InGameButton(RIGHTXP, LOWYP);
+        turnDownButton = new InGameButton(LEFTXP, LOWYP);
+        turnDown2Button = new InGameButton(LEFTXP, LOWYP);
+        turnDownPermButton = new InGameButton(LEFTXP, LOWYP);
+        crossColdButton = new InGameButton(LEFTXP, LOWYP);
+        crossCold2Button = new InGameButton(MIDDLEXP, MIDDLEYP);
         grabKeyButton = new InGameButton(MIDDLEXP, MIDDLEYP);
     },
 
@@ -330,7 +384,8 @@ var penguinPuzzleState = {
             "Suddenly, the heap of snow shifts towards you.",
             "You hear an irritated snort.",
             "Two glowing coals roll around to the front of the snow pile and stare at you.",
-            "Its scarf snakes across the ice and wraps around your pick."]);
+            "Its scarf snakes across the ice and wraps firmly around your pick.",
+            "Uh..."]);
         grabPipeButton.setLabel("Grab the pipe");
         grabPipe2Button.setScript(["You hook the pickaxe head around the tobacco pipe, and pull gently.",
             "It falls into the snow.",
@@ -347,6 +402,13 @@ var penguinPuzzleState = {
             "It lands near your feet.",
             "The snow pile goes still."]);
         grabPipe2Button.setLabel("Grab the pipe");
+        meltIceButton.setScript(["The tobacco pipe is unnaturally hot.",
+            "It takes a while, but the heat helps to defrost the panel.",
+            "The switches are now functional."]);
+        meltIceButton.setLabel("Melt ice on panel");
+        turnOnButton.setScript(["You press a conspicuous red button.",
+            "The panel begins to hum softly."]);
+        turnOnButton.setLabel("Turn panel on");
         penguinButton.setScript(["You cautiously observe the penguin from a distance.",
             "It seems like it's fast asleep.",
             "You can hear it snoring softly."]);
@@ -367,7 +429,7 @@ var penguinPuzzleState = {
             "Thankfully, the ice is solid, and you make it to the other side.",
             "You're dreadfully close to the penguin now."]);
         crossSafeButton.setLabel("Cross by the side");
-        wallButton.setScript(["The walls on either side seem to those of a natural cave.",
+        wallButton.setScript(["The walls on either side seem to be those of a natural cave.",
             "They're encased in ice, but you can see the stone underneath.",
             "You nearly trip over something in the snow on the ground."]);
         wallButton.setLabel(["Search the walls"]);
@@ -426,6 +488,43 @@ var penguinPuzzleState = {
         touch2Button.setScript(["You turn the dial furiously back and forth.",
             "Nothing happens, but it's kind of satisfying."]);
         touch2Button.setLabel("Touch the thermostat");
+        useDialButton.setScript(["The thermostat has been turned on."]);
+        useDialButton.setLabel("Use thermostat");
+        turnUpButton.setScript(["You turn up the heat.",
+            "The water is getting a little warmer.",
+            "The penguin starts making a buzzing noise."]);
+        turnUpButton.setLabel("Heat up");
+        turnUp2Button.setScript(["You crank the heat up as far as it can go.",
+            "After a few seconds, you hear a spine-chilling shrieking from across the cave.",
+            ""]);
+        turnUp2Button.setLabel(["Heat up"]);
+        turnUp3Button.setScript(["You heat the room back up.",
+            "It returns to a normal temperature."]);
+        turnUp3Button.setLabel("Heat up");
+        crossWarmButton.setScript(["You don't even make it three steps before the ice gives out beneath you.",
+            "You plunge into the murk below.",
+            "You hear a burbling voice behind you:",
+            '"No hard feelings, kiddo."']);
+        crossWarmButton.setLabel("Exit room");
+        turnDownButton.setScript(["You turn the dial until it hits zero.",
+            "The room is feeling pretty frigid."]);
+        turnDownButton.setLabel("Cool down");
+        turnDown2Button.setScript(["You cool the room back down.",
+            "It returns to a normal temperature.",
+            "The penguin stops buzzing."]);
+        turnDown2Button.setLabel("Cool down");
+        turnDownPermButton.setScript(["You turn the dial all the way back down."]);
+        turnDownPermButton.setLabel("Cool down");
+        crossColdButton.setScript(["You slowly, quietly cross the frozen lake.",
+            "The ice is solid beneath your feet.",
+            "You turn the knob of the door.",
+            "It's already unlocked."]);
+        crossColdButton.setLabel("Exit room");
+        crossCold2Button.setScript(["You carefully make your way around the hole in the ice.",
+            "You reach the door and turn the knob.",
+            "It looks like it's been unlocked this whole time.",
+            "Welp."]);
+        crossCold2Button.setLabel("Exit room");
         grabKeyButton.setScript(["As you lean in towards the penguin, you hear a weird clicking sound.",
             "You catch a whiff of something oily.",
             "...You think you see a second pair of eyes hidden in its feathers.",
@@ -467,6 +566,10 @@ var penguinPuzzleState = {
         reachButton.setNewBottomRightButton(examineRoomButton);
         reachButton.setNewBottomLeftButton(penguin2Button);
         extendButton.setNewTopRightButton(grabPipeButton);
+        grabPipeButton.setToIrregular();
+        grabPipe2Button.setNewTopRightButton(meltIceButton);
+        meltIceButton.setNewTopRightButton(turnOnButton);
+        turnOnButton.setNewBottomRightButton(cutLockButton);
         penguin2Button.setNewBottomLeftButton(crossButton);
         crossButton.setNewTopLeftButton(crossDangerButton);
         crossButton.setNewBottomLeftButton(crossSafeButton);
@@ -489,6 +592,26 @@ var penguinPuzzleState = {
         openDrawerButton.setNewBottomRightButton(cutLockButton);
         cutLockButton.setNewBottomRightButton(touchButton);
         touchButton.setNewBottomRightButton(touch2Button);
+        useDialButton.setNothingTopLeft();
+        useDialButton.setNothingTopRight();
+        useDialButton.setNewBottomLeftButton(turnDownButton);
+        useDialButton.setNewBottomRightButton(turnUpButton);
+        turnUpButton.setNewBottomLeftButton(turnDown2Button);
+        turnUpButton.setNewBottomRightButton(turnUp2Button);
+        turnUp2Button.setNothingBottomLeft();
+        turnUp2Button.setNothingBottomRight();
+        turnUp3Button.setNewBottomRightButton(turnUpButton);
+        turnUp3Button.setNewBottomLeftButton(turnDownButton);
+        crossWarmButton.setToDeath();
+        turnDownButton.setNewBottomLeftButton(crossColdButton);
+        turnDownButton.setNewBottomRightButton(turnUp3Button);
+        turnDown2Button.setNewBottomLeftButton(turnDownButton);
+        turnDown2Button.setNewBottomRightButton(turnUpButton);
+        turnDownPermButton.setNewMiddleButton(crossCold2Button);
+        turnDownPermButton.setNothingBottomLeft();
+        turnDownPermButton.setNothingBottomRight();
+        crossColdButton.setToEnd();
+        crossCold2Button.setToEnd();
         grabKeyButton.setNothingMiddle();
         grabKeyButton.setNewTopLeftButton(examineLake2Button);
         grabKeyButton.setNewTopRightButton(reachButton);
@@ -497,48 +620,63 @@ var penguinPuzzleState = {
     },
 
     setButtonChanges: function() {
-        //use a few checks to assign new choices depending on what the player clicks first
-        if (heapCheck === false) {
+        //use checks to assign new choices depending on what the player clicks first
+        if (heapCheck !== true) {
             if (heapButton.beenClicked() === true) {
                 pickaxeButton.setNewTopRightButton(reachButton);
                 heapCheck = true;
             }
         }
-        if (examineLakeCheck === false) {
+        if (examineLakeCheck !== true) {
             if (examineLakeButton.beenClicked() === true) {
                 grabKeyButton.setNewTopLeftButton(checkWaterButton);
                 examineLakeCheck = true;
             }
         }
-        if (penguin2Check === false) {
+        if (penguin2Check !== true) {
             if (penguin2Button.beenClicked() === true) {
                 reachButton.removeBottomLeftButton();
                 penguin2Check = true;
             }
         }
-        if (examineRoomCheck === false) {
+        if (examineRoomCheck !== true) {
             if (examineRoomButton.beenClicked() === true) {
                 reachButton.removeBottomRightButton();
                 grabKeyButton.setNewBottomRightButton(tryKeyButton);
                 examineRoomCheck = true;
             }
         }
-        if (grabKeyCheck === false) {
+        if (grabKeyCheck !== true) {
             if (grabKeyButton.beenClicked() === true) {
                 examineRoomButton.setNewBottomRightButton(tryKeyButton);
                 grabKeyCheck = true;
             }
         }
-        if (followCordCheck === false) {
+        if (followCordCheck !== true) {
             if (followCordButton.beenClicked() === true) {
                 tryKeyButton.setNewBottomRightButton(lookLockButton);
                 followCordCheck = true;
             }
         }
-        if (readNoteCheck === false) {
+        if (readNoteCheck !== true) {
             if (readNoteButton.beenClicked() === true) {
                 extendButton.setNewTopRightButton(grabPipe2Button);
+                if (extendButton.beenClicked() === true) {
+                    readNoteButton.setNewTopRightButton(grabPipe2Button);
+                }
                 readNoteCheck = true;
+            }
+        }
+        if (cutLockCheck !== true) {
+            if (cutLockButton.beenClicked() === true) {
+                turnOnButton.setNewBottomRightButton(useDialButton);
+                cutLockCheck = true;
+            }
+        }
+        if (turnOnCheck !== true) {
+            if (turnOnButton.beenClicked() === true) {
+                cutLockButton.setNewBottomRightButton(useDialButton);
+                turnOnCheck = true;
             }
         }
     },

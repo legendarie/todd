@@ -111,7 +111,7 @@ var doorState = {
 
     changeState: function() {
         //change states to the open door
-        nextState = 'openDoorState';
-        game.state.start('openDoorState');
+        nextState = 'penguinPuzzleState';
+        game.state.start('penguinPuzzleState');
     }
 };
