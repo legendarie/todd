@@ -77,11 +77,13 @@ var caveStartState = {
 
     changeStatePuzzle: function() {
         //change states to the gear puzzle
-        game.state.start('oldPuzzleState', oldPuzzleState);
+        nextState = 'gearPuzzleState';
+        game.state.start('gearPuzzleState', gearPuzzleState);
     },
 
     changeStateHall: function() {
         //change states to the algae hallway
+        nextState = 'algaeHallState';
         game.state.start('openDoorState', openDoorState);
     }
 };

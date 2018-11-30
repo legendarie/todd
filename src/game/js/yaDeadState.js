@@ -32,7 +32,9 @@ var yaDeadState = {
     /** Change the game state back to roadForkState (alreadyBeen will have been set to true) */
 
     changeState: function() {
-        game.state.start('roadForkState');
+        if (nextState != null) {
+            game.state.start(nextState);
+        }
     }
 
 };

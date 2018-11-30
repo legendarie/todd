@@ -44,6 +44,7 @@ var roadForkWGState = {
 
     changeState: function() {
         //change states to the first conversation with Wise Guy
+        nextState = 'roadForkState';
         game.state.start('roadForkState', roadForkState);
     }
 };

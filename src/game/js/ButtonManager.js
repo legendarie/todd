@@ -1,10 +1,26 @@
+//variables for checks in penguinPuzzleState
+var heapCheck = false;
+var examineLakeCheck = false;
+var penguin2Check = false;
+var examineRoomCheck = false;
+var grabKeyCheck = false;
+var followCordCheck = false;
+var readNoteCheck = false;
+
+//variables for checks in gearPuzzleState
+var window2Check = false;
+var gear2Check = false;
+var followWireCheck = false;
+var testWireCheck = false;
+
+
 //This class tracks the buttons that are supposed to appear after each choice
 class ButtonManager {
 
-    constructor(leftButton, middleButton, rightButton) {
-        this.leftButton = leftButton;
-        this.rightButton = rightButton;
-        this.middleButton = middleButton;
+    constructor() {
+        this.leftButton = null;
+        this.rightButton = null;
+        this.middleButton = null;
 
         this.topLeftButton = null;
         this.topRightButton = null;
@@ -73,11 +89,6 @@ class ButtonManager {
                 this.bottomRightButton = newBottomRight;
             }
         }
-    }
-
-    //convenient way to call the next line for a script
-    runScript() {
-        clickedButton.next();
     }
 
     /**Getters and setters*/

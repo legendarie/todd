@@ -159,6 +159,7 @@ var roadForkState = {
     /** If the player selects the cliffRoad button, the game state changes to the outsideCaveState */
 
     goToPath: function() {
+        nextState = 'outsideCaveState';
         game.state.start('outsideCaveState');
     }
 };

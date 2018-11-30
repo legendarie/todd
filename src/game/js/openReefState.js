@@ -92,11 +92,13 @@ var openReefState = {
 
     changeStateSign: function() {
         //change states to signState
+        nextState = 'signState';
         game.state.start('signState', signState);
     },
 
     changeStateFork: function() {
         //change states to roadForkState
+        nextState = 'roadForkWGState';
         game.state.start('roadForkWGState', roadForkWGState);
     }
 };

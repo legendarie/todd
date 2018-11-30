@@ -64,8 +64,12 @@ var gearPuzzleState = {
             //load the background and scale it
             gearPuzzleScene.loadScene('gearPuzzlebg', 0.32);
 
-            //add the text bar (with all universal settings), with the first line of text
-            gearPuzzleScene.addTextBar("The left tunnel leads into a wide cavern.");
+            if (this.hasDied !== true) {
+                //add the text bar (with all universal settings), with the first line of text
+                gearPuzzleScene.addTextBar("The left tunnel leads into a wide cavern.");
+            } else {
+                gearPuzzleScene.addTextBar("What do you want to do?");
+            }
 
             //add a set of ellipses to the text box to indicate
             //further messages
@@ -76,11 +80,28 @@ var gearPuzzleState = {
             this.setScripts();
             this.setNewButtons();
 
-            //initialize the button choice manager and button list for the puzzle
-            buttonManager = new ButtonManager(gear1Button, barButton, window1Button);
+            // //initialize the button choice manager and button list for the puzzle
+            // //remove this when gearPuzzleScene is hooked up to the rest of the game
+            // buttonManager = new ButtonManager(gear1Button, barButton, window1Button);
 
-            //when the text bar is clicked, go to the changeText function
-            textBar.events.onInputUp.add(this.changeText, this);
+            if (this.hasDied !== true) {
+                buttonManager.setLeftButton(gear1Button);
+                buttonManager.setMiddleButton(barButton);
+                buttonManager.setRightButton(window1Button);
+
+                //when the text bar is clicked, go to the changeText function
+                textBar.events.onInputUp.add(this.changeText, this);
+            } else {
+                if (buttonManager.getLeftButton() != null) {
+                    this.makeButton(buttonManager.getLeftButton());
+                }
+                if (buttonManager.getMiddleButton() != null) {
+                    this.makeButton(buttonManager.getMiddleButton());
+                }
+                if (buttonManager.getRightButton() != null) {
+                    this.makeButton(buttonManager.getRightButton());
+                }
+            }
         }
     },
 
@@ -108,8 +129,10 @@ var gearPuzzleState = {
 
     makeButton: function (button) {
         //position the button in the window and begin reading through the script lines
-        button.position();
-        button.getButton().events.onInputUp.add(this.beginScript, this);
+        if (button != null) {
+            button.position();
+            button.getButton().events.onInputUp.add(this.beginScript, this);
+        }
     },
 
     beginScript() {
@@ -153,6 +176,7 @@ var gearPuzzleState = {
                 deadEnd = clickedButton.isDeath();
                 if (deadEnd === true) {
                     //if it is, enter the "You Died" screen
+                    this.hasDied = true;
                     game.state.start('yaDeadState', yaDeadState);
                 }
                 else {
@@ -381,24 +405,37 @@ var gearPuzzleState = {
 
     setButtonChanges: function() {
         //use a few checks to assign new choices depending on what the player clicks first
-        if (window2Button.beenClicked() === true) {
-            removeRockButton.setNewRightButton(pullLever2Button);
+        if (window2Check === false) {
+            if (window2Button.beenClicked() === true) {
+                removeRockButton.setNewRightButton(pullLever2Button);
+                window2Check = true;
+            }
         }
-        if (gear2Button.beenClicked() === true) {
-            checkGearsButton.setNewRightButton(switchSearchButton);
+        if (gear2Check === false) {
+            if (gear2Button.beenClicked() === true) {
+                checkGearsButton.setNewRightButton(switchSearchButton);
+                gear2Check = true;
+            }
         }
-        if ((followWireButton.beenClicked() === true) || (followWire2Button.beenClicked() === true)) {
-            cutWireButton.setNewLeftButton(cutDangerButton);
-            cutWireButton.setNewRightButton(cutSafeButton);
-            cutWireButton.setNothingMiddle();
+        if (followWireCheck === false) {
+            if ((followWireButton.beenClicked() === true) || (followWire2Button.beenClicked() === true)) {
+                cutWireButton.setNewLeftButton(cutDangerButton);
+                cutWireButton.setNewRightButton(cutSafeButton);
+                cutWireButton.setNothingMiddle();
+                followWireCheck = true;
+            }
         }
-        if (testWireButton.beenClicked() === true) {
-            grabToolButton.setNewMiddleButton(cutWireWellButton);
+        if (testWireCheck === false) {
+            if (testWireButton.beenClicked() === true) {
+                grabToolButton.setNewMiddleButton(cutWireWellButton);
+                testWireCheck = true;
+            }
         }
     },
 
     changeState: function() {
         //change states to the next state
+        nextState = 'workshopState';
         game.state.start('doorState', doorState)
     }
 

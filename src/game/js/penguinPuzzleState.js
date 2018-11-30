@@ -62,7 +62,7 @@ var penguinPuzzleState = {
     preload: function () {
         //declare penguinPuzzleScene to be an instance of a Scene, and load in the background image to the state
         penguinPuzzleScene = new Scene;
-        penguinPuzzleScene.setBackground('gearPuzzlebg', 'assets/gearPuzzlebg.png');
+        penguinPuzzleScene.setBackground('penguinPuzzlebg', 'assets/penguinPuzzlebg.png');
 
         //reset the global clickCount variable
         clickCount = 0;
@@ -73,29 +73,51 @@ var penguinPuzzleState = {
         if (penguinPuzzleScene != null) {
 
             //load the background and scale it
-            penguinPuzzleScene.loadScene('gearPuzzlebg', 0.32);
-
-            //add the text bar (with all universal settings), with the first line of text
-            penguinPuzzleScene.addTextBar("You pad into a quiet cave.");
+            penguinPuzzleScene.loadScene('penguinPuzzlebg', 0.32);
 
             //add a set of ellipses to the text box to indicate
             //further messages
             penguinPuzzleScene.addEllipses();
+
+            if (this.hasDied !== true) {
+                //add the text bar (with all universal settings), with the first line of text
+                penguinPuzzleScene.addTextBar("You pad into a quiet cave.");
+            } else {
+                penguinPuzzleScene.addTextBar("What do you want to do?");
+                penguinPuzzleScene.removeEllipses();
+            }
 
             //create all of the buttons and their button links
             this.createButtons();
             this.setScripts();
             this.setNewButtons();
 
-            //initialize the button choice manager and button list for the puzzle
-            buttonManager = new ButtonManager();
-            buttonManager.setTopLeftButton(doorButton);
-            buttonManager.setTopRightButton(heapButton);
-            buttonManager.setBottomLeftButton(penguinButton);
-            buttonManager.setBottomRightButton(wallButton);
+            // //initialize the button choice manager and button list for the puzzle
+            // //remove this when penguinPuzzleScene is hooked up to the rest of the game
+            // buttonManager = new ButtonManager();
 
-            //when the text bar is clicked, go to the changeText function
-            textBar.events.onInputUp.add(this.changeText, this);
+            if (this.hasDied !== true) {
+                buttonManager.setTopLeftButton(doorButton);
+                buttonManager.setTopRightButton(heapButton);
+                buttonManager.setBottomLeftButton(penguinButton);
+                buttonManager.setBottomRightButton(wallButton);
+
+                //when the text bar is clicked, go to the changeText function
+                textBar.events.onInputUp.add(this.changeText, this);
+            } else {
+                if (buttonManager.getTopLeftButton() != null) {
+                    this.makeButton(buttonManager.getTopLeftButton());
+                }
+                if (buttonManager.getTopRightButton() !=null) {
+                    this.makeButton(buttonManager.getTopRightButton());
+                }
+                if (buttonManager.getBottomLeftButton() != null) {
+                    this.makeButton(buttonManager.getBottomLeftButton());
+                }
+                if (buttonManager.getBottomRightButton() != null) {
+                    this.makeButton(buttonManager.getBottomRightButton());
+                }
+            }
         }
     },
 
@@ -124,8 +146,8 @@ var penguinPuzzleState = {
 
     makeButton: function (button) {
         //position the button in the window and begin reading through the script lines
-        button.position();
-        button.getButton().events.onInputUp.add(this.beginScript, this);
+            button.position();
+            button.getButton().events.onInputUp.add(this.beginScript, this);
     },
 
     beginScript() {
@@ -169,6 +191,7 @@ var penguinPuzzleState = {
                 deadEnd = clickedButton.isDeath();
                 if (deadEnd === true) {
                     //if it is, enter the "You Died" screen
+                    this.hasDied = true;
                     game.state.start('yaDeadState', yaDeadState);
                 }
                 else {
@@ -329,7 +352,7 @@ var penguinPuzzleState = {
             "You can hear it snoring softly."]);
         penguinButton.setLabel("Check the penguin");
         penguin2Button.setScript(["You observe the penguin.",
-            "It looks peaceful.",
+            "It looks...strange.",
             "Upon closer examination, you see something hanging above its head.",
             "It looks like a key on a ring.",
             "Damn."]);
@@ -475,29 +498,48 @@ var penguinPuzzleState = {
 
     setButtonChanges: function() {
         //use a few checks to assign new choices depending on what the player clicks first
-        if (heapButton.beenClicked() === true) {
-            pickaxeButton.setNewTopRightButton(reachButton);
+        if (heapCheck === false) {
+            if (heapButton.beenClicked() === true) {
+                pickaxeButton.setNewTopRightButton(reachButton);
+                heapCheck = true;
+            }
         }
-        if (examineLakeButton.beenClicked() === true) {
-            grabKeyButton.setNewTopLeftButton(checkWaterButton);
+        if (examineLakeCheck === false) {
+            if (examineLakeButton.beenClicked() === true) {
+                grabKeyButton.setNewTopLeftButton(checkWaterButton);
+                examineLakeCheck = true;
+            }
         }
-        if (penguin2Button.beenClicked() === true) {
-            reachButton.removeBottomLeftButton();
+        if (penguin2Check === false) {
+            if (penguin2Button.beenClicked() === true) {
+                reachButton.removeBottomLeftButton();
+                penguin2Check = true;
+            }
         }
-        if (examineRoomButton.beenClicked() === true) {
-            reachButton.removeBottomRightButton();
+        if (examineRoomCheck === false) {
+            if (examineRoomButton.beenClicked() === true) {
+                reachButton.removeBottomRightButton();
+                grabKeyButton.setNewBottomRightButton(tryKeyButton);
+                examineRoomCheck = true;
+            }
         }
-        if (examineRoomButton.beenClicked() === true) {
-            grabKeyButton.setNewBottomRightButton(tryKeyButton);
+        if (grabKeyCheck === false) {
+            if (grabKeyButton.beenClicked() === true) {
+                examineRoomButton.setNewBottomRightButton(tryKeyButton);
+                grabKeyCheck = true;
+            }
         }
-        if (grabKeyButton.beenClicked() === true) {
-            examineRoomButton.setNewBottomRightButton(tryKeyButton);
+        if (followCordCheck === false) {
+            if (followCordButton.beenClicked() === true) {
+                tryKeyButton.setNewBottomRightButton(lookLockButton);
+                followCordCheck = true;
+            }
         }
-        if (followCordButton.beenClicked() === true) {
-            tryKeyButton.setNewBottomRightButton(lookLockButton);
-        }
-        if (readNoteButton.beenClicked() === true) {
-            extendButton.setNewTopRightButton(grabPipe2Button);
+        if (readNoteCheck === false) {
+            if (readNoteButton.beenClicked() === true) {
+                extendButton.setNewTopRightButton(grabPipe2Button);
+                readNoteCheck = true;
+            }
         }
     },
 

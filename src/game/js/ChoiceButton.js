@@ -53,6 +53,10 @@ class ChoiceButton extends Button {
         this.alreadyClicked = true;
     }
 
+    unClick() {
+        this.alreadyClicked = false;
+    }
+
     //a check for whether this button has been clicked
     beenClicked() {
         return this.alreadyClicked;

@@ -6,6 +6,8 @@ var brownDial;
 var redDial;
 var whiteDial;
 var door;
+var nextState;
+var buttonManager;
 let doorScene = null;
 
 //initialize the state
@@ -17,6 +19,9 @@ var doorState = {
         //declare doorScene to be an instance of a Scene, and load in the background image to the state
         doorScene = new Scene;
         doorScene.setBackground('theDoor', 'assets/theDoorbg.png');
+
+        //set up the global buttonManager (for puzzles)
+        buttonManager = new ButtonManager();
 
         //reset the global clickCount variable
         clickCount = 0;
@@ -106,6 +111,7 @@ var doorState = {
 
     changeState: function() {
         //change states to the open door
-        game.state.start('openDoorState', openDoorState);
+        nextState = 'openDoorState';
+        game.state.start('openDoorState');
     }
 };

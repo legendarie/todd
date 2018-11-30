@@ -65,6 +65,7 @@ var openDoorState = {
 
     changeState: function () {
         //change states to the open reef
+        nextState = 'openReefState';
       game.state.start('openReefState', openReefState);
     }
 };
