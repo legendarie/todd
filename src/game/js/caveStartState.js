@@ -8,6 +8,8 @@ let caveScene = null;
 //initialize the state
 var caveStartState = {
 
+    /** The initial functions to set up the scene for player interaction */
+
     preload: function() {
         //declare caveScene to be an instance of a Scene, and load in the background image to the state
         caveScene = new Scene;
@@ -16,6 +18,8 @@ var caveStartState = {
         //reset the global clickCount variable
         clickCount = 0;
     },
+
+    /** Add the initial visual elements to the canvas, and initiate the text sequence for this state */
 
     create: function() {
         //check to make sure the caveScene variable is not null
@@ -37,8 +41,10 @@ var caveStartState = {
         }
     },
 
+    /** Advances the text sequence when the user interacts with the text bar */
+
     changeText: function() {
-        //only increment the click count four times
+        //only increment the click count four times, as it is unnecessary for it to increment more
         if (clickCount < 4) {
             clickCount++;
             if (clickCount === 1) {
@@ -50,7 +56,8 @@ var caveStartState = {
                 caveScene.changeText("To the right, you can just barely make out a soft," +
                 " green glow.");
             } else {
-                //change the text in the text bar, then create the tunnel buttons
+                //when clickCount equals 4, remove the ellipses to indicate to the player that there is no more
+                //text at this point, then call the caveButtons function
                 caveScene.changeText("Which tunnel do you choose to follow?");
                 caveScene.removeEllipses();
                 this.caveButtons();
@@ -58,9 +65,8 @@ var caveStartState = {
         }
     },
 
-    /**All of the functions that create interactive buttons,
-     * which for this state are the two cave buttons that switch
-     * to two separate states*/
+    /** All of the functions that create interactive buttons, which for this state are the two cave buttons
+     * that switch to two separate states depending on which button is clicked */
 
     caveButtons: function() {
         //make the left tunnel clickable. If clicked, it will call the changeStatePuzzle function
@@ -72,8 +78,7 @@ var caveStartState = {
         rightCave.events.onInputUp.add(this.changeStateHall, this);
     },
 
-    /**The functions that switch to the next state, of which
-     * there are two; one for each of the tunnels*/
+    /** Changes the game state either to the gearPuzzleState or the algaeHallState */
 
     changeStatePuzzle: function() {
         //change states to the gear puzzle

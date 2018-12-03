@@ -1,11 +1,11 @@
+//initiate the global variables
 var textBar;
 var openDoor;
 let openDoorScene = null;
 
-//initialize the state
 var openDoorState = {
 
-    /**The initial functions to set up the scene for player interaction*/
+    /** The initial functions to set up the scene for player interaction */
 
     preload: function() {
         //declare openDoorScene to be an instance of a Scene, and load in the background image to the state
@@ -16,7 +16,10 @@ var openDoorState = {
         clickCount = 0;
     },
 
+    /** Add the initial visual elements to the canvas, and add the first piece of text to the scene */
+
     create: function() {
+
         //check to make sure the doorScene variable is not null
         if (openDoorScene != null) {
 
@@ -35,8 +38,8 @@ var openDoorState = {
         }
     },
 
-    /**All of the functions that change the text in the text box:
-     * changeText runs through the first two lines of text*/
+    /** All of the functions that change the text in the text box:
+     * changeText runs through the first two lines of text */
 
     changeText: function() {
         //make sure that the text and button additions occur only once
@@ -52,8 +55,8 @@ var openDoorState = {
         }
     },
 
-    /**All of the functions that create interactive buttons:
-     * doorButton switches states to the first reef scene*/
+    /** All of the functions that create interactive buttons:
+     * doorButton switches states to the first reef scene */
 
     doorButton: function() {
         //make the open door clickable. If the region is clicked, call the changeState function
@@ -61,7 +64,7 @@ var openDoorState = {
         openDoor.events.onInputUp.add(this.changeState, this);
     },
 
-    /**The function that switches to the next state*/
+    /** Change the game state to openReefState */
 
     changeState: function () {
         //change states to the open reef

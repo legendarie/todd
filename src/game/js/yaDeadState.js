@@ -1,3 +1,4 @@
+//initialize the global variable
 let yaDeadScene = null;
 
 var yaDeadState = {
@@ -18,18 +19,22 @@ var yaDeadState = {
 
     create: function() {
 
-        //add the background image
-        var yaDeadbg = yaDeadScene.loadScene('youDied', 2.3);
+        //make sure that yaDeadScene is not still null
+        if (yaDeadScene !== null) {
 
-        //create the hand cursor over the background so the player knows it's interactable
-        yaDeadbg.input.useHandCursor = true;
+            //add the background image
+            var yaDeadbg = yaDeadScene.loadScene('youDied', 2.3);
 
-        //when the background is clicked, the player returns to the roadForkState
-        yaDeadbg.events.onInputUp.add(this.changeState, this);
+            //create the hand cursor over the background so the player knows it's interactable
+            yaDeadbg.input.useHandCursor = true;
 
+            //when the background is clicked, the player returns to the roadForkState
+            yaDeadbg.events.onInputUp.add(this.changeState, this);
+
+        }
     },
 
-    /** Change the game state back to roadForkState (alreadyBeen will have been set to true) */
+    /** Checks to see what value nextState has, then changes the state to whe state indicated */
 
     changeState: function() {
         if (nextState != null) {

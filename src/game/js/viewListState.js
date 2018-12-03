@@ -1,3 +1,4 @@
+//initialize the global variable
 let viewListScene = null;
 
 var viewListState = {
@@ -6,28 +7,29 @@ var viewListState = {
 
     preload: function() {
 
-        //create a new instance of Scene
+        //set viewListScene as a new instance of Scene
         viewListScene = new Scene;
 
         //load the background image into the state
         viewListScene.setBackground('fridgeDoor', 'assets/fridgeDoorbg.png');
-
     },
 
-    /** Add the visual elements to the scene; in this state, there is only a background. When the background is
-     * clicked, call the next function */
+    /** Add the initial visual elements to the canvas */
 
     create: function() {
 
-        //add background to the state and scale it
-        var listBg = viewListScene.loadScene('fridgeDoor', 0.53);
+        //check that viewListScene is not still null
+        if (viewListScene !== null) {
 
-        //add hand cursor to background to indicate to the player that it is interactable
-        listBg.input.useHandCursor = true;
+            //add background to the state and scale it
+            var listBg = viewListScene.loadScene('fridgeDoor', 0.53);
 
-        //on click, the player returns to the kitchenState
-        listBg.events.onInputUp.add(this.backToKitchen, this);
+            //add hand cursor to background to indicate to the player that it is interactable
+            listBg.input.useHandCursor = true;
 
+            //on click, the player returns to the kitchenState
+            listBg.events.onInputUp.add(this.backToKitchen, this);
+        }
     },
 
     /** Game state changes back to the kitchenState */

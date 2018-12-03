@@ -1,3 +1,4 @@
+//initialize the global variables
 var clickCount;
 var textBar;
 var caveButton;
@@ -21,21 +22,24 @@ var wormState = {
 
     },
 
-    /** Adds the visuals to the state. caveButton is created over the mouth of the cave. When the player clicks
-     * this button, the state calls the enterCave function */
+    /** Add the initial visual elements to the canvas, and add the first piece of text */
 
     create: function() {
 
-        //load the first background into the scene
-        wormScene.loadScene('worm', 0.75);
+        //make sure that wormScene is not still null
+        if (wormScene !== null) {
 
-        //add text for this part of the scene
-        wormScene.addTextBar('You enter a funny-looking cave.');
+            //load the first background into the scene
+            wormScene.loadScene('worm', 0.75);
 
-        //make button over cave entrance that changes functions when clicked
-        caveButton = wormScene.addButton(670, 300, 270, 250, 0);
-        caveButton.events.onInputUp.add(this.enterCave, this);
+            //add text for this part of the scene
+            wormScene.addTextBar('You enter a funny-looking cave.');
 
+            //make button over cave entrance that changes functions when clicked
+            caveButton = wormScene.addButton(670, 300, 270, 250, 0);
+            caveButton.events.onInputUp.add(this.enterCave, this);
+
+        }
     },
 
     /** The player enters the dark cave, and text is added */

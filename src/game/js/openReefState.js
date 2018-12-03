@@ -3,13 +3,12 @@ var clickCount;
 var textBar;
 var sign;
 var path;
-var alreadyBeenOR = false;    //a boolean variable to track whether the player has visited this screen before
+var alreadyBeenOR = false;    //a boolean variable to track whether the player has visited this state before
 let openReefScene = null;
 
-//initialize the state
 var openReefState = {
 
-    /**The initial functions to set up the scene for player interaction*/
+    /** The initial functions to set up the scene for player interaction */
 
     preload: function() {
         //declare openReefScene to be an instance of a Scene, and load in the background image to the state
@@ -20,7 +19,10 @@ var openReefState = {
         clickCount = 0;
     },
 
+    /** Add the initial visual elements to the canvas, and add the first piece of text to the scene */
+
     create: function() {
+
         //check to make sure the openReefScene variable is not null
         if (openReefScene != null) {
 
@@ -47,19 +49,20 @@ var openReefState = {
         }
     },
 
-    /**All of the functions that change the text in the text box:
-     * changeText runs through the first three lines of text*/
+    /** All of the functions that change the text in the text box:
+     * changeText runs through the first three lines of text */
 
     changeText: function() {
         //if the player hasn't been to this screen before,
         if (alreadyBeenOR === false) {
-            //only increment the click count twice
+            //only increment the click count twice. Unnecessary to increment it more
             if (clickCount < 2) {
                 clickCount++;
                 if (clickCount === 1) {
                     openReefScene.changeText("The water feels strangely cold.")
                 } else {
-                    //change the text in the text bar, then create the sign and path buttons
+                    //change the text in the text bar, remove the ellipses to indicate to the player that
+                    // there is no more text at this time, then create the sign and path buttons
                     openReefScene.changeText("You take a good look at your surroundings.");
                     openReefScene.removeEllipses();
                     alreadyBeenOR = true;
@@ -70,9 +73,9 @@ var openReefState = {
         }
     },
 
-    /**All of the functions that create interactive buttons:
+    /** All of the functions that create interactive buttons:
      * signButton switches states to the sign
-     * pathButton switches states to the forked path*/
+     * pathButton switches states to the forked path */
 
     signButton: function() {
         //make the sign clickable. If clicked, it will call the changeStateSign function
@@ -86,9 +89,8 @@ var openReefState = {
         path.events.onInputUp.add(this.changeStateFork, this);
     },
 
-    /**The functions that switch to the next state, of which
-     * there are two; one for the sign, and one for the road,
-     * which progresses the story*/
+    /** The functions that switch to the next state, of which there are two:
+     * one for the sign, and one for the road, which progresses the story */
 
     changeStateSign: function() {
         //change states to signState

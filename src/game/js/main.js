@@ -1,5 +1,7 @@
+//initialize the game and the canvas
 var game = new Phaser.Game(1200, 690, Phaser.AUTO, 'game');
 
+//load in all of the states that will be entered in the game
 game.state.add('doorState', doorState);
 game.state.add('openDoorState', openDoorState);
 
@@ -9,7 +11,6 @@ game.state.add('signState', signState);
 game.state.add('roadForkWGState', roadForkWGState);
 game.state.add('roadForkState', roadForkState);
 game.state.add('wormState', wormState);
-//game.state.add('outsideCaveState', outsideCaveState); //doesn't exist yet
 
 game.state.add('yaDeadState', yaDeadState);
 

@@ -41,6 +41,9 @@ var pantryPuzzleState = {
         //add the hidden items that the player has to find to the scene, if they have not already been found.
         //If they have already been found, then they are not added to the scene again. The foundItems array
         //keeps track of which items have been found even if the player returns to the kitchen
+
+        /** Maybe make an array of obj, xPos, yPos, width, height, opacity then make a new function
+         * that iterates through the array to generate the objects */
         if (!foundItems.includes(orangeSoda)) {
             orangeSoda = pantryPuzzle.addHiddenButton(640, 60, 40, 100, 0);
         } else {
