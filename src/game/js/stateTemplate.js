@@ -57,7 +57,7 @@ var stateTemplate = {
     /**All of the functions that create interactive buttons:*/
 
     nextSceneButton: function() {
-        //make something clickable. If the thing is clicked, call the changeState function
+        //make something clickable. If the exit is clicked, call the changeState function
         thing = genericScene.addButton(450, 210, 250, 420, 0);
         thing.events.onInputUp.add(this.changeState, this);
     },
@@ -66,6 +66,7 @@ var stateTemplate = {
 
     changeState: function() {
         //change states to the next state
+        nextState = 'nextState';
         game.state.start('nextState', 'the variable for nextState');
     }
 };

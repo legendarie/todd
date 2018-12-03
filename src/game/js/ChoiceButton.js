@@ -1,5 +1,5 @@
 //This class is an extension of button with some helpful stuff for holding the script.
-//Probably the only useful thing I made in all of this.
+//Probably the only useful exit I made in all of this.
 
 //a button for the button manager to check for so it can set its own slots to null
 var nothingButton = new Button(0, 0, 0, 0);

@@ -39,7 +39,7 @@ class Scene {
     }
 
     //add the sprite to the game. Take the coordinates, image, and scale as parameters.
-    //This type of sprite is also interactable, and when the player hovers their mouse over it, the hand
+    //This type of sprite is also interactive, and when the player hovers their mouse over it, the hand
     //cursor appears
     addSprite(x, y, sprite, scale) {
         //add the sprite and make it interactive
@@ -52,7 +52,7 @@ class Scene {
     }
 
     //add the sprite to the game. Take the coordinates image, and scale as parameters.
-    //This type of sprite is not interactable
+    //This type of sprite is not interactive
     addStaticSprite(x, y, sprite, scale) {
         sprite = game.add.sprite(x, y, sprite);
         sprite.scale.setTo(scale);

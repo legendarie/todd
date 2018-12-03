@@ -285,7 +285,8 @@ var penguinPuzzleState = {
             "...",
             ".....",
             ".......",
-            "You feel a little bit better."]);
+            "You feel a little bit better.",
+            "That snow pile was still pretty freaky though. "]);
         contemplateButton.setLabel("Contemplate life");
         heapButton.setScript(["A pile of snow and clothes is heaped on the cave floor.",
             "You can see a scarf and a still-smoking tobacco pipe.",
@@ -699,15 +700,6 @@ var penguinPuzzleState = {
             if (followCordButton.beenClicked() === true) {
                 tryKeyButton.setNewBottomRightButton(lookLockButton);
                 followCordCheck = true;
-            }
-        }
-        if (readNoteCheck !== true) {
-            if (readNoteButton.beenClicked() === true) {
-                extendButton.setNewTopRightButton(grabPipe2Button);
-                if (extendButton.beenClicked() === true) {
-                    readNoteButton.setNewTopRightButton(grabPipe2Button);
-                }
-                readNoteCheck = true;
             }
         }
         if (cutLockCheck !== true) {

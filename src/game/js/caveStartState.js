@@ -84,6 +84,6 @@ var caveStartState = {
     changeStateHall: function() {
         //change states to the algae hallway
         nextState = 'algaeHallState';
-        game.state.start('openDoorState', openDoorState);
+        game.state.start('algaeHallState');
     }
 };

@@ -32849,7 +32849,7 @@ Phaser.PluginManager.prototype = {
     },
 
     /**
-    * PostUpdate is the last thing to be called before the world render.
+    * PostUpdate is the last exit to be called before the world render.
     * In particular, it is called after the world postUpdate, which means the camera has been adjusted.
     * It only calls plugins who have active=true.
     *
@@ -54205,7 +54205,7 @@ Phaser.BitmapData.prototype = {
 
     /**
     * Replaces all pixels matching one color with another. The color values are given as two sets of RGBA values.
-    * An optional region parameter controls if the replacement happens in just a specific area of the BitmapData or the entire thing.
+    * An optional region parameter controls if the replacement happens in just a specific area of the BitmapData or the entire exit.
     *
     * @method Phaser.BitmapData#replaceRGB
     * @param {number} r1 - The red color value to be replaced. Between 0 and 255.
@@ -83737,7 +83737,7 @@ Phaser.Sound.prototype = {
         if (marker === '' && Object.keys(this.markers).length > 0)
         {
             //  If they didn't specify a marker but this is an audio sprite,
-            //  we should never play the entire thing
+            //  we should never play the entire exit
             return this;
         }
 
@@ -107051,7 +107051,7 @@ Phaser.TilemapLayer.prototype.render = function ()
         shiftX === 0 && shiftY === 0 &&
         mc.renderWidth === renderWidth && mc.renderHeight === renderHeight)
     {
-        //  No reason to redraw map, looking at same thing and not invalidated.
+        //  No reason to redraw map, looking at same exit and not invalidated.
         return;
     }
 
