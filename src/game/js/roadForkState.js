@@ -6,7 +6,7 @@ var slingshot;
 var back;
 var wormHole;
 var cliffRoad;
-var alreadyBeen = false;     //boolean to keep track of whether the player has been in this state before
+var visited = false;     //boolean to keep track of whether the player has been in this state before
 let convo1Scene = null;
 
 //initialize the state
@@ -20,8 +20,7 @@ var roadForkState = {
         convo1Scene.setBackground('roadForkbg', 'assets/roadForkbg.png');
 
         //load in the image of Wise Guy (santa placeholder for now)
-        convo1Scene.setSprite('wiseGuy', 'assets/santa.png');
-        //game.load.image('wiseGuy', 'assets/santa.png');
+        convo1Scene.setSprite('wiseGuy', 'assets/wiseGuy.png');
 
         convo1Scene.setSprite('slingshot', 'assets/slingshot.png');
 
@@ -42,13 +41,13 @@ var roadForkState = {
             convo1Scene.loadScene('roadForkbg', 0.55);
 
             //if the player has not been here before,
-            if (alreadyBeen === false) {
+            if (visited === false) {
 
                 //indicate that the player has now been to this scene
-                alreadyBeen = true;
+                visited = true;
 
                 //add Wise Guy (santa placeholder)
-                wiseGuy = convo1Scene.addStaticSprite(350, 200, 'wiseGuy', 1);
+                wiseGuy = convo1Scene.addStaticSprite(350, 220, 'wiseGuy', 0.3, 0, 0);
 
                 //add the text bar (with all universal settings), with the first line of text
                 convo1Scene.addTextBar("\"Sup.\"");
@@ -60,7 +59,7 @@ var roadForkState = {
                 //when the text bar is clicked, go to the changeText function
                 textBar.events.onInputUp.add(this.changeText, this);
 
-            } else if (alreadyBeen === true) {
+            } else if (visited === true) {
                 //if the player has been here before, then they skip the conversation with Wise Guy,
                 //and move straight to the path choice.
                 this.pathChoice();
@@ -159,7 +158,7 @@ var roadForkState = {
     /** If the player selects the cliffRoad button, the game state changes to the outsideCaveState */
 
     goToPath: function() {
-        nextState = 'outsideCaveState';
-        game.state.start('outsideCaveState');
+        var nextState = 'caveEntranceState';
+        game.state.start(nextState);
     }
 };

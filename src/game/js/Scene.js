@@ -52,10 +52,12 @@ class Scene {
     }
 
     //add the sprite to the game. Take the coordinates image, and scale as parameters.
-    //This type of sprite is not interactive
-    addStaticSprite(x, y, sprite, scale) {
+
+    //This type of sprite is not interactable
+    addStaticSprite(x, y, sprite, scale, anchorX, anchorY) {
         sprite = game.add.sprite(x, y, sprite);
         sprite.scale.setTo(scale);
+        sprite.anchor.add(anchorX, anchorY);
 
         return sprite;
     }
@@ -122,7 +124,7 @@ class Scene {
         button = hiddenButton.getButton();
         button.input.useHandCursor = false;
 
-        return button
+        return button;
     }
 
     /**All functions having to do with ellipses. addCircle creates each individual

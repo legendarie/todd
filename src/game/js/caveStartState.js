@@ -42,13 +42,13 @@ var caveStartState = {
         if (clickCount < 4) {
             clickCount++;
             if (clickCount === 1) {
-                caveScene.changeText("Before you snake two dark tunnels.")
+                caveScene.changeText("Before you snake two dark tunnels.");
             } else if (clickCount === 2) {
                 caveScene.changeText("To the left, you hear the rhythmic click" +
-                " of metal on metal.")
+                " of metal on metal.");
             } else if (clickCount === 3) {
                 caveScene.changeText("To the right, you can just barely make out a soft," +
-                " green glow.")
+                " green glow.");
             } else {
                 //change the text in the text bar, then create the tunnel buttons
                 caveScene.changeText("Which tunnel do you choose to follow?");
@@ -78,7 +78,7 @@ var caveStartState = {
     changeStatePuzzle: function() {
         //change states to the gear puzzle
         nextState = 'gearPuzzleState';
-        game.state.start('gearPuzzleState', gearPuzzleState);
+        game.state.start('gearPuzzleState');
     },
 
     changeStateHall: function() {

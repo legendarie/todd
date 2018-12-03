@@ -13,6 +13,7 @@ game.state.add('wormState', wormState);
 
 game.state.add('yaDeadState', yaDeadState);
 
+game.state.add('caveEntranceState', caveEntranceState);
 game.state.add('caveStartState', caveStartState);
 
 game.state.add('gearPuzzleState', gearPuzzleState);
