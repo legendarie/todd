@@ -81,6 +81,7 @@ var penguinPuzzleState = {
         //declare penguinPuzzleScene to be an instance of a Scene, and load in the background image to the state
         penguinPuzzleScene = new Scene;
         penguinPuzzleScene.setBackground('penguinPuzzlebg', 'assets/penguinPuzzlebg.png');
+        penguinPuzzleScene.setBackground('attackPenguinbg', 'assets/attackPenguin.png');
         penguinPuzzleScene.setBackground('sunkPenguinbg', 'assets/sunkPenguinbg.png');
 
         //reset the global clickCount variable
@@ -207,6 +208,10 @@ var penguinPuzzleState = {
                 //check to see if the clickedButton is turnUp2Button
                 if (clickedButton === turnUp2Button) {
                     buttonManager.removeButtons();
+
+                    penguinPuzzleScene.loadScene('attackPenguinbg', 0.32);
+                    penguinPuzzleScene.addTextBar("");
+
                     penguinAttackButton = penguinPuzzleScene.addButton(0, 0, 1000, 1000, 0);
                     penguinAttackButton.events.onInputUp.add(this.fallScene, this);
                 } else {
@@ -717,18 +722,11 @@ var penguinPuzzleState = {
         }
     },
 
-    attackScene: function() {
-        //a special scene pulling up a screen-wide button that clicks through a "cutscene"
-        penguinAttackButton.events.onInputUp.remove(this.attackScene, this);
-        penguinAttackButton = penguinPuzzleScene.addButton(0, 0, 1000, 1000, 0);
-        penguinAttackButton.events.onInputUp.add(this.fallScene, this);
-    },
-
     fallScene: function() {
         //the second part of the cutscene that continues the choice branch
         penguinAttackButton.kill();
         penguinPuzzleScene.loadScene('sunkPenguinbg', 0.32);
-        penguinPuzzleScene.addTextBar("");
+        penguinPuzzleScene.addTextBar("...");
 
         //set the next choices available
         buttonManager.setBottomLeftButton(turnDownPermButton);
