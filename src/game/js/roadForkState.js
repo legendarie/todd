@@ -6,7 +6,7 @@ var slingshot;
 var back;
 var wormHole;
 var cliffRoad;
-var visited = false;     //boolean to keep track of whether the player has been in this state before
+var alreadyBeenRF = false;     //boolean to keep track of whether the player has been in this state before
 let convo1Scene = null;
 
 //initialize the state
@@ -41,10 +41,10 @@ var roadForkState = {
             convo1Scene.loadScene('roadForkbg', 0.55);
 
             //if the player has not been here before,
-            if (visited === false) {
+            if (alreadyBeenRF === false) {
 
                 //indicate that the player has now been to this scene
-                visited = true;
+                alreadyBeenRF = true;
 
                 //add Wise Guy (santa placeholder)
                 wiseGuy = convo1Scene.addStaticSprite(350, 220, 'wiseGuy', 0.3, 0, 0);
@@ -59,7 +59,7 @@ var roadForkState = {
                 //when the text bar is clicked, go to the changeText function
                 textBar.events.onInputUp.add(this.changeText, this);
 
-            } else if (visited === true) {
+            } else if (alreadyBeenRF === true) {
                 //if the player has been here before, then they skip the conversation with Wise Guy,
                 //and move straight to the path choice.
                 this.pathChoice();

@@ -132,6 +132,7 @@ var wormState = {
     /** Change the game state to the death scene */
 
     changeState: function() {
+        nextState = 'roadForkState';
         game.state.start('yaDeadState');
     }
 

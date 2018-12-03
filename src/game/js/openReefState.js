@@ -3,7 +3,7 @@ var clickCount;
 var textBar;
 var sign;
 var path;
-var alreadyBeen = false;    //a boolean variable to track whether the player has visited this screen before
+var alreadyBeenOR = false;    //a boolean variable to track whether the player has visited this screen before
 let openReefScene = null;
 
 //initialize the state
@@ -28,7 +28,7 @@ var openReefState = {
             openReefScene.loadScene('openReefbg', 0.6);
 
             //if the player hasn't been to this screen before,
-            if (alreadyBeen === false) {
+            if (alreadyBeenOR === false) {
                 //add the text bar (with all universal settings), with the first line of text
                 openReefScene.addTextBar("You take your first step into a whole new world.");
 
@@ -52,7 +52,7 @@ var openReefState = {
 
     changeText: function() {
         //if the player hasn't been to this screen before,
-        if (alreadyBeen === false) {
+        if (alreadyBeenOR === false) {
             //only increment the click count twice
             if (clickCount < 2) {
                 clickCount++;
@@ -62,7 +62,7 @@ var openReefState = {
                     //change the text in the text bar, then create the sign and path buttons
                     openReefScene.changeText("You take a good look at your surroundings.");
                     openReefScene.removeEllipses();
-                    alreadyBeen = true;
+                    alreadyBeenOR = true;
                     this.signButton();
                     this.pathButton();
                 }
