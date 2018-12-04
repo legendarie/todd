@@ -23,7 +23,7 @@ var algaeHallState = {
         if (algaeHallScene != null) {
 
             //load the background and scale it
-            algaeHallScene.loadScene('algaeHallbg', 0.9);
+            algaeHallScene.loadScene('algaeHallbg', 0.32);
 
             //add the text bar (with all universal settings), with the first line of text
             algaeHallScene.addTextBar("The right tunnel twists and turns.");

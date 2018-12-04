@@ -26,7 +26,7 @@ var caveStartState = {
         if (caveScene != null) {
 
             //load the background and scale it
-            caveScene.loadScene('cave', 0.5);
+            caveScene.loadScene('cave', 0.54);
 
             //add the text bar (with all universal settings), with the first line of text
             caveScene.addTextBar("The entrance of the cave is dim," +
@@ -70,11 +70,11 @@ var caveStartState = {
 
     caveButtons: function() {
         //make the left tunnel clickable. If clicked, it will call the changeStatePuzzle function
-        leftCave = caveScene.addButton(225, 250, 260, 300, 0);
+        leftCave = caveScene.addButton(250, 250, 270, 330, 0);
         leftCave.events.onInputUp.add(this.changeStatePuzzle, this);
 
         //make the right tunnel clickable. If clicked, it will call the changeStateHall function
-        rightCave = caveScene.addButton(625, 250, 260, 300, 0);
+        rightCave = caveScene.addButton(690, 250, 270, 335, 0);
         rightCave.events.onInputUp.add(this.changeStateHall, this);
     },
 
