@@ -45,9 +45,11 @@ var stateTemplate = {
             clickCount++;
             if (clickCount === 1) {
                 genericScene.changeText("Second Text.")
+            } else if (clickCount === 2) {
+                genericScene.changeText("Third Text.")
             } else {
                 //change the text in the text bar, then further the plot somehow
-                genericScene.changeText("Third Text.");
+                genericScene.changeText("Fourth Text.");
                 genericScene.removeEllipses();
                 this.nextSceneButton();
             }
@@ -67,6 +69,6 @@ var stateTemplate = {
     changeState: function() {
         //change states to the next state
         nextState = 'nextState';
-        game.state.start('nextState', 'the variable for nextState');
+        game.state.start('nextState');
     }
 };
