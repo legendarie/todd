@@ -3,7 +3,7 @@ var clickCount;
 var textBar;
 var house;
 var iceCavern;
-var fruit1;
+var fruit;
 var fruit2;
 var fruit3;
 let gardenScene = null;
@@ -18,6 +18,8 @@ var gardenState = {
         gardenScene = new Scene;
         gardenScene.setBackground('gardenbg', 'assets/gardenbg.png');
 
+        this.hasDied = false;
+
         //reset the global clickCount variable
         clickCount = 0;
     },
@@ -27,37 +29,52 @@ var gardenState = {
         if (gardenScene != null) {
 
             //load the background and scale it
-            gardenScene.loadScene('gardenbg', 0.9);
+            gardenScene.loadScene('gardenbg', 0.32);
 
-            //add the text bar (with all universal settings), with the first line of text
-            gardenScene.addTextBar("You enter a subaquatic garden.");
 
-            //add a set of ellipses to the text box to indicate
-            //further messages
-            gardenScene.addEllipses();
+            //if the player has died here, respawn them without the introductory text
+            if (this.hasDied === true) {
+                gardenScene.addTextBar("");
+                this.houseButton();
+                this.iceCavernButton();
+                this.fruitButton();
+            } else {
 
-            //when the text bar is clicked, go to the changeText function
-            textBar.events.onInputUp.add(this.changeText, this);
+                //add the text bar (with all universal settings), with the first line of text
+                gardenScene.addTextBar("You come across a crossroads.");
+
+                //add a set of ellipses to the text box to indicate
+                //further messages
+                gardenScene.addEllipses();
+
+                //when the text bar is clicked, go to the changeText function
+                textBar.events.onInputUp.add(this.changeText, this);
+            }
         }
     },
 
-    /**All of the functions that change the text in the text box:*/
+    /**All of the functions that change the text in the text box:
+     * changeText runs through the first six lines of text
+     * beginDeathText prepares the death script
+     * continueDeathText runs through the death sequence for touching the fruit*/
 
     changeText: function() {
         //only increment the click count 5 times
         if (clickCount < 5) {
             clickCount++;
             if (clickCount === 1) {
-                gardenScene.changeText("It's lush with greenery.")
+                gardenScene.changeText("The little grotto is overgrown with different types of plants.")
             } else if (clickCount === 2) {
-                gardenScene.changeText("Er...bluery?")
+                gardenScene.changeText("They are somewhat tactfully arranged.")
             } else if (clickCount === 3) {
-                gardenScene.changeText("This wasn't really what you were expecting to be here.")
+                gardenScene.changeText("This wasn't really what you were expecting to see here.")
             } else if (clickCount === 4) {
-                gardenScene.changeText("You see two passageways and a towering tree.")
+                gardenScene.changeText("You see a solid stone door, and an icy tunnel.")
             } else {
                 //change the text in the text bar, then create the passage/tree buttons
                 gardenScene.changeText("Where do you want to go?");
+                textBar.events.onInputUp.remove(this.changeText, this);
+                clickCount = 0;
                 gardenScene.removeEllipses();
                 this.houseButton();
                 this.iceCavernButton();
@@ -68,9 +85,7 @@ var gardenState = {
 
     beginDeathText: function() {
         //remove listeners on the fruit buttons and begin the death script
-        fruit1.events.onInputUp.remove(this.beginDeathText, this);
-        fruit2.events.onInputUp.remove(this.beginDeathText, this);
-        fruit3.events.onInputUp.remove(this.beginDeathText, this);
+        fruit.events.onInputUp.remove(this.beginDeathText, this);
 
         gardenScene.changeText("You reach up to pluck some interesting-looking fruit.");
         textBar.events.onInputUp.add(this.continueDeathText, this);
@@ -97,26 +112,21 @@ var gardenState = {
             } else if (clickCount === 7) {
                 gardenScene.changeText("YOU'RE turning into fruit!")
             } else if (clickCount === 8) {
-                gardenScene.changeText("You feel a bit woozy.")
-            } else if (clickCount === 9) {
                 gardenScene.changeText("...")
-            } else if (clickCount === 10) {
-                gardenScene.changeText("Maybe you should take a nap.")
-            } else if (clickCount === 11) {
-                gardenScene.changeText("That spot under the tree looks good.")
-            } else if (clickCount === 12) {
-                gardenScene.changeText("Turning into fruit is pretty hard work, you know.")
-            } else if (clickCount === 13) {
-                gardenScene.changeText("You curl up by the twisting roots and fall asleep.")
+            } else if (clickCount === 9) {
+                gardenScene.changeText("You give your hand a lick.")
             } else {
                 //change the text in the text bar, then create the passage/tree buttons
-                gardenScene.changeText("Your final dreams are of seafood and discount wigs.");
+                gardenScene.changeText("Your final comfort is the knowledge that you taste delicious.");
                 textBar.events.onInputUp.add(this.changeStateDeath, this);
             }
         }
     },
 
-    /**All of the functions that create interactive buttons:*/
+    /**All of the functions that create interactive buttons:
+     * houseButton creates the button over the door leading to kitchenState
+     * iceCavernButton creates the button over the tunnel leading to the gem game
+     * fruitButton creates the button over the fruit cluster that activates a death sequence*/
 
     houseButton: function() {
         //make the door clickable. If clicked, call the changeStateHouse function
@@ -132,31 +142,27 @@ var gardenState = {
 
     fruitButton: function() {
         //make the tree's fruits clickable. If clicked, run through a death scene.
-        fruit1 = gardenScene.addButton(200, 50, 50, 50, 0.2);
-        fruit2 = gardenScene.addButton(300, 50, 50, 50, 0.2);
-        fruit3 = gardenScene.addButton(400, 50, 50, 50, 0.2);
-
-        fruit1.events.onInputUp.add(this.changeStateDeath, this);
-        fruit2.events.onInputUp.add(this.changeStateDeath, this);
-        fruit3.events.onInputUp.add(this.changeStateDeath, this);
+        fruit = gardenScene.addButton(266, 185, 30, 40, 0.2);
+        fruit.events.onInputUp.add(this.beginDeathText, this);
     },
 
-    /**The function that switches to the next state, of which there are...*/
+    /**The functions that switch to the next state, of which there are three*/
 
     changeStateHouse: function() {
         //change states to the next state
-        nextState = 'nextState';
-        game.state.start('nextState');
+        nextState = 'kitchenState';
+        game.state.start('kitchenState');
     },
 
     changeStateCavern: function() {
         //change states to the gem game
-        nextState = 'penguinPuzzle';
-        game.state.start('penguinPuzzle');
+        nextState = 'penguinPuzzleState';
+        game.state.start('penguinPuzzleState');
     },
 
     changeStateDeath: function() {
         //activate the death scene
+        this.hasDied = true;
         game.state.start('yaDeadState');
     }
 };
