@@ -7,7 +7,7 @@ let algaeHallScene = null;
 //initialize the state
 var algaeHallState = {
 
-    /**The initial functions to set up the scene for player interaction*/
+    /** The initial functions to set up the scene for player interaction */
 
     preload: function() {
         //declare scene to be an instance of a Scene, and load in the background image to the state
@@ -23,22 +23,21 @@ var algaeHallState = {
         if (algaeHallScene != null) {
 
             //load the background and scale it
-            algaeHallScene.loadScene('algaeHallbg', 0.9);
+            algaeHallScene.loadScene('algaeHallbg', 0.32);
 
             //add the text bar (with all universal settings), with the first line of text
             algaeHallScene.addTextBar("The right tunnel twists and turns.");
 
-            //add a set of ellipses to the text box to indicate
-            //further messages
+            //add a set of ellipses to the text box to indicate further messages
             algaeHallScene.addEllipses();
 
-            //when the text bar is clicked, go to the changeText function
+            //when the text bar is clicked, call the changeText function
             textBar.events.onInputUp.add(this.changeText, this);
         }
     },
 
-    /**All of the functions that change the text in the text box:
-     * changeText runs through the first six lines of text*/
+    /** All of the functions that change the text in the text box:
+     * changeText runs through the first six lines of text */
 
     changeText: function() {
         //only increment the click count so many times
@@ -61,8 +60,8 @@ var algaeHallState = {
         }
     },
 
-    /**All of the functions that create interactive buttons:
-     * exitButton makes the screen interactive (switching to the next scene)*/
+    /** All of the functions that create interactive buttons:
+     * exitButton makes the screen interactive (switching to the next scene) */
 
     exitButton: function() {
         //make the screen clickable. If the screen is clicked, call the changeState function

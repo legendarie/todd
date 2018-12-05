@@ -3,7 +3,7 @@ var textBar;
 var clickCount;
 var kitchenButton;
 var finalDoorButton;
-var alreadyBeen = false;    //boolean variable to check to see if the player has already entered the state
+var alreadyBeenKN = false;    //boolean variable to check to see if the player has already entered the state
 let kitchenScene = null;
 
 var kitchenState = {
@@ -17,33 +17,31 @@ var kitchenState = {
 
         //load the background image into the state
         kitchenScene.setBackground('kitchen', 'assets/kitchenbg.jpg');
-
     },
 
-    /** This function adds the starting visual elements to the scene. In this scene, there is the background
-     * and a text bar, plus ellipses to indicate to the player that there is more text */
+    /** Add the initial visual elements to the canvas, and add the beginning text to the scene */
 
     create: function() {
 
-        //add background to the state and scale it
-        kitchenScene.loadScene('kitchen', 1.3);
+        //make sure that kitchenScene variable is not still null
+        if (kitchenScene !== null) {
+            //add background to the state and scale it
+            kitchenScene.loadScene('kitchen', 1.3);
 
-        if (alreadyBeen === false) {
-            //add explanatory text and ellipses
-            kitchenScene.addTextBar('You step into someone\'s kitchen. You wonder whose it is.');
-            kitchenScene.addEllipses();
-            //when the text bar is clicked, call the changeText function
-            textBar.events.onInputUp.add(this.changeText, this);
+            if (alreadyBeenKN === false) {
+                //add explanatory text and ellipses
+                kitchenScene.addTextBar('You step into someone\'s kitchen. You wonder whose it is.');
+                kitchenScene.addEllipses();
+                //when the text bar is clicked, call the changeText function
+                textBar.events.onInputUp.add(this.changeText, this);
 
-            //reset alreadyBeen to true, so the player does not have to read the explanatory text again
-            alreadyBeen = true;
-
-        } else {
-
-            //if the player has already entered the state, then skip the text and call the addButtons function
-            this.addButtons();
+                //set alreadyBeenKN to true, so the player does not have to read the explanatory text again
+                alreadyBeenKN = true;
+            } else {
+                //if the player has already entered the state, then skip the text and call the addButtons function
+                this.addButtons();
+            }
         }
-
     },
 
     /** Updates the text in the text bar to explain the scene to the player. Then, call the addButtons function */
@@ -59,8 +57,9 @@ var kitchenState = {
         this.addButtons();
     },
 
-    /** Adds the buttons on the fridge and the pantry door into the scene. If the fridge door is clicked,
-     * the viewList function is called. If the pantry is clicked, the enterPantry function is called. */
+    /** Adds the buttons on the fridge, the pantry door, and the cabinet. If the fridge door is clicked,
+     * the viewList function is called. If the pantry is clicked, the enterPantry function is called.
+     * If the cabinet is clicked, the secretRoomTextStart function is called. */
 
     addButtons: function() {
 
@@ -73,14 +72,17 @@ var kitchenState = {
         //add button on the cabinet that leads to the secret gift room
         secretRoomButton = kitchenScene.addButton(845, 390, 60, 110, 0);
 
-        //if allItemsFound (instantiated in the pantryPuzzleState) is set to true in the pantryPuzzleState
         if (allItemsFound === true) {
+            //if allItemsFound (initiated and set in the pantryPuzzleState) is set to true in the pantryPuzzleState...
 
-            //set clickCount to 0 to start tracking the number of times the player clicks on the text bar
+            //reset clickCount to 0
             clickCount = 0;
+
+            //add the first piece of text, and add ellipses to indicate to the player that there is more text
             kitchenScene.addTextBar('You hear a loud click as a door you didn\'t notice before'
                 + ' unlocks to your right.');
             kitchenScene.addEllipses();
+
             //when the text bar is clicked, call the beatPuzzleText function
             textBar.events.onInputUp.add(this.beatPuzzleText, this);
 
@@ -88,7 +90,7 @@ var kitchenState = {
             secretRoomButton.events.onInputUp.add(this.secretRoomTextStart, this);
 
         } else {
-            //if allItemsFound (instantiated in the pantryPuzzleState) is still set to
+            //if allItemsFound (initiated and set in the pantryPuzzleState) is still set to
             //false in the pantryPuzzleState...
 
             //when the fridgeButton is pressed, call the viewList function
@@ -103,21 +105,11 @@ var kitchenState = {
 
     },
 
-    /** Change the game state to viewListState */
-
-    viewList: function() {
-        game.state.start('viewListState');
-    },
-
-    /** Change the game state to pantryPuzzleState */
-
-    enterPantry: function() {
-        game.state.start('pantryPuzzleState');
-    },
-
     /** Adds more text to advance the plot. Only appears after the player has completed the Pantry Puzzle */
 
     beatPuzzleText: function() {
+
+        //only allow the clickCount to increment to 3. Unnecessary for it to increment more
         if (clickCount < 3) {
             clickCount++;
             if (clickCount === 1) {
@@ -158,30 +150,6 @@ var kitchenState = {
 
     },
 
-    /** The player has chosen to leave the kitchen and step through the door */
-
-    throughFinalDoor: function() {
-
-        //remove the kitchenButton and the finalDoorButton from the scene
-        kitchenButton.kill();
-        finalDoorButton.kill();
-
-        //add the last bit of text for this state
-        kitchenScene.changeText('You step out of the kitchen into the darkness...');
-
-        //create a button over the entire background and a listener for the player to click on the button.
-        //When the player clicks the button (background), call the leaveKitchen function
-        var exitKitchenButton = kitchenScene.addButton(0, 0, 1200, 690, 0);
-        exitKitchenButton.events.onInputUp.add(this.leaveKitchen, this);
-
-    },
-
-    /** Change the game state to the finalCorridorState */
-
-    leaveKitchen: function() {
-        game.state.start('finalCorridorState'); //doesn't exist yet
-    },
-
     /** Adds first block of text setting up the secret room */
 
     secretRoomTextStart: function() {
@@ -208,6 +176,24 @@ var kitchenState = {
 
     },
 
+    /** The player has chosen to leave the kitchen and step through the door */
+
+    throughFinalDoor: function() {
+
+        //remove the kitchenButton and the finalDoorButton from the scene
+        kitchenButton.kill();
+        finalDoorButton.kill();
+
+        //add the last bit of text for this state
+        kitchenScene.changeText('You step out of the kitchen into the darkness...');
+
+        //create a button over the entire background and a listener for the player to click on the button.
+        //When the player clicks the button (background), call the leaveKitchen function
+        var exitKitchenButton = kitchenScene.addButton(0, 0, 1200, 690, 0);
+        exitKitchenButton.events.onInputUp.add(this.leaveKitchen, this);
+
+    },
+
     /** Cycles through the remainder of the text setting up the secret room, then call the goToSecretRoom function */
 
     secretRoomText: function() {
@@ -228,6 +214,24 @@ var kitchenState = {
             }
         }
 
+    },
+
+    /** Change the game state to viewListState */
+
+    viewList: function() {
+        game.state.start('viewListState');
+    },
+
+    /** Change the game state to pantryPuzzleState */
+
+    enterPantry: function() {
+        game.state.start('pantryPuzzleState');
+    },
+
+    /** Change the game state to the finalCorridorState */
+
+    leaveKitchen: function() {
+        game.state.start('finalCorridorState'); //doesn't exist yet
     },
 
     /** Changes game state to the secretRoomState */

@@ -13,7 +13,7 @@ let doorScene = null;
 //initialize the state
 var doorState = {
 
-    /**The initial functions to set up the scene for player interaction*/
+    /** The initial functions to set up the scene for player interaction */
 
     preload: function() {
         //declare doorScene to be an instance of a Scene, and load in the background image to the state
@@ -26,6 +26,8 @@ var doorState = {
         //reset the global clickCount variable
         clickCount = 0;
     },
+
+    /** Add the initial visual elements to the canvas, and add the first piece of text to the scene */
 
     create: function() {
         //check to make sure the doorScene variable is not null
@@ -47,10 +49,10 @@ var doorState = {
 
     },
 
-    /**All of the functions that change the text in the text box:
+    /** All of the functions that change the text in the text box:
      * changeText runs through the first three lines of text
      * blueMessage displays when the blue panel is clicked
-     * otherMessage directs the player to try another dial color (red, white, brown panels)*/
+     * otherMessage directs the player to try another dial color (red, white, brown panels) */
 
     changeText: function() {
         //only increment the click count twice
@@ -78,9 +80,9 @@ var doorState = {
         doorScene.changeText("The dial seems to be stuck... Choose another color.");
     },
 
-    /**All of the functions that create interactive buttons:
+    /** All of the functions that create interactive buttons:
      * dialButtons creates the different dial color options
-     * doorButton switches states to the open door*/
+     * doorButton switches states to the open door */
 
     dialButtons: function() {
         //make the blue part of the dial clickable. If clicked, it will call the blueMessage function
@@ -111,11 +113,11 @@ var doorState = {
 
     changeState: function() {
         //change states to the open door
-        // nextState = 'openDoorState';
-        // game.state.start('openDoorState');
+        nextState = 'openDoorState';
+        game.state.start('openDoorState');
 
         //temporarily changes to a puzzle state for testing
-        nextState = 'penguinPuzzleState';
-        game.state.start('penguinPuzzleState');
+        //nextState = 'penguinPuzzleState';
+        //game.state.start('penguinPuzzleState');
     }
 };

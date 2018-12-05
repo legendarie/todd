@@ -46,7 +46,7 @@ var gearPuzzleScene = null;
 //initialize the state
 var gearPuzzleState = {
 
-    /**The initial functions to set up the scene for player interaction*/
+    /** The initial functions to set up the scene for player interaction */
 
     preload: function () {
         //declare gearPuzzleScene to be an instance of a Scene, and load in the background image to the state
@@ -56,6 +56,8 @@ var gearPuzzleState = {
         //reset the global clickCount variable
         clickCount = 0;
     },
+
+    /** Add all the initial visual elements to the canvas */
 
     create: function () {
         //check to make sure the gearPuzzleScene variable is not null
@@ -105,12 +107,12 @@ var gearPuzzleState = {
         }
     },
 
-    /**All of the functions that have to do with the text in the text box:
+    /** All of the functions that have to do with the text in the text box:
      * changeText runs through the first five lines of text
      * beginScript displays the first line of a button's script when it's clicked, and calls runScript
      * runScript runs through the entire script of a button, makes checks for changes or certain criteria,
      * and displays the next buttons to appear
-     * setScripts sets the scripts and labels for each button*/
+     * setScripts sets the scripts and labels for each button */
 
     changeText: function () {
         //only increment the click count four times
@@ -314,14 +316,14 @@ var gearPuzzleState = {
         followWire2Button.setLabel("Follow the wire");
     },
 
-    /**All of the functions that have to do with the choicebuttons:
+    /** All of the functions that have to do with the choicebuttons:
      * makeButton takes a button and sets it as clickable, as prepares to run the script
      * addButtons adds the choice buttons stored in the buttonManager to the window
      * removeButtons kills any buttons on the screen
      * createButtons initializes the button variables with their x/y values for later use
      * setNewButtons sets up what buttons each choice button changes when clicked
      * setButtonChanges is a check that's run before the buttons are displayed,
-     * which tracks certain choices and changes the game's reaction based on the player's actions*/
+     * which tracks certain choices and changes the game's reaction based on the player's actions */
 
     makeButton: function (button) {
         //position the button in the window and begin reading through the script lines
@@ -449,7 +451,7 @@ var gearPuzzleState = {
         }
     },
 
-    /**The function that switches to the next state*/
+    /** Change the game state to workshopState */
 
     changeState: function() {
         //change states to the next state

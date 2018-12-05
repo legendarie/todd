@@ -75,7 +75,7 @@ var penguinPuzzleScene = null;
 //initialize the state
 var penguinPuzzleState = {
 
-    /**The initial functions to set up the scene for player interaction*/
+    /** The initial functions to set up the scene for player interaction */
 
     preload: function () {
         //declare penguinPuzzleScene to be an instance of a Scene, and load in the background image to the state
@@ -87,6 +87,8 @@ var penguinPuzzleState = {
         //reset the global clickCount variable
         clickCount = 0;
     },
+
+    /** Add the initial visual elements to the canvas, and add the first piece of text to the scene */
 
     create: function () {
         //check to make sure the penguinPuzzleScene variable is not null
@@ -151,12 +153,12 @@ var penguinPuzzleState = {
         }
     },
 
-    /**All of the functions that have to do with the text in the text box:
+    /** All of the functions that have to do with the text in the text box:
      * changeText runs through the first five lines of text
      * beginScript displays the first line of a button's script when it's clicked, and calls runScript
      * runScript runs through the entire script of a button, makes checks for changes or certain criteria,
      * and displays the next buttons to appear
-     * setScripts sets the scripts and labels for each button*/
+     * setScripts sets the scripts and labels for each button */
 
     changeText: function () {
         //only increment the click count four times
@@ -480,7 +482,7 @@ var penguinPuzzleState = {
         grabKeyButton.setLabel("Grab the key");
     },
 
-    /**All of the functions that have to do with the choicebuttons:
+    /** All of the functions that have to do with the choicebuttons:
      * makeButton takes a button and sets it as clickable, as prepares to run the script
      * addButtons adds the choice buttons stored in the buttonManager to the window
      * removeButtons kills any buttons on the screen
@@ -489,7 +491,7 @@ var penguinPuzzleState = {
      * setButtonChanges is a check that's run before the buttons are displayed,
      * which tracks certain choices and changes the game's reaction based on the player's actions
      * attackScene begins the penguin attack cutscene
-     * fallScene ends the penguin attack cutscene*/
+     * fallScene ends the penguin attack cutscene */
 
     makeButton: function (button) {
         //position the button in the window and begin reading through the script lines
@@ -737,7 +739,7 @@ var penguinPuzzleState = {
         this.makeButton(turnDownPermButton);
     },
 
-    /**The function that switches to the next state*/
+    /** Change the game state to [insert state name here] */
 
     changeState: function() {
         //change states to the next state

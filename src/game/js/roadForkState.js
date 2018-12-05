@@ -6,7 +6,7 @@ var slingshot;
 var back;
 var wormHole;
 var cliffRoad;
-var visited = false;     //boolean to keep track of whether the player has been in this state before
+var alreadyBeenRF = false;     //boolean to keep track of whether the player has been in this state before
 let convo1Scene = null;
 
 //initialize the state
@@ -28,10 +28,7 @@ var roadForkState = {
         clickCount = 0;
     },
 
-    /** This function checks to see if the player has already been to this state, and creates the scene accordingly.
-     * If the player has not been here, it adds the background and the Wise Guy sprite, who begins speaking to the
-     * player, and begins their long conversation. If the player has been here, it only adds the background, and
-     * omits the Wise Guy sprite. It then moves on to the pathChoice function. */
+    /** Add the initial visual elements to the canvas, and add the first piece of text to the scene */
 
     create: function() {
         //check to make sure convo1Scene is not null
@@ -41,12 +38,12 @@ var roadForkState = {
             convo1Scene.loadScene('roadForkbg', 0.55);
 
             //if the player has not been here before,
-            if (visited === false) {
+            if (alreadyBeenRF === false) {
 
                 //indicate that the player has now been to this scene
-                visited = true;
+                alreadyBeenRF = true;
 
-                //add Wise Guy (santa placeholder)
+                //add Wise Guy sprite to the canvas
                 wiseGuy = convo1Scene.addStaticSprite(350, 220, 'wiseGuy', 0.3, 0, 0);
 
                 //add the text bar (with all universal settings), with the first line of text
@@ -59,7 +56,7 @@ var roadForkState = {
                 //when the text bar is clicked, go to the changeText function
                 textBar.events.onInputUp.add(this.changeText, this);
 
-            } else if (visited === true) {
+            } else if (alreadyBeenRF === true) {
                 //if the player has been here before, then they skip the conversation with Wise Guy,
                 //and move straight to the path choice.
                 this.pathChoice();
@@ -111,7 +108,7 @@ var roadForkState = {
         }
     },
 
-    /** In this function, the player takes the slingshot from Wise Guy, and their conversation ends. */
+    /** Take the slingshot from Wise Guy, and add the last piece of text */
 
     takeSlingshot: function() {
 
@@ -131,10 +128,10 @@ var roadForkState = {
 
     pathChoice: function() {
 
-        //remove Wise Guy from the scene (if he was there)
+        //remove Wise Guy from the scene (if he was there) -- N/A if alreadyBeenRF is true
         wiseGuy.kill();
 
-        //remove the textBar and its text from the scene (if they are there)
+        //remove the textBar and its text from the scene (if they are there) -- N/A if alreadyBeenRF is true
         textBar.kill();
         text.kill();
 
@@ -149,13 +146,13 @@ var roadForkState = {
         cliffRoad.events.onInputUp.add(this.goToPath, this);
     },
 
-    /** If the player selects the wormHole button, the game state changes to the wormState */
+    /** If the player selects the wormHole button, change game state to the wormState */
 
     goToWorm: function() {
         game.state.start('wormState');
     },
 
-    /** If the player selects the cliffRoad button, the game state changes to the outsideCaveState */
+    /** If the player selects the cliffRoad button, change game state to the outsideCaveState */
 
     goToPath: function() {
         var nextState = 'caveEntranceState';
