@@ -16,11 +16,8 @@ var algaeDudeState = {
     preload: function() {
         //declare algaeDudeScene to be an instance of a Scene, and load in the background image to the state
         algaeDudeScene = new Scene;
-        algaeDudeScene.setBackground('algaeDudebg', 'assets/algaeDudebg.png');
-
-        //add Algae Dude sprite to the state
-        algaeDudeScene.setSprite("present", "assets/santa.png");
-        algaeDudeScene.setSprite("arms", "assets/santa.png");
+        algaeDudeScene.setBackground('mortGiftbg', 'assets/mortGiftbg.png');
+        algaeDudeScene.setBackground('mortbg', 'assets/mortbg.png');
 
         //reset the global clickCount variable
         clickCount = 0;
@@ -33,16 +30,12 @@ var algaeDudeState = {
         if (algaeDudeScene != null) {
 
             //load the background and scale it
-            algaeDudeScene.loadScene('algaeDudebg', 0.9);
+            algaeDudeScene.loadScene('mortGiftbg', 0.32);
 
             //add the text bar (with all universal settings), with the first line of text
-            algaeDudeScene.addTextBar("...");
+            algaeDudeScene.addTextBar("");
 
-            //give mort his arms and the gift he holds
-            gift = algaeDudeScene.addStaticSprite(0, 0, "present", 1.0);
-            arms = algaeDudeScene.addSprite(0, 0, "arms", 1.0);
-
-            //set up mort as a button
+            //set up a button over mort
             this.algaeDudeButton();
         }
     },
@@ -61,7 +54,7 @@ var algaeDudeState = {
 
     convoText: function() {
         //only increment the click count so many times
-        if (clickCount < 10) {
+        if (clickCount < 11) {
             clickCount++;
             if (clickCount === 1) {
                 algaeDudeScene.changeText('\"i mort\"')
@@ -70,16 +63,18 @@ var algaeDudeState = {
             } else if (clickCount === 3) {
                 algaeDudeScene.changeText('\"stranger after beard and hammer man, yes?\"')
             } else if (clickCount === 4) {
-                algaeDudeScene.changeText('\"mort give gift\"')
+                algaeDudeScene.changeText('\"...\"')
             } else if (clickCount === 5) {
-                algaeDudeScene.changeText('\"if stranger find five gifts,\"')
+                algaeDudeScene.changeText('\"mort give gift\"')
             } else if (clickCount === 6) {
-                algaeDudeScene.changeText('\"surprise hidden in hammer man house\"')
+                algaeDudeScene.changeText('\"if stranger find five gifts,\"')
             } else if (clickCount === 7) {
-                algaeDudeScene.changeText('\"open secret cupboard when list is finished\"')
+                algaeDudeScene.changeText('\"surprise hidden in hammer man house\"')
             } else if (clickCount === 8) {
-                algaeDudeScene.changeText('\"do not tell fish man mort tell stranger these things\"')
+                algaeDudeScene.changeText('\"open secret cupboard when list is finished\"')
             } else if (clickCount === 9) {
+                algaeDudeScene.changeText('\"do not tell fish man mort tell stranger these things\"')
+            } else if (clickCount === 10) {
                 algaeDudeScene.changeText('\"secret secret\"')
             } else {
                 //change the text in the text bar, then further the plot somehow
@@ -98,26 +93,26 @@ var algaeDudeState = {
 
     algaeDudeButton: function() {
         //make mort interactive (begins the conversation when clicked)
-        algaeDude = algaeDudeScene.addButton(575, 250, 100, 100, 0.2);
+        algaeDude = algaeDudeScene.addButton(575, 275, 100, 150, 0);
         algaeDude.events.onInputUp.add(this.beginConvo, this);
     },
 
     presentButton: function() {
         //make the present collectible.
-        giftButton = algaeDudeScene.addButton(575, 250, 100, 100, 0.2);
+        giftButton = algaeDudeScene.addButton(585, 325, 75, 75, 0);
         giftButton.events.onInputUp.add(this.getGift, this);
     },
 
     getGift: function() {
         //collect the gift and let the player leave the scene
-        gift.kill();
+        algaeDudeScene.loadScene('mortbg', 0.32);
         giftButton.kill();
         this.exitButton();
     },
 
     exitButton: function() {
         //make the screen clickable. If the screen is clicked, call the changeState function
-        exit = algaeDudeScene.addButton(0, 0, 1500, 1000, 0.2);
+        exit = algaeDudeScene.addButton(0, 0, 1500, 1000, 0);
         exit.events.onInputUp.add(this.changeState, this);
     },
 

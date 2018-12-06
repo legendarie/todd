@@ -105,16 +105,15 @@ var penguinPuzzleState = {
                 penguinPuzzleScene.loadScene('penguinPuzzlebg', 0.32)
             }
 
-            //add a set of ellipses to the text box to indicate
-            //further messages
-            penguinPuzzleScene.addEllipses();
-
             if (this.hasDied !== true) {
                 //add the text bar (with all universal settings), with the first line of text
                 penguinPuzzleScene.addTextBar("You pad into a quiet cave.");
+
+                //add a set of ellipses to the text box to indicate
+                //further messages
+                penguinPuzzleScene.addEllipses();
             } else {
                 penguinPuzzleScene.addTextBar("What do you want to do?");
-                penguinPuzzleScene.removeEllipses();
             }
 
             // //initialize the button choice manager and button list for the puzzle

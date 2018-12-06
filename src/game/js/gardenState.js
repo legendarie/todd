@@ -4,8 +4,6 @@ var textBar;
 var house;
 var iceCavern;
 var fruit;
-var fruit2;
-var fruit3;
 let gardenScene = null;
 
 //initialize the state
@@ -67,7 +65,7 @@ var gardenState = {
             } else if (clickCount === 2) {
                 gardenScene.changeText("They are somewhat tactfully arranged.")
             } else if (clickCount === 3) {
-                gardenScene.changeText("This wasn't really what you were expecting to see here.")
+                gardenScene.changeText("A glowing lantern sits on a stony ledge.")
             } else if (clickCount === 4) {
                 gardenScene.changeText("You see a solid stone door, and an icy tunnel.")
             } else {
@@ -86,6 +84,10 @@ var gardenState = {
     beginDeathText: function() {
         //remove listeners on the fruit buttons and begin the death script
         fruit.events.onInputUp.remove(this.beginDeathText, this);
+        house.events.onInputUp.remove(this.changeStateHouse, this);
+        iceCavern.events.onInputUp.remove(this.changeStateCavern, this);
+
+        gardenScene.addEllipses();
 
         gardenScene.changeText("You reach up to pluck some interesting-looking fruit.");
         textBar.events.onInputUp.add(this.continueDeathText, this);
@@ -130,19 +132,19 @@ var gardenState = {
 
     houseButton: function() {
         //make the door clickable. If clicked, call the changeStateHouse function
-        house = gardenScene.addButton(100, 450, 200, 200, 0.2);
+        house = gardenScene.addButton(325, 175, 200, 275, 0);
         house.events.onInputUp.add(this.changeStateHouse, this);
     },
 
     iceCavernButton: function() {
         //make the cavern entrance clickable. If clicked, call the changeStateCavern function
-        iceCavern = gardenScene.addButton(700, 500, 200, 200, 0.2);
+        iceCavern = gardenScene.addButton(775, 380, 275, 275, 0);
         iceCavern.events.onInputUp.add(this.changeStateCavern, this);
     },
 
     fruitButton: function() {
         //make the tree's fruits clickable. If clicked, run through a death scene.
-        fruit = gardenScene.addButton(266, 185, 30, 40, 0.2);
+        fruit = gardenScene.addButton(266, 185, 30, 40, 0);
         fruit.events.onInputUp.add(this.beginDeathText, this);
     },
 
