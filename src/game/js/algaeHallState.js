@@ -73,6 +73,7 @@ var algaeHallState = {
 
     changeState: function() {
         //change states to the next state
-        game.state.start('doorState');
+        nextState = 'algaeDudeState';
+        game.state.start('algaeDudeState');
     }
 };

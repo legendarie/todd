@@ -18,6 +18,7 @@ game.state.add('caveEntranceState', caveEntranceState);
 game.state.add('caveStartState', caveStartState);
 
 game.state.add('gearPuzzleState', gearPuzzleState);
+game.state.add('workshopState', workshopState);
 
 game.state.add('algaeHallState', algaeHallState);
 game.state.add('algaeDudeState', algaeDudeState);
@@ -34,4 +35,4 @@ game.state.add('fightState', fightState);
 game.state.add('findingSanta', findingSanta);
 
 //tell the game at which state to begin
-game.state.start('doorState');
+game.state.start('workshopState');

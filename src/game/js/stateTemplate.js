@@ -58,7 +58,7 @@ var stateTemplate = {
 
     /**All of the functions that create interactive buttons:*/
 
-    nextSceneButton: function() {
+    doorButton: function() {
         //make something clickable. If the exit is clicked, call the changeState function
         thing = genericScene.addButton(450, 210, 250, 420, 0);
         thing.events.onInputUp.add(this.changeState, this);
