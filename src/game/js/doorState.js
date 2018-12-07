@@ -116,8 +116,12 @@ var doorState = {
         // nextState = 'openDoorState';
         // game.state.start('openDoorState');
 
-        //temporarily changes to a puzzle state for testing
+        //temporarily changes to the penguin puzzle state for testing
         nextState = 'penguinPuzzleState';
         game.state.start('penguinPuzzleState');
+
+        //temporarily changes to the gear puzzle state for testing
+        // nextState = 'gearPuzzleState';
+        // game.state.start('gearPuzzleState');
     }
 };

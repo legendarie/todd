@@ -5,6 +5,8 @@ var clickedButton;
 var endsBranch;
 var deadEnd;
 
+//bug: **"Cut the wire" appears even when the wire has not been found, should fix**
+
 //general positions for the three buttons
 const LEFTXG = 100;
 const MIDDLEXG = 450;
@@ -52,6 +54,7 @@ var gearPuzzleState = {
         //declare gearPuzzleScene to be an instance of a Scene, and load in the background image to the state
         gearPuzzleScene = new Scene;
         gearPuzzleScene.setBackground('gearPuzzlebg', 'assets/gearPuzzlebg.png');
+        gearPuzzleScene.setBackground('brokenBarsbg', 'assets/brokenBarsbg.png');
 
         //reset the global clickCount variable
         clickCount = 0;
@@ -181,6 +184,7 @@ var gearPuzzleState = {
                     game.state.start('yaDeadState', yaDeadState);
                 }
                 else {
+                    gearPuzzleScene.loadScene('brokenBarsbg', 0.32);
                     openDoor = gearPuzzleScene.addButton(460, 210, 250, 252, 0);
                     openDoor.events.onInputUp.add(this.changeState, this);
                 }
