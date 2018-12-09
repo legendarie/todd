@@ -35,4 +35,4 @@ game.state.add('fightState', fightState);
 game.state.add('findingSanta', findingSanta);
 
 //tell the game at which state to begin
-game.state.start('workshopState');
+game.state.start('doorState');

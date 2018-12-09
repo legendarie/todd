@@ -65,7 +65,7 @@ var algaeHallState = {
 
     exitButton: function() {
         //make the screen clickable. If the screen is clicked, call the changeState function
-        exit = algaeHallScene.addButton(0, 0, 1500, 1000, 0.2);
+        exit = algaeHallScene.addButton(0, 0, 1500, 1000, 0);
         exit.events.onInputUp.add(this.changeState, this);
     },
 

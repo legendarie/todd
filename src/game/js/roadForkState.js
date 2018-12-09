@@ -76,14 +76,14 @@ var roadForkState = {
             } else if (clickCount === 2) {
                 convo1Scene.changeText("\"Yeah, you have to be. I'd recognize that stubborn expression anywhere.\"");
             } else if (clickCount === 3) {
-                convo1Scene.changeText("\"You've come to defeat it, huh? That exit that's been " +
+                convo1Scene.changeText("\"You've come to defeat it, huh? That monster that's been " +
                     "terrorizing the place?\"");
             } else if (clickCount === 4) {
                 convo1Scene.changeText("\"Man, I'm so glad you're finally here.\"");
             } else if (clickCount === 5) {
-                convo1Scene.changeText("\"That exit invaded town a while ago and set up camp in a nearby cave.\"");
+                convo1Scene.changeText("\"That thing invaded town a while ago and set up camp in a nearby cave.\"");
             } else if (clickCount === 6) {
-                convo1Scene.changeText("\"You shoulda seen the exit. Smashing stuff with this giant hammer....\"");
+                convo1Scene.changeText("\"You shoulda seen the thing. Smashing stuff with this giant hammer....\"");
             } else if (clickCount === 7) {
                 convo1Scene.changeText("\"Ehem, anyways. That probably wasn't comforting to hear.\"");
             } else if (clickCount === 8) {

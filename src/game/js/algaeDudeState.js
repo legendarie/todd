@@ -120,6 +120,7 @@ var algaeDudeState = {
 
     changeState: function() {
         //change states to the next state
-        game.state.start('doorState');
+        nextState = 'gardenState';
+        game.state.start('gardenState');
     }
 };

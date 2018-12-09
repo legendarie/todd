@@ -113,12 +113,12 @@ var doorState = {
 
     changeState: function() {
         //change states to the open door
-        // nextState = 'openDoorState';
-        // game.state.start('openDoorState');
+        nextState = 'openDoorState';
+        game.state.start('openDoorState');
 
         //temporarily changes to the penguin puzzle state for testing
-        nextState = 'penguinPuzzleState';
-        game.state.start('penguinPuzzleState');
+        // nextState = 'penguinPuzzleState';
+        // game.state.start('penguinPuzzleState');
 
         //temporarily changes to the gear puzzle state for testing
         // nextState = 'gearPuzzleState';
