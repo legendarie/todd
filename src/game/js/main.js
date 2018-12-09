@@ -23,6 +23,8 @@ game.state.add('workshopState', workshopState);
 game.state.add('algaeHallState', algaeHallState);
 game.state.add('algaeDudeState', algaeDudeState);
 
+game.state.add('transitionCaveState', transitionCaveState);
+
 game.state.add('gardenState', gardenState);
 
 game.state.add('penguinPuzzleState', penguinPuzzleState);
