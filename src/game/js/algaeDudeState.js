@@ -33,7 +33,7 @@ var algaeDudeState = {
             algaeDudeScene.loadScene('mortGiftbg', 0.32);
 
             //add the text bar (with all universal settings), with the first line of text
-            algaeDudeScene.addTextBar("");
+            //algaeDudeScene.addTextBar("");
 
             //set up a button over mort
             this.algaeDudeButton();
@@ -48,7 +48,7 @@ var algaeDudeState = {
         //start off the cryptic conversation with mort, the algae growth
         algaeDude.kill();
         algaeDudeScene.addEllipses();
-        algaeDudeScene.changeText('\"hello\"');
+        algaeDudeScene.addTextBar('\"hello\"');
         textBar.events.onInputUp.add(this.convoText, this);
     },
 

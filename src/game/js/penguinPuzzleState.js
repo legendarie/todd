@@ -742,6 +742,6 @@ var penguinPuzzleState = {
 
     changeState: function() {
         //change states to the next state
-        game.state.start('doorState', doorState)
+        game.state.start('santaExpositionState');
     }
 };

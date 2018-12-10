@@ -33,8 +33,10 @@ game.state.add('kitchenState', kitchenState);
 game.state.add('viewListState', viewListState);
 game.state.add('pantryPuzzleState', pantryPuzzleState);
 
-game.state.add('fightStated', fightState);
+game.state.add('santaExpositionState', santaExpositionState);
+
 game.state.add('findingSanta', findingSanta);
+game.state.add('fightState', fightState);
 game.state.add('gemGame2', gemGame2);
 
 //tell the game at which state to begin

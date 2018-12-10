@@ -231,7 +231,7 @@ var kitchenState = {
     /** Change the game state to the finalCorridorState */
 
     leaveKitchen: function() {
-        game.state.start('finalCorridorState'); //doesn't exist yet
+        game.state.start('santaExpositionState');
     },
 
     /** Changes game state to the secretRoomState */
