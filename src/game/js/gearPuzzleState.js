@@ -460,7 +460,7 @@ var gearPuzzleState = {
     changeState: function() {
         //change states to the next state
         nextState = 'workshopState';
-        game.state.start('doorState', doorState)
+        game.state.start('workshopState')
     }
 
 };

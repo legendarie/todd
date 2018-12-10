@@ -23,7 +23,7 @@ var workshopState = {
         if (workshopScene != null) {
 
             //load the background and scale it
-            workshopScene.loadScene('workshopbg', 0.9);
+            workshopScene.loadScene('workshopbg', 0.32);
 
             //add the text bar (with all universal settings), with the first line of text
             workshopScene.addTextBar("As you enter the workshop, you lift the lever by the door.");
@@ -61,15 +61,16 @@ var workshopState = {
         }
     },
 
-    /**All of the functions that create interactive buttons:*/
+    /**All of the functions that create interactive buttons:
+     * doorButton creates a button over the doorway to switch scenes*/
 
     doorButton: function() {
         //make something clickable. If the exit is clicked, call the changeState function
-        door = workshopScene.addButton(815, 50, 200, 275, 0.2);
+        door = workshopScene.addButton(675, 125, 115, 230, 0);
         door.events.onInputUp.add(this.changeState, this);
     },
 
-    /**The function that switches to the next state, of which there are...*/
+    /**The function that switches to the next state*/
 
     changeState: function() {
         //change states to the next state

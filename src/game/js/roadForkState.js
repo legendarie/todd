@@ -76,7 +76,7 @@ var roadForkState = {
             } else if (clickCount === 2) {
                 convo1Scene.changeText("\"Yeah, you have to be. I'd recognize that stubborn expression anywhere.\"");
             } else if (clickCount === 3) {
-                convo1Scene.changeText("\"You've come to defeat it, huh? That thing that's been " +
+                convo1Scene.changeText("\"You've come to defeat it, huh? That monster that's been " +
                     "terrorizing the place?\"");
             } else if (clickCount === 4) {
                 convo1Scene.changeText("\"Man, I'm so glad you're finally here.\"");
