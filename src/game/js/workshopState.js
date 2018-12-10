@@ -74,6 +74,6 @@ var workshopState = {
     changeState: function() {
         //change states to the next state
         nextState = 'gardenState';
-        game.state.start('gardenState');
+        game.state.start('transitionCaveState');
     }
 };

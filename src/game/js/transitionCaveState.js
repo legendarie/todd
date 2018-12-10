@@ -93,7 +93,7 @@ var transitionCaveState = {
     },
 
     changeState: function() {
-        game.state.start('findingSanta');
+        game.state.start('gardenState');
     }
 
 };
