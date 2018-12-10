@@ -23,6 +23,7 @@ var findingSanta = {
 
         //initialize santa
         santa = findScene.addSprite(0, 0, 'santa', 0.3);
+        santa.scale.setTo(0.1);
         santa.position.setTo(Math.floor(Math.random() * (game.world.width-santa.width)),
             Math.floor(Math.random() * (game.world.height-santa.height)));
         santa.alpha = 0;

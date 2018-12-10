@@ -40,4 +40,4 @@ game.state.add('fightState', fightState);
 game.state.add('gemGame2', gemGame2);
 
 //tell the game at which state to begin
-game.state.start('doorState');
+game.state.start('findingSanta');

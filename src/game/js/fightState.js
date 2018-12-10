@@ -71,7 +71,7 @@ var fightState = {
         // add the santa sprite to the middle of the world
         santa = game.add.sprite(0, 0, 'santa');
         santa.position.setTo(Math.floor(Math.random() * (game.world.width - santa.width)), Math.floor(Math.random() * (game.world.height - santa.height)));
-        santa.scale.setTo(0.5);
+        santa.scale.setTo(0.15);
         game.physics.enable(santa);
         santa.body.collideWorldBounds = true;
         santa.body.bounce.setTo(0.6, 0.6);
@@ -132,7 +132,7 @@ var fightState = {
         candy.kill();
         this.createCandy();
         if (lives <= 0) {
-            game.state.start('doorState', doorState);
+            game.state.start('yaDeadState', yaDeadState);
         }
     },
 
