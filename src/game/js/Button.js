@@ -23,6 +23,7 @@ class Button {
 
     //adds text to the center of the button
     addText(text) {
+        this.buttonLabel = text;
         this.buttonText = game.add.text(0, 0, text, style);
         this.buttonText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
         this.buttonText.setTextBounds(this.x, this.y, this.width, this.height);

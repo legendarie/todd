@@ -4,10 +4,8 @@ var game = new Phaser.Game(1200, 690, Phaser.AUTO, 'game');
 //load in all of the states that will be entered in the game
 game.state.add('doorState', doorState);
 game.state.add('openDoorState', openDoorState);
-
 game.state.add('openReefState', openReefState);
 game.state.add('signState', signState);
-
 game.state.add('roadForkWGState', roadForkWGState);
 game.state.add('roadForkState', roadForkState);
 game.state.add('wormState', wormState);
@@ -21,10 +19,10 @@ game.state.add('gearPuzzleState', gearPuzzleState);
 game.state.add('workshopState', workshopState);
 
 game.state.add('algaeHallState', algaeHallState);
+game.state.add('riddleRoomState', riddleRoomState);
 game.state.add('algaeDudeState', algaeDudeState);
 
 game.state.add('transitionCaveState', transitionCaveState);
-
 game.state.add('gardenState', gardenState);
 
 game.state.add('penguinPuzzleState', penguinPuzzleState);
@@ -34,10 +32,9 @@ game.state.add('viewListState', viewListState);
 game.state.add('pantryPuzzleState', pantryPuzzleState);
 
 game.state.add('santaExpositionState', santaExpositionState);
-
 game.state.add('findingSanta', findingSanta);
 game.state.add('fightState', fightState);
 game.state.add('gemGame2', gemGame2);
 
 //tell the game at which state to begin
-game.state.start('findingSanta');
+game.state.start('riddleRoomState');
