@@ -106,13 +106,13 @@ var riddleRoomState = {
         } else if (riddleCounter === 5) {
             riddleRoomScene.changeText('"I am always falling, but never breaking. What am I?"')
         } else if (riddleCounter === 6) {
-            riddleRoomScene.changeText('"I will destroy this world. What am I?"')
+            riddleRoomScene.changeText('"I will destroy this world. Who am I?"')
         } else if (riddleCounter === 7) {
-            riddleRoomScene.changeText('"I should never have walked through that door. What am I?"')
+            riddleRoomScene.changeText('"I should never have walked through that door. Who am I?"')
         } else if (riddleCounter === 8) {
-            riddleRoomScene.changeText('"I am a filthy intruder. What am I?"')
+            riddleRoomScene.changeText('"I am a filthy intruder. Who am I?"')
         } else if (riddleCounter === 9) {
-            riddleRoomScene.changeText('"I will die in this cave. What am I?"')
+            riddleRoomScene.changeText('"I will die in this cave. Who am I?"')
         }
 
         //set what the answers are
