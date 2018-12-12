@@ -58,7 +58,7 @@ var findingSanta = {
         var distLinear = Math.sqrt(Math.pow(distX,2)+Math.pow(distY,2));
 
         //change santa's volume according to the distance between the mouse and santa
-        santaSound.volume = 0.1 + 5*Math.pow((1 - distLinear/diag),2);
+        santaSound.volume = 0.1 + 5*Math.pow((1 - distLinear/diag),4);
     },
 
 

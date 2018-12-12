@@ -1,4 +1,4 @@
-let count = 0;
+let count = 3;
 let lives = 5;
 var originalX;
 var originalY;
@@ -34,7 +34,8 @@ var fightState = {
         this.createSnow();
         numCollision = 0;
 
-        text = game.add.text(lives, 0, 0);
+        santaHealth = game.add.text(0, 0, count);
+        yourHealth = game.add.text(300,0,lives);
 
     },
 
@@ -84,6 +85,7 @@ var fightState = {
         snow.minParticleScale = 0.1;
         snow.setYSpeed(20, 100);
         snow.width = game.world.width * 1.5;
+        snow.height = game.world.height * 0.75;
         snow.minRotation = 0;
         snow.maxRotation = 40;
         snow.start(false, 7000, 100);
@@ -91,7 +93,6 @@ var fightState = {
 
 
     play: function () {
-        count++;
         candy.events.onInputUp.add(this.launch, this);
 
 
@@ -118,10 +119,10 @@ var fightState = {
     },
 
     restart: function () {
-        count = count + 1;
+        count = count - 1;
         candy.destroy();
         this.createCandy();
-        if (count >= 7) {
+        if (count <= 0) {
             game.state.start('doorState', doorState);
         }
 
@@ -141,5 +142,7 @@ var fightState = {
         // as the game is running, the candy and santa are allowed to interact (to bounce off one another)
         game.physics.arcade.collide(candy, santa, this.restart, null, this);
         game.physics.arcade.collide(candy, snow, this.hitSnow, null, this);
+        santaHealth.setText("Santa's health: "+count);
+        yourHealth.setText("Your health: "+lives);
     }
 }
