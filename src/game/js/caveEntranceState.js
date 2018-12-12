@@ -5,10 +5,10 @@ let caveEntranceScene = null;
 
 var caveEntranceState = {
 
-    /** The initial functions to set up the scene for player interaction */
+    /** The initial functions to set up the scene for player interaction*/
 
     preload: function() {
-        //make caveEntranceScene an extension of the Scene
+        //make caveEntranceScene an extension of Scene
         caveEntranceScene = new Scene;
 
         //load the background image into the state
@@ -24,7 +24,7 @@ var caveEntranceState = {
         giftFound = false;
     },
 
-    /** Add the initial visual elements to the canvas and begin the text sequence */
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
 
     create: function() {
         //check to make sure that the scene has been created
@@ -100,17 +100,19 @@ var caveEntranceState = {
         }
     },
 
-    /** Create the button over the cave entrance and allow the user to interact with it. When that occurs,
-     * call the changeState function */
+    /** All of the functions that create interactive buttons:
+     * enterCaveButton creates a button over the cave mouth that switches to the next state*/
 
     enterCaveButton: function() {
-        var caveEntranceButton = caveEntranceScene.addButton(560, 250, 340, 350, 0);
+        caveEntranceButton = caveEntranceScene.addButton(560, 250, 340, 350, 0);
         caveEntranceButton.events.onInputUp.add(this.changeState, this);
     },
 
-    /** Change the game state to caveStartState */
+    /**The function that switches to the next state*/
 
     changeState: function() {
+        //change states to caveStartState
+        nextState = 'caveStartState';
         game.state.start('caveStartState');
     }
 

@@ -2,24 +2,29 @@
 var clickCount;
 var textBar;
 var exit;
+
 let algaeHallScene = null;
 
 //initialize the state
 var algaeHallState = {
 
-    /** The initial functions to set up the scene for player interaction */
+    /** The initial functions to set up the scene for player interaction*/
 
     preload: function() {
-        //declare scene to be an instance of a Scene, and load in the background image to the state
+        //declare algaeHallScene to be an instance of Scene
         algaeHallScene = new Scene;
+
+        //load the background image into the state
         algaeHallScene.setBackground('algaeHallbg', 'assets/algaeHallbg.png');
 
         //reset the global clickCount variable
         clickCount = 0;
     },
 
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
+
     create: function() {
-        //check to make sure the scene variable is not null
+        //check to make sure that the scene has been created
         if (algaeHallScene != null) {
 
             //load the background and scale it
@@ -37,11 +42,12 @@ var algaeHallState = {
     },
 
     /** All of the functions that change the text in the text box:
-     * changeText runs through the first six lines of text */
+     * changeText runs through the first six lines of text*/
 
     changeText: function() {
-        //only increment the click count so many times
-        if (clickCount < 4) {
+        //describe the algae-covered passageway
+        //only allow the clickCount to increment to 5
+        if (clickCount < 5) {
             clickCount++;
             if (clickCount === 1) {
                 algaeHallScene.changeText("Patches of glowing, green algae grow along the walls.")
@@ -49,19 +55,20 @@ var algaeHallState = {
                 algaeHallScene.changeText("They light your way as you walk along.")
             } else if (clickCount === 3) {
                 algaeHallScene.changeText("The farther you go, the bigger the swaths become.")
-            } else if (clickCount === 3) {
+            } else if (clickCount === 4) {
                 algaeHallScene.changeText("They seem to buzz with a pleasant energy.")
             } else {
-                //change the text in the text bar, then spawn the button to leave the scene
+                //once this script has been run through, spawn the button to leave the scene
                 algaeHallScene.changeText("It isn't long before the passage opens up.");
                 algaeHallScene.removeEllipses();
+
                 this.exitButton();
             }
         }
     },
 
     /** All of the functions that create interactive buttons:
-     * exitButton makes the screen interactive (switching to the next scene) */
+     * exitButton makes the screen interactive (switching to the next scene)*/
 
     exitButton: function() {
         //make the screen clickable. If the screen is clicked, call the changeState function
@@ -72,7 +79,7 @@ var algaeHallState = {
     /**The function that switches to the next state*/
 
     changeState: function() {
-        //change states to the next state
+        //change states to riddleRoomState
         nextState = 'riddleRoomState';
         game.state.start('riddleRoomState');
     }

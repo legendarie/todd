@@ -9,6 +9,7 @@ var whiteDial;
 var door;
 var nextState;
 var buttonManager;
+
 let doorScene = null;
 
 //initialize the state
@@ -17,8 +18,10 @@ var doorState = {
     /** The initial functions to set up the scene for player interaction */
 
     preload: function() {
-        //declare doorScene to be an instance of a Scene, and load in the background image to the state
+        //declare doorScene to be an instance of a Scene
         doorScene = new Scene;
+
+        //load the background image into the state
         doorScene.setBackground('theDoor', 'assets/theDoorbg.png');
 
         //set up the global buttonManager (for puzzles)
@@ -31,12 +34,11 @@ var doorState = {
         giftCount = 0;
     },
 
-    /** Add the initial visual elements to the canvas, and add the first piece of text to the scene */
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
 
     create: function() {
-        //check to make sure the doorScene variable is not null
+        //check to make sure that the scene has been created
         if (doorScene != null) {
-
             //load the background and scale it
             doorScene.loadScene('theDoor', 0.6);
 
@@ -59,15 +61,17 @@ var doorState = {
      * otherMessage directs the player to try another dial color (red, white, brown panels) */
 
     changeText: function() {
-        //only increment the click count twice
+        //inquire about the dial on the door
+        //only allow the clickCount to increment to 2
         if (clickCount < 2) {
             clickCount++;
             if (clickCount === 1) {
                 doorScene.changeText("To what color do you turn the dial?")
             } else {
-                //change the text in the text bar, then create the dial buttons
+                //once this script has been run through, create the dial buttons
                 doorScene.changeText("Choose a color.");
                 doorScene.removeEllipses();
+
                 this.dialButtons();
             }
         }
@@ -119,13 +123,5 @@ var doorState = {
         //change states to the open door
         nextState = 'openDoorState';
         game.state.start('openDoorState');
-
-        //temporarily changes to the penguin puzzle state for testing
-        // nextState = 'penguinPuzzleState';
-        // game.state.start('penguinPuzzleState');
-
-        //temporarily changes to the gear puzzle state for testing
-        // nextState = 'gearPuzzleState';
-        // game.state.start('gearPuzzleState');
     }
 };

@@ -1,6 +1,7 @@
+//A class for the button objects that appear in every state
 class Button {
 
-    /**The constructor sets up all needed variables and calls the separate "add" function*/
+    /**The constructor sets up all needed variables, including the box opacity*/
 
     constructor(x, y, width, height, opacity) {
         this.x = x;
@@ -29,14 +30,17 @@ class Button {
         this.buttonText.setTextBounds(this.x, this.y, this.width, this.height);
     }
 
-    addLabel() {
-        if (this.buttonLabel != null) {
-            this.addText(this.buttonLabel);
+    //retruns the button to the window after being killed
+    revive() {
+        this.add();
+        if (this.buttonLabel !== null) {
+            this.addText(this.buttonLabel)
         }
     }
 
-    /**The kill function removes the button and any text on it*/
+    /**Other functions (killing the button and adding the button's label)*/
 
+    //removes the button's actual interactive button, and any text that was on it
     kill() {
         if (this.button != null) {
             this.button.kill();
@@ -46,14 +50,14 @@ class Button {
         }
     }
 
-    revive() {
-        this.add();
-        if (this.buttonLabel !== null) {
-            this.addText(this.buttonLabel)
+    //adds the stored "label" string to the button as visible text
+    addLabel() {
+        if (this.buttonLabel != null) {
+            this.addText(this.buttonLabel);
         }
     }
 
-    /**Getter functions*/
+    /**Getters and setters*/
 
     getButton() {
         return this.button;
