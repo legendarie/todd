@@ -49,10 +49,10 @@ var riddleRoomState = {
             score = 0;
 
             //load the background and scale it
-            riddleRoomScene.loadScene('riddleRoombg', 0.9);
+            riddleRoomScene.loadScene('riddleRoombg', 0.32);
 
             //add the text bar (with all universal settings), with the first line of text
-            riddleRoomScene.addTextBar('"You see a stone slate carved with the phrase, "What Am I?"');
+            riddleRoomScene.addTextBar('You see a stone slate carved with the phrase, "What Am I?"');
 
             //when the text bar is clicked, go to the changeText function
             this.slateButton();
@@ -96,13 +96,13 @@ var riddleRoomState = {
 
         //depending on which riddle the game is on, the text on the slate will change
         if (riddleCounter === 1) {
-            riddleRoomScene.changeText('"I am often bright, but I shed no light. What am I?"');
+            riddleRoomScene.changeText('"I can be the sun, I can be sand, and I can be a bird. What am I?"');
         } else if (riddleCounter === 2) {
             riddleRoomScene.changeText('"I can point to any destination, but I cannot get there myself. What am I?"');
         } else if (riddleCounter === 3) {
             riddleRoomScene.changeText('"I can run, but I cannot walk. What am I?"');
         } else if (riddleCounter === 4) {
-            riddleRoomScene.changeText('"I can be the sun, I can be sand, and I can be a bird. What am I?"')
+            riddleRoomScene.changeText('"I am often bright, but I shed no light. What am I?"')
         } else if (riddleCounter === 5) {
             riddleRoomScene.changeText('"I am always falling, but never breaking. What am I?"')
         } else if (riddleCounter === 6) {
@@ -145,9 +145,9 @@ var riddleRoomState = {
                 middleCorrect = true;
             }
             if (riddleCounter === 4) {
-                leftAnswer.setLabel("A mirror");
-                rightAnswer.setLabel("The color red");
-                middleAnswer.setLabel("A clock");
+                leftAnswer.setLabel("Metal");
+                rightAnswer.setLabel("My future");
+                middleAnswer.setLabel("The moon");
 
                 middleCorrect = true;
             }
@@ -250,31 +250,31 @@ var riddleRoomState = {
 
     slateButton: function() {
         //creates the button over the riddle slate
-        slate = riddleRoomScene.addButton(900, 180, 250, 300, 0.2);
+        slate = riddleRoomScene.addButton(805, 280, 190, 225, 0);
         slate.events.onInputUp.add(this.nextRiddle, this);
     },
 
     leftAnswerButton: function() {
         //creates the leftmost choice button with the first answer set to it
-        leftAnswer = riddleRoomScene.addChoiceButton(100, 500, 325, 100, "Mankind");
+        leftAnswer = riddleRoomScene.addChoiceButton(100, 500, 325, 100, "A plant");
         leftAnswer.getButton().events.onInputUp.add(this.readyNextRiddle, this);
     },
 
     rightAnswerButton: function() {
         //creates the rightmost choice button with the first answer set to it
-        rightAnswer = riddleRoomScene.addChoiceButton(800, 500, 325, 100, "My future");
+        rightAnswer = riddleRoomScene.addChoiceButton(800, 500, 325, 100, "The color red");
         rightAnswer.getButton().events.onInputUp.add(this.readyNextRiddle, this);
     },
 
     middleAnswerButton: function() {
         //creates the middle choice button with the first answer set to it
-        middleAnswer = riddleRoomScene.addChoiceButton(450, 500, 325, 100, "The moon");
+        middleAnswer = riddleRoomScene.addChoiceButton(450, 500, 325, 100, "A clock");
         middleAnswer.getButton().events.onInputUp.add(this.correct, this);
     },
 
     exitButton: function() {
         //creates the button over the open passage to switch scenes
-        passage = riddleRoomScene.addButton(325, 200, 350, 400, 0.2);
+        passage = riddleRoomScene.addButton(225, 100, 300, 375, 0);
 
         //if the player got at least eight riddles correct,
         //set up algaeDudeState as the next state
@@ -289,8 +289,8 @@ var riddleRoomState = {
 
     changeStateGarden: function() {
         //change states to the garden if the player failed too many riddles
-        nextState = 'gardenState';
-        game.state.start('gardenState');
+        nextState = 'transitionCaveState';
+        game.state.start('transitionCaveState');
     },
 
     changeStateAlgae: function() {
