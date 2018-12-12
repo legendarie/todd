@@ -13,29 +13,33 @@ var gardenState = {
     /**The initial functions to set up the scene for player interaction*/
 
     preload: function() {
-        //declare gardenScene to be an instance of a Scene, and load in the background image to the state
+        //declare gardenScene to be an instance of a Scene
         gardenScene = new Scene;
+
+        //load in the background image to the state
         gardenScene.setBackground('gardenbg', 'assets/gardenbg.png');
 
         //reset the global clickCount variable
         clickCount = 0;
     },
 
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
+
     create: function() {
-        //check to make sure the scene variable is not null
+        //check to make sure that the scene has been created
         if (gardenScene != null) {
 
             //load the background and scale it
             gardenScene.loadScene('gardenbg', 0.32);
 
-                //add the text bar (with all universal settings), with the first line of text
+            //add the text bar (with all universal settings), with the first line of text
             gardenScene.addTextBar("You come across a crossroads.");
 
-                //add a set of ellipses to the text box to indicate
-                //further messages
+            //add a set of ellipses to the text box to indicate
+            //further messages
             gardenScene.addEllipses();
 
-                //when the text bar is clicked, go to the changeText function
+            //when the text bar is clicked, go to the changeText function
             textBar.events.onInputUp.add(this.changeText, this);
         }
     },
@@ -46,6 +50,7 @@ var gardenState = {
      * continueDeathText runs through the death sequence for touching the fruit*/
 
     changeText: function() {
+        //describe the grotto
         //only increment the click count 5 times
         if (clickCount < 5) {
             clickCount++;
@@ -58,11 +63,12 @@ var gardenState = {
             } else if (clickCount === 4) {
                 gardenScene.changeText("You see a solid stone door, and an icy tunnel.")
             } else {
-                //change the text in the text bar, then create the passage/tree buttons
+                //once this script has been run through, create the passage/tree buttons
                 gardenScene.changeText("Where do you want to go?");
                 textBar.events.onInputUp.remove(this.changeText, this);
                 clickCount = 0;
                 gardenScene.removeEllipses();
+
                 this.houseButton();
                 this.iceCavernButton();
                 this.fruitButton();
@@ -71,7 +77,7 @@ var gardenState = {
     },
 
     beginDeathText: function() {
-        //remove listeners on the fruit buttons and begin the death script
+        //remove listener on the buttons and begin the death script
         fruit.events.onInputUp.remove(this.beginDeathText, this);
         house.events.onInputUp.remove(this.changeStateHouse, this);
         iceCavern.events.onInputUp.remove(this.changeStateCavern, this);
@@ -83,8 +89,9 @@ var gardenState = {
     },
 
     continueDeathText: function() {
-        //increment the click count 15 times
-        if (clickCount < 15) {
+        //run the player through the death script
+        //only allow the clickCount to increment to 9
+        if (clickCount < 9) {
             clickCount++;
             if (clickCount === 1) {
                 gardenScene.changeText("It's a bit of a stretch, but you're able to grab one.")
@@ -107,10 +114,9 @@ var gardenState = {
             } else if (clickCount === 9) {
                 gardenScene.changeText("You give your hand a lick.")
             } else {
-                //change the text in the text bar, then create the passage/tree buttons
+                //once this script has been run through, call the death state
                 gardenScene.changeText("Your final comfort is the knowledge that you taste delicious.");
                 textBar.events.onInputUp.add(this.changeStateDeath, this);
-
             }
         }
     },
@@ -141,19 +147,19 @@ var gardenState = {
     /**The functions that switch to the next state, of which there are three*/
 
     changeStateHouse: function() {
-        //change states to the next state
+        //change states to kitchenState
         nextState = 'kitchenState';
         game.state.start('kitchenState');
     },
 
     changeStateCavern: function() {
-        //change states to the gem game
+        //change states penguinPuzzleState
         nextState = 'penguinPuzzleState';
         game.state.start('penguinPuzzleState');
     },
 
     changeStateDeath: function() {
-        //activate the death scene
+        //activate the death state
         hasDiedGarden = true;
         game.state.start('yaDeadState');
     }

@@ -80,6 +80,7 @@ var algaeDudeState = {
                 //once this script has been run through, make the present clickable
                 algaeDudeScene.changeText('\"...take gift\"');
                 algaeDudeScene.removeEllipses();
+
                 this.presentButton();
             }
         }

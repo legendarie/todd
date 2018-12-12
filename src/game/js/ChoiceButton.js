@@ -1,9 +1,8 @@
-//This class is an extension of button with some helpful stuff for holding the script.
-//Probably the only useful exit I made in all of this.
-
 //a button for the button manager to check for so it can set its own slots to null
 var nothingButton = new Button(0, 0, 0, 0);
 
+//This class is an extension of button with some helpful stuff for holding the scripts
+//in the puzzle states
 class ChoiceButton extends Button {
 
     /**The constructor sets up the ChoiceButton object with an empty array for the
@@ -23,6 +22,11 @@ class ChoiceButton extends Button {
         this.irregularLines = false;
     }
 
+    /**All of the functions that deal with a ChoiceButton's script:
+     * addLine adds a custom line to the script
+     * next returns the next line in the script (for reading through it)
+     * */
+
     //adds a line of dialogue to the button's script (which runs in the text box)
     addLine(newLine) {
         this.script.push(newLine);
@@ -37,25 +41,7 @@ class ChoiceButton extends Button {
         }
     }
 
-    //returns the number of objects (lines) in the script array
-    scriptLength() {
-        return this.script.length
-    }
-
-    //sets the spot for the script to 0, so if the button is clicked again, it runs through the script again
-    reset() {
-        this.spot = 0;
-    }
-
-    //sets this button to "has been clicked"
-    click() {
-        clickedButton = this;
-        this.alreadyClicked = true;
-    }
-
-    unClick() {
-        this.alreadyClicked = false;
-    }
+    /**All checks (setters for these parameters found in "Getters and setters")*/
 
     //a check for whether this button has been clicked
     beenClicked() {
@@ -77,14 +63,30 @@ class ChoiceButton extends Button {
         return this.death;
     }
 
+    /**Getters and setters*/
+
+    //sets this button to "has been clicked"
+    click() {
+        clickedButton = this;
+        this.alreadyClicked = true;
+    }
+
+    //returns the number of objects (lines) in the script array
+    scriptLength() {
+        return this.script.length
+    }
+
+    //sets the spot for the script to 0, so if the button is clicked again, it runs through the script again
+    reset() {
+        this.spot = 0;
+    }
+
     //sets all of the buttons to null (for the end of a choice branch)
     removeButtons() {
         this.removeLeftButton();
         this.removeRightButton();
         this.removeMiddleButton();
     }
-
-    /**Getters and setters*/
 
     getSpot() {
         return this.spot;

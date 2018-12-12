@@ -1,3 +1,4 @@
+//A class for the button objects that appear in every state
 class Button {
 
     /**The constructor sets up all needed variables, including the box opacity*/

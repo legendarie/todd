@@ -5,8 +5,6 @@ var clickedButton;
 var endsBranch;
 var deadEnd;
 
-//bug: **"Cut the wire" appears even when the wire has not been found, should fix**
-
 //general positions for the three buttons
 const LEFTXG = 100;
 const MIDDLEXG = 450;
@@ -48,7 +46,7 @@ var gearPuzzleScene = null;
 //initialize the state
 var gearPuzzleState = {
 
-    /** The initial functions to set up the scene for player interaction */
+    /** The initial functions to set up the scene for player interaction*/
 
     preload: function () {
         //declare gearPuzzleScene to be an instance of a Scene, and load in the background image to the state
@@ -60,35 +58,33 @@ var gearPuzzleState = {
         clickCount = 0;
     },
 
-    /** Add all the initial visual elements to the canvas */
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
 
     create: function () {
-        //check to make sure the gearPuzzleScene variable is not null
+        //check to make sure that the scene has been created
         if (gearPuzzleScene != null) {
 
             //load the background and scale it
             gearPuzzleScene.loadScene('gearPuzzlebg', 0.32);
 
+            //edit the text in the text box if the player has died
             if (this.hasDied !== true) {
                 //add the text bar (with all universal settings), with the first line of text
                 gearPuzzleScene.addTextBar("The left tunnel leads into a wide cavern.");
+
+                //add a set of ellipses to the text box to indicate
+                //further messages
+                gearPuzzleScene.addEllipses();
             } else {
                 gearPuzzleScene.addTextBar("What do you want to do?");
             }
-
-            //add a set of ellipses to the text box to indicate
-            //further messages
-            gearPuzzleScene.addEllipses();
 
             //create all of the buttons and their button links
             this.createButtons();
             this.setScripts();
             this.setNewButtons();
 
-            // //initialize the button choice manager and button list for the puzzle
-            // //remove this when gearPuzzleScene is hooked up to the rest of the game
-            // buttonManager = new ButtonManager(gear1Button, barButton, window1Button);
-
+            //skip past the initial dialogue if the player has died
             if (this.hasDied !== true) {
                 buttonManager.setLeftButton(gear1Button);
                 buttonManager.setMiddleButton(barButton);
@@ -118,7 +114,7 @@ var gearPuzzleState = {
      * setScripts sets the scripts and labels for each button */
 
     changeText: function () {
-        //only increment the click count four times
+        //only allow the clickCount ot increment to 4
         if (clickCount < 4) {
             clickCount++;
             if (clickCount === 1) {
@@ -128,10 +124,11 @@ var gearPuzzleState = {
             } else if (clickCount === 3) {
                 gearPuzzleScene.changeText("A small window peers into the next room.")
             } else {
-                //change the text in the text bar, then create the choice buttons
+                //once this script has been run through, create the choice buttons
                 gearPuzzleScene.changeText("What do you want to do?");
                 gearPuzzleScene.removeEllipses();
                 textBar.events.onInputUp.remove(this.changeText, this);
+
                 this.makeButton(barButton);
                 this.makeButton(gear1Button);
                 this.makeButton(window1Button);
@@ -140,21 +137,23 @@ var gearPuzzleState = {
     },
 
     beginScript() {
-        //clear the choices and the listener on the clicked choice
+        //clear the choices and the listener on the clicked button
         this.removeButtons();
         clickedButton.getButton().events.onInputUp.remove(this.beginScript, this);
 
-        //add the first line of the choice's script, ellipses if needed, and a listener on the text bar
+        //add the first line of the button's script, ellipses if needed, and a listener on the text bar
         gearPuzzleScene.changeText("" + clickedButton.next());
         if (clickedButton.scriptLength() > 1) {
             gearPuzzleScene.addEllipses();
         }
+        //check to make sure the button needs the normal end-of-script question
         if (clickedButton.isIrregular() === true) {
             this.setButtonChanges();
             buttonManager.getNewButtons();
             clickedButton.removeButtons();
             this.addButtons();
         } else {
+            //if it does, run through the script as normal
             textBar.events.onInputUp.add(this.runScript, this);
         }
     },
@@ -169,14 +168,13 @@ var gearPuzzleState = {
             endsBranch = clickedButton.isEndButton();
             if (endsBranch === false) {
                 //if it isn't, assign any new buttons and add them to the window
-                //check to make sure the button needs the normal end-of-script question
                 gearPuzzleScene.changeText("What do you want to do?");
                 this.setButtonChanges();
                 buttonManager.getNewButtons();
                 clickedButton.removeButtons();
                 this.addButtons();
             } else {
-                //if it is, check if it's a death
+                //if it is an ending, check if it's a death
                 deadEnd = clickedButton.isDeath();
                 if (deadEnd === true) {
                     //if it is, enter the "You Died" screen
@@ -184,12 +182,13 @@ var gearPuzzleState = {
                     game.state.start('yaDeadState', yaDeadState);
                 }
                 else {
+                    //if it is not a death, set up for the end of the scene
                     gearPuzzleScene.loadScene('brokenBarsbg', 0.32);
                     openDoor = gearPuzzleScene.addButton(460, 210, 250, 252, 0);
                     openDoor.events.onInputUp.add(this.changeState, this);
                 }
             }
-            //always remove the listener
+            //always remove the listener on the text bar
             textBar.events.onInputUp.remove(this.runScript, this);
         }
     },
@@ -464,10 +463,10 @@ var gearPuzzleState = {
         }
     },
 
-    /** Change the game state to workshopState */
+    /**The function that switches to the next state*/
 
     changeState: function() {
-        //change states to the next state
+        //change states to workshopState
         nextState = 'workshopState';
         game.state.start('workshopState')
     }

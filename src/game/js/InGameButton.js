@@ -1,6 +1,8 @@
-//This class is an example of a specific child of the ChoiceButton class that each button could be,
-//but I don't know how helpful it is.
+//This class is specifically designed for the
+// "choose your own adventure" puzzles
 class InGameButton extends ChoiceButton {
+
+    /**Every button has the same opacity, width, and height*/
 
     constructor(x, y) {
         super(x, y, 325, 100, 0.2);
@@ -8,11 +10,17 @@ class InGameButton extends ChoiceButton {
         this.y = y;
     }
 
+    /**The position function puts the button in the window
+     * in the correct location with the script reset to the
+     * beginning*/
+
     position() {
         this.addFull();
         this.reset();
         this.button.events.onInputUp.add(this.click, this)
     }
+
+    /**Add the stored label/button to the window*/
 
     addFull() {
         this.add();

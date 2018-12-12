@@ -64,6 +64,7 @@ var caveStartState = {
                 //once the script has been run through, make the tunnels interactive
                 caveScene.changeText("Which tunnel do you choose to follow?");
                 caveScene.removeEllipses();
+
                 this.caveButtons();
             }
         }

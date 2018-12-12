@@ -61,6 +61,7 @@ var algaeHallState = {
                 //once this script has been run through, spawn the button to leave the scene
                 algaeHallScene.changeText("It isn't long before the passage opens up.");
                 algaeHallScene.removeEllipses();
+
                 this.exitButton();
             }
         }

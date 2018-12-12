@@ -54,6 +54,7 @@ var caveEntranceState = {
                 //once this script has been run through, make the cave mouth interactive
                 caveEntranceScene.changeText("But it doesn't look like you really have a choice.");
                 caveEntranceScene.removeEllipses();
+
                 this.enterCaveButton();
             }
         }
