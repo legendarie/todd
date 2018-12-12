@@ -416,7 +416,6 @@ var gearPuzzleState = {
         pullLever2Button.setNewLeftButton(checkGears2Button);
         pullLever2Button.setNewRightButton(checkWindowButton);
         checkWindowButton.setNewRightButton(grabToolButton);
-        grabToolButton.setNewMiddleButton(cutWireButton);
         grabToolButton.setNewRightButton(window3Button);
         cutDangerButton.setToDeath();
         cutSafeButton.setToEnd();
@@ -441,9 +440,7 @@ var gearPuzzleState = {
         }
         if (followWireCheck !== true) {
             if ((followWireButton.beenClicked() === true) || (followWire2Button.beenClicked() === true)) {
-                cutWireButton.setNewLeftButton(cutDangerButton);
                 cutWireButton.setNewRightButton(cutSafeButton);
-                cutWireButton.setNothingMiddle();
                 followWireCheck = true;
             }
         }
@@ -451,6 +448,18 @@ var gearPuzzleState = {
             if (testWireButton.beenClicked() === true) {
                 grabToolButton.setNewMiddleButton(cutWireWellButton);
                 testWireCheck = true;
+            }
+        }
+        if (barCheck !== true) {
+            if (barButton.beenClicked() === true) {
+                grabToolButton.setNewMiddleButton(cutWireButton);
+                barCheck = true;
+            }
+        }
+        if (grabToolCheck !== true) {
+            if (grabToolButton.beenClicked() === true) {
+                barButton.setNewMiddleButton(cutWireButton);
+                grabToolCheck = true;
             }
         }
     },

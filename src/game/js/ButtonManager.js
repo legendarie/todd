@@ -10,10 +10,12 @@ var cutLockCheck = false;
 var turnOnCheck = false;
 
 //variables for checks in gearPuzzleState
+var barCheck = false;
 var window2Check = false;
 var gear2Check = false;
 var followWireCheck = false;
 var testWireCheck = false;
+var grabToolCheck = false;
 
 
 //This class tracks the buttons that are supposed to appear after each choice

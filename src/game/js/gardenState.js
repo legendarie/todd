@@ -4,6 +4,7 @@ var textBar;
 var house;
 var iceCavern;
 var fruit;
+
 let gardenScene = null;
 
 //initialize the state
@@ -16,8 +17,6 @@ var gardenState = {
         gardenScene = new Scene;
         gardenScene.setBackground('gardenbg', 'assets/gardenbg.png');
 
-        this.hasDied = false;
-
         //reset the global clickCount variable
         clickCount = 0;
     },
@@ -29,25 +28,15 @@ var gardenState = {
             //load the background and scale it
             gardenScene.loadScene('gardenbg', 0.32);
 
-
-            //if the player has died here, respawn them without the introductory text
-            if (this.hasDied === true) {
-                gardenScene.addTextBar("");
-                this.houseButton();
-                this.iceCavernButton();
-                this.fruitButton();
-            } else {
-
                 //add the text bar (with all universal settings), with the first line of text
-                gardenScene.addTextBar("You come across a crossroads.");
+            gardenScene.addTextBar("You come across a crossroads.");
 
                 //add a set of ellipses to the text box to indicate
                 //further messages
-                gardenScene.addEllipses();
+            gardenScene.addEllipses();
 
                 //when the text bar is clicked, go to the changeText function
-                textBar.events.onInputUp.add(this.changeText, this);
-            }
+            textBar.events.onInputUp.add(this.changeText, this);
         }
     },
 
@@ -121,6 +110,7 @@ var gardenState = {
                 //change the text in the text bar, then create the passage/tree buttons
                 gardenScene.changeText("Your final comfort is the knowledge that you taste delicious.");
                 textBar.events.onInputUp.add(this.changeStateDeath, this);
+
             }
         }
     },
@@ -164,7 +154,7 @@ var gardenState = {
 
     changeStateDeath: function() {
         //activate the death scene
-        this.hasDied = true;
+        hasDiedGarden = true;
         game.state.start('yaDeadState');
     }
 };

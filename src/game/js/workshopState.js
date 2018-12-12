@@ -4,6 +4,9 @@ var textBar;
 var door;
 let workshopScene = null;
 
+//a declaration for the next state
+var hasDiedGarden;
+
 //initialize the state
 var workshopState = {
 
