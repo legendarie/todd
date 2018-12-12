@@ -33,7 +33,7 @@ var caveEntranceState = {
             caveEntranceScene.loadScene('caveEntranceBg', 0.5);
 
             if (giftFound === false) {
-                gift2 = openReefScene.addSprite(1120, 240, 'gift', 0.015);
+                gift2 = openReefScene.addSprite(510, 615, 'gift', 0.015);
                 gift2.events.onInputUp.add(this.foundGift, this);
             }
 
