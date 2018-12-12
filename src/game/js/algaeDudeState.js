@@ -1,11 +1,10 @@
 //establish the global variables
 var clickCount;
 var textBar;
-var exit;
 var algaeDude;
-var gift;
 var giftButton;
-var arms;
+var exit;
+
 let algaeDudeScene = null;
 
 //initialize the state
@@ -14,8 +13,11 @@ var algaeDudeState = {
     /** The initial functions to set up the scene for player interaction */
 
     preload: function() {
-        //declare algaeDudeScene to be an instance of a Scene, and load in the background image to the state
+        //declare algaeDudeScene to be an instance of Scene
         algaeDudeScene = new Scene;
+
+        //load the background image into the state
+        //(as well as the background change (mort without a present))
         algaeDudeScene.setBackground('mortGiftbg', 'assets/mortGiftbg.png');
         algaeDudeScene.setBackground('mortbg', 'assets/mortbg.png');
 
@@ -23,17 +25,14 @@ var algaeDudeState = {
         clickCount = 0;
     },
 
-    /** Add the starting visual features to the game canvas */
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
 
     create: function() {
-        //check to make sure the algaeDudeScene variable is not null
+        //check to make sure that the scene has been created
         if (algaeDudeScene != null) {
 
             //load the background and scale it
             algaeDudeScene.loadScene('mortGiftbg', 0.32);
-
-            //add the text bar (with all universal settings), with the first line of text
-            //algaeDudeScene.addTextBar("");
 
             //set up a button over mort
             this.algaeDudeButton();
@@ -53,7 +52,8 @@ var algaeDudeState = {
     },
 
     convoText: function() {
-        //only increment the click count so many times
+        //run through mort's conversation
+        //only allow the clickCount to increment to 11
         if (clickCount < 11) {
             clickCount++;
             if (clickCount === 1) {
@@ -77,7 +77,7 @@ var algaeDudeState = {
             } else if (clickCount === 10) {
                 algaeDudeScene.changeText('\"secret secret\"')
             } else {
-                //change the text in the text bar, then further the plot somehow
+                //once this script has been run through, make the present clickable
                 algaeDudeScene.changeText('\"...take gift\"');
                 algaeDudeScene.removeEllipses();
                 this.presentButton();
@@ -86,10 +86,10 @@ var algaeDudeState = {
     },
 
     /** All of the functions that create interactive buttons:
-     * algaeDudeButton creates a button over mort
-     * presentButton creates a button over mort's gift
+     * algaeDudeButton creates a button over mort to begin the conversation
+     * presentButton creates a button over mort's gift so it can be collected
      * getGift collects the gift and calls the exitButton function
-     * exitButton makes the screen interactive (switching to the next scene) */
+     * exitButton makes the screen interactive (switching to the next scene if clicked)*/
 
     algaeDudeButton: function() {
         //make mort interactive (begins the conversation when clicked)
@@ -116,11 +116,11 @@ var algaeDudeState = {
         exit.events.onInputUp.add(this.changeState, this);
     },
 
-    /** The function that switches to the next state */
+    /** The function that switches to the next state*/
 
     changeState: function() {
-        //change states to the next state
-        nextState = 'gardenState';
-        game.state.start('gardenState');
+        //change states to transitionCaveState
+        nextState = 'transitionCaveState';
+        game.state.start('transitionCaveState');
     }
 };

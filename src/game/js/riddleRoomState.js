@@ -112,7 +112,7 @@ var riddleRoomState = {
         } else if (riddleCounter === 8) {
             riddleRoomScene.changeText('"I am a filthy intruder. Who am I?"')
         } else if (riddleCounter === 9) {
-            riddleRoomScene.changeText('"I will die in this cave. Who am I?"')
+            riddleRoomScene.changeText('"I will die if I go any further. Who am I?"')
         }
 
         //set what the answers are

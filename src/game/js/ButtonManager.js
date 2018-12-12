@@ -5,7 +5,6 @@ var penguin2Check = false;
 var examineRoomCheck = false;
 var grabKeyCheck = false;
 var followCordCheck = false;
-var readNoteCheck = false;
 var cutLockCheck = false;
 var turnOnCheck = false;
 
@@ -18,9 +17,12 @@ var testWireCheck = false;
 var grabToolCheck = false;
 
 
-//This class tracks the buttons that are supposed to appear after each choice
+//This class tracks the buttons that are supposed to appear after each
+//choice in the two "choose your own adventure" puzzles
 class ButtonManager {
 
+    //the left/middle/right buttons are primarily for gearPuzzleState
+    //the four others are for penguinPuzzleState
     constructor() {
         this.leftButton = null;
         this.rightButton = null;
@@ -32,8 +34,9 @@ class ButtonManager {
         this.bottomRightButton = null;
     }
 
-    //sets any new buttons to their proper positions
+    //store any new buttons that would appear under their proper labels
     getNewButtons() {
+        //get any new buttons from the button that was just clicked
         let newLeft = clickedButton.getNewLeftButton();
         let newRight = clickedButton.getNewRightButton();
         let newMiddle = clickedButton.getNewMiddleButton();
@@ -43,6 +46,7 @@ class ButtonManager {
         let newBottomLeft = clickedButton.getNewBottomLeftButton();
         let newBottomRight = clickedButton.getNewBottomRightButton();
 
+        //store that information, if it exists, for each position
         if (newLeft != null) {
             if (newLeft === nothingButton) {
                 this.removeLeftButton();
@@ -97,6 +101,7 @@ class ButtonManager {
 
     /**Getters and setters*/
 
+    //set all the buttons in buttonManager as null
     removeButtons() {
         this.removeLeftButton();
         this.removeRightButton();

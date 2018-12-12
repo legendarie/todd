@@ -18,7 +18,7 @@ var roadForkWGState = {
         clickCount = 0;
     },
 
-    /** Add the initial visual elements to the canvas, and add the first piece of text to the scene */
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
 
     create: function() {
 

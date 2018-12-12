@@ -1,14 +1,16 @@
 //initialize the global variables for this state
 var clickCount;
 var textBar;
+var caveEntranceButton;
+
 let caveEntranceScene = null;
 
 var caveEntranceState = {
 
-    /** The initial functions to set up the scene for player interaction */
+    /** The initial functions to set up the scene for player interaction*/
 
     preload: function() {
-        //make caveEntranceScene an extension of the Scene
+        //make caveEntranceScene an extension of Scene
         caveEntranceScene = new Scene;
 
         //load the background image into the state
@@ -18,7 +20,7 @@ var caveEntranceState = {
         clickCount = 0;
     },
 
-    /** Add the initial visual elements to the canvas and begin the text sequence */
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
 
     create: function() {
         //check to make sure that the scene has been created
@@ -37,10 +39,11 @@ var caveEntranceState = {
         }
     },
 
-    /** Update the text sequence as the user interacts with the text bar */
+    /** All of the functions that change the text in the text box:
+     * changeText runs through the first four lines of text*/
 
     changeText: function() {
-        //only allow the clickCount to increment to 3 (unnecessary that it increments more)
+        //only allow the clickCount to increment to 3
         if (clickCount < 3) {
             clickCount++;
             if (clickCount === 1) {
@@ -48,8 +51,7 @@ var caveEntranceState = {
             } else if (clickCount === 2) {
                 caveEntranceScene.changeText("You're not too thrilled about the idea of venturing into the darkness.");
             } else  {
-                //once the clickCount is 3, remove the ellipses to indicate that there is no more text at this
-                //time. Then, call the enterCaveButton function to allow the user to enter the cave
+                //once this script has been run through, make the cave mouth interactive
                 caveEntranceScene.changeText("But it doesn't look like you really have a choice.");
                 caveEntranceScene.removeEllipses();
                 this.enterCaveButton();
@@ -57,17 +59,19 @@ var caveEntranceState = {
         }
     },
 
-    /** Create the button over the cave entrance and allow the user to interact with it. When that occurs,
-     * call the changeState function */
+    /** All of the functions that create interactive buttons:
+     * enterCaveButton creates a button over the cave mouth that switches to the next state*/
 
     enterCaveButton: function() {
-        var caveEntranceButton = caveEntranceScene.addButton(560, 250, 340, 350, 0);
+        caveEntranceButton = caveEntranceScene.addButton(560, 250, 340, 350, 0);
         caveEntranceButton.events.onInputUp.add(this.changeState, this);
     },
 
-    /** Change the game state to caveStartState */
+    /**The function that switches to the next state*/
 
     changeState: function() {
+        //change states to caveStartState
+        nextState = 'caveStartState';
         game.state.start('caveStartState');
     }
 
