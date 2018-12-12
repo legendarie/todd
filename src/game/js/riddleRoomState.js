@@ -21,7 +21,7 @@ var isCorrect = false;
 var riddleCounter;
 
 //tallies up how many riddles the player got correct
-var score;
+var riddlesCorrect;
 
 let riddleRoomScene = null;
 
@@ -46,7 +46,7 @@ var riddleRoomState = {
             //set it up so that the first riddle is run through
             riddleCounter = 1;
 
-            score = 0;
+            riddlesCorrect = 0;
 
             //load the background and scale it
             riddleRoomScene.loadScene('riddleRoombg', 0.32);
@@ -213,8 +213,8 @@ var riddleRoomState = {
         //sets the "player got the answer right" check to true
         isCorrect = true;
 
-        //increase the score (if the score hits 5, a bonus scene is added)
-        score++;
+        //increase the riddlesCorrect (if the riddlesCorrect hits 5, a bonus scene is added)
+        riddlesCorrect++;
 
         this.readyNextRiddle();
     },
@@ -278,7 +278,7 @@ var riddleRoomState = {
 
         //if the player got at least eight riddles correct,
         //set up algaeDudeState as the next state
-        if (score >= 8) {
+        if (riddlesCorrect >= 8) {
             passage.events.onInputUp.add(this.changeStateAlgae, this);
         } else {
             passage.events.onInputUp.add(this.changeStateGarden, this);
