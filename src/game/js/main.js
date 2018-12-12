@@ -37,5 +37,5 @@ game.state.add('fightState', fightState);
 game.state.add('gemGame2', gemGame2);
 
 
-game.state.start('kitchenState');
+game.state.start('doorState');
 

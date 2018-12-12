@@ -1,4 +1,5 @@
 //establish the global variables
+var giftCount; //this keeps track of the number of gifts that the player has found throughout the game
 var clickCount;
 var textBar;
 var blueDial;
@@ -25,6 +26,9 @@ var doorState = {
 
         //reset the global clickCount variable
         clickCount = 0;
+
+        //reset the global variable giftCount to 0
+        giftCount = 0;
     },
 
     /** Add the initial visual elements to the canvas, and add the first piece of text to the scene */

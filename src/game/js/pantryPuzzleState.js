@@ -35,6 +35,9 @@ var pantryPuzzleState = {
         pantryPuzzle.loadScene('pantry', 0.8);
 
         //add the text to the scene, style it, and add a shadow underneath it
+        var scoreTextBox = game.add.graphics();
+        scoreTextBox.beginFill(0x00000, 0.2);
+        scoreTextBox.drawRect(0, 0, 350, 60);
         scoreText = game.add.text(0, 0, 'Items found: ' + score + ' of 8', {font: "bold 38px Arial", fill: "#ff3b3b"});
         scoreText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
 

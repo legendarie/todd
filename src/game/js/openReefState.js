@@ -1,9 +1,11 @@
 //establish global variables
 var clickCount;
 var textBar;
+var gift1;
 var sign;
 var path;
 var alreadyBeenOR = false;    //a boolean variable to track whether the player has visited this state before
+var giftFound = false;  //a boolean variable to check whether the player has clicked on the gift
 let openReefScene = null;
 
 var openReefState = {
@@ -14,6 +16,8 @@ var openReefState = {
         //declare openReefScene to be an instance of a Scene, and load in the background image to the state
         openReefScene = new Scene;
         openReefScene.setBackground('openReefbg', 'assets/openReefbg.png');
+
+        openReefScene.setSprite('gift', 'assets/gift.png');
 
         //reset the global clickCount variable
         clickCount = 0;
@@ -43,6 +47,10 @@ var openReefState = {
             } else {
                 //if the player has already visited this screen, create the
                 //interactive buttons without the text bar descriptions
+                if (giftFound === false) {
+                    gift1 = openReefScene.addSprite(1120, 240, 'gift', 0.015);
+                    gift1.events.onInputUp.add(this.foundGift, this);
+                }
                 this.signButton();
                 this.pathButton();
             }
@@ -87,6 +95,25 @@ var openReefState = {
         //make the path ahead clickable. If clicked, it will call the changeStateFork function
         path = openReefScene.addButton(500, 250, 250, 200, 0);
         path.events.onInputUp.add(this.changeStateFork, this);
+    },
+
+    foundGift: function() {
+        //remove the gift from the scene and update the score and tell the player how
+        //many gifts they have found so far
+        gift1.kill();
+        giftFound = true;
+        giftCount++;
+
+        openReefScene.addTextBar('You found a gift!');
+        openReefScene.addEllipses();
+        textBar.events.onInputUp.add(this.changeGiftText, this);
+
+        return giftCount;
+    },
+
+    changeGiftText: function() {
+        openReefScene.changeText('You have found ' + giftCount + ' gift(s)');
+        openReefScene.removeEllipses();
     },
 
     /** The functions that switch to the next state, of which there are two:
