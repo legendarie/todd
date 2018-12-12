@@ -17,10 +17,13 @@ var openReefState = {
         openReefScene = new Scene;
         openReefScene.setBackground('openReefbg', 'assets/openReefbg.png');
 
+        //loads the gift sprite into the state
         openReefScene.setSprite('gift', 'assets/gift.png');
 
         //reset the global clickCount variable
         clickCount = 0;
+
+        console.log(giftFound);
     },
 
     /** Add the initial visual elements to the canvas, and add the first piece of text to the scene */
@@ -32,6 +35,13 @@ var openReefState = {
 
             //load the background and scale it
             openReefScene.loadScene('openReefbg', 0.6);
+
+            if (giftFound === false) {
+                //if the gift hasn't been found (clicked) yet, then once it is clicked,
+                // call the foundGift function
+                gift1 = openReefScene.addSprite(1120, 240, 'gift', 0.015);
+                gift1.events.onInputUp.add(this.foundGift, this);
+            }
 
             //if the player hasn't been to this screen before,
             if (alreadyBeenOR === false) {
@@ -45,16 +55,39 @@ var openReefState = {
                 //when the text bar is clicked, go to the changeText function
                 textBar.events.onInputUp.add(this.changeText, this);
             } else {
-                //if the player has already visited this screen, create the
-                //interactive buttons without the text bar descriptions
-                if (giftFound === false) {
-                    gift1 = openReefScene.addSprite(1120, 240, 'gift', 0.015);
-                    gift1.events.onInputUp.add(this.foundGift, this);
-                }
+                //if the player has already visited this screen, create the interactive buttons without the
+                // text bar descriptions plus add the gift sprite to the scene
                 this.signButton();
                 this.pathButton();
             }
         }
+    },
+
+    /** Once the player has found the gift, remove the sprite from the screen, set giftFound to true
+     * (so the gift isn't made again if the player returns to the original state), update the giftCount,
+     * and tell the player that they have found a gift. **/
+
+    foundGift: function() {
+        textBar.kill();
+        text.kill();
+        openReefScene.removeEllipses();
+
+        gift1.kill();
+        giftFound = true;
+        giftCount++;
+
+        openReefScene.addTextBar('You found a gift!');
+        openReefScene.addEllipses();
+        textBar.events.onInputUp.add(this.changeGiftText, this);
+
+        return giftCount;
+    },
+
+    /** Tells the player how many gifts they have found so far. **/
+
+    changeGiftText: function() {
+        openReefScene.changeText('You have found ' + giftCount + ' gift(s)');
+        textBar.events.onInputUp.add(this.changeText, this);
     },
 
     /** All of the functions that change the text in the text box:
@@ -64,19 +97,21 @@ var openReefState = {
         //if the player hasn't been to this screen before,
         if (alreadyBeenOR === false) {
             //only increment the click count twice. Unnecessary to increment it more
-            if (clickCount < 2) {
-                clickCount++;
-                if (clickCount === 1) {
-                    openReefScene.changeText("The water feels strangely cold.")
-                } else {
-                    //change the text in the text bar, remove the ellipses to indicate to the player that
-                    // there is no more text at this time, then create the sign and path buttons
-                    openReefScene.changeText("You take a good look at your surroundings.");
-                    openReefScene.removeEllipses();
-                    alreadyBeenOR = true;
-                    this.signButton();
-                    this.pathButton();
-                }
+            clickCount++;
+            if (clickCount === 1) {
+                openReefScene.changeText("The water feels strangely cold.")
+            } else if (clickCount === 2) {
+                //change the text in the text bar, remove the ellipses to indicate to the player that
+                // there is no more text at this time, then create the sign and path buttons
+                openReefScene.changeText("You take a good look at your surroundings.");
+                openReefScene.removeEllipses();
+            } else {
+                openReefScene.removeEllipses();
+                textBar.kill();
+                text.kill();
+                alreadyBeenOR = true;
+                this.signButton();
+                this.pathButton();
             }
         }
     },
@@ -97,37 +132,18 @@ var openReefState = {
         path.events.onInputUp.add(this.changeStateFork, this);
     },
 
-    foundGift: function() {
-        //remove the gift from the scene and update the score and tell the player how
-        //many gifts they have found so far
-        gift1.kill();
-        giftFound = true;
-        giftCount++;
-
-        openReefScene.addTextBar('You found a gift!');
-        openReefScene.addEllipses();
-        textBar.events.onInputUp.add(this.changeGiftText, this);
-
-        return giftCount;
-    },
-
-    changeGiftText: function() {
-        openReefScene.changeText('You have found ' + giftCount + ' gift(s)');
-        openReefScene.removeEllipses();
-    },
-
     /** The functions that switch to the next state, of which there are two:
      * one for the sign, and one for the road, which progresses the story */
 
     changeStateSign: function() {
         //change states to signState
         nextState = 'signState';
-        game.state.start('signState', signState);
+        game.state.start('signState');
     },
 
     changeStateFork: function() {
         //change states to roadForkState
         nextState = 'roadForkWGState';
-        game.state.start('roadForkWGState', roadForkWGState);
+        game.state.start('roadForkWGState');
     }
 };
