@@ -1,11 +1,15 @@
-let count = 3;
-let lives = 5;
+let santaHealth;
+let lives;
 var originalX;
 var originalY;
+var distanceX;
+var distanceY;
 var candy;
 var santa;
 var numCollision;
 var slingShot;
+var santaHealthText;
+var yourHealthText;
 var snow;
 
 
@@ -19,6 +23,9 @@ var fightState = {
         game.load.image('stripeCandy', 'assets/stripeCandy.png');
         game.load.image('slingshot', 'assets/slingshot.png');
         game.load.image('snowFlakes', 'assets/snowflake.png');
+
+        santaHealth = 3;
+        lives = 5;
     },
 
     create: function () {
@@ -34,9 +41,8 @@ var fightState = {
         this.createSnow();
         numCollision = 0;
 
-        santaHealth = game.add.text(0, 0, count);
-        yourHealth = game.add.text(300,0,lives);
-
+        santaHealthText = game.add.text(0, 0, santaHealth);
+        yourHealthText = game.add.text(300,0,lives);
     },
 
 
@@ -80,7 +86,7 @@ var fightState = {
 
     createSnow: function () {
         snow = game.add.emitter(game.world.centerX, 0, 50); //x coordinate, y coordinate, number of particles
-        snow.makeParticles('snowFlakes', 100, 50, true);
+        snow.makeParticles('snowFlakes', 100, 10, true);
         snow.maxParticleScale = 0.3;
         snow.minParticleScale = 0.1;
         snow.setYSpeed(20, 100);
@@ -94,12 +100,9 @@ var fightState = {
 
     play: function () {
         candy.events.onInputUp.add(this.launch, this);
-
-
     },
 
     launch: function () {
-
         // enables game physics to apply to the candy sprite, then sets its x and y velocity, the gravity
         // that will be applied to the sprite when it falls, and the x and y trajectory upon a bounce
         candy.body.collideWorldBounds = true;
@@ -119,10 +122,10 @@ var fightState = {
     },
 
     restart: function () {
-        count = count - 1;
+        santaHealth = santaHealth - 1;
         candy.destroy();
         this.createCandy();
-        if (count <= 0) {
+        if (santaHealth <= 0) {
             game.state.start('doorState', doorState);
         }
 
@@ -137,12 +140,11 @@ var fightState = {
         }
     },
 
-
     update: function () {
         // as the game is running, the candy and santa are allowed to interact (to bounce off one another)
         game.physics.arcade.collide(candy, santa, this.restart, null, this);
         game.physics.arcade.collide(candy, snow, this.hitSnow, null, this);
-        santaHealth.setText("Santa's health: "+count);
-        yourHealth.setText("Your health: "+lives);
+        santaHealthText.setText("Santa's health: "+ santaHealth);
+        yourHealthText.setText("Your health: "+lives);
     }
 }

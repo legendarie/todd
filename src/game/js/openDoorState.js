@@ -16,11 +16,11 @@ var openDoorState = {
         clickCount = 0;
     },
 
-    /** Add the initial visual elements to the canvas, and add the first piece of text to the scene */
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
 
     create: function() {
 
-        //check to make sure the doorScene variable is not null
+        //check to make sure that the scene has been created
         if (openDoorScene != null) {
 
             //load the background and scale it
@@ -68,7 +68,11 @@ var openDoorState = {
 
     changeState: function () {
         //change states to the open reef
-        nextState = 'openReefState';
-      game.state.start('openReefState', openReefState);
+      //   nextState = 'openReefState';
+      // game.state.start('openReefState', openReefState);
+
+      //for testing: fightState
+        nextState = 'fightState';
+        game.state.start('fightState');
     }
 };

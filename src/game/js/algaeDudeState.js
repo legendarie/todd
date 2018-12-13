@@ -41,7 +41,7 @@ var algaeDudeState = {
 
     /** All of the functions that change the text in the text box:
      * beginConvo starts up the conversation with mort if you click on him
-     * convoText continues mort's conversation using the text bar */
+     * convoText continues mort's conversation using the text bar*/
 
     beginConvo: function() {
         //start off the cryptic conversation with mort, the algae growth
