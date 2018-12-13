@@ -1,5 +1,6 @@
 //establish the global variables
 var clickCount;
+var hasDiedGarden = false;
 var textBar;
 var gift4;
 var house;
@@ -25,7 +26,9 @@ var gardenState = {
 
         //reset the global clickCount, giftFound, and giftText variables
         clickCount = 0;
-        giftFound = false;
+        if (hasDiedGarden === false) {
+            giftFound = false;
+        }
         giftText = false;
     },
 
@@ -40,19 +43,27 @@ var gardenState = {
 
             //load the gift sprite and scale it
             if (giftFound === false) {
-                gift4 = gardenScene.addSprite(1000, 550, 'gift', 0.015);
+                gift4 = gardenScene.addSprite(100, 550, 'gift', 0.015);
                 gift4.events.onInputUp.add(this.foundGift, this);
             }
 
-            //add the text bar (with all universal settings), with the first line of text
-            gardenScene.addTextBar("You come across a crossroads.");
+            if (hasDiedGarden === false) {
+                //add the text bar (with all universal settings), with the first line of text
+                gardenScene.addTextBar("You come across a crossroads.");
 
-            //add a set of ellipses to the text box to indicate
-            //further messages
-            gardenScene.addEllipses();
+                //add a set of ellipses to the text box to indicate
+                //further messages
+                gardenScene.addEllipses();
 
-            //when the text bar is clicked, go to the changeText function
-            textBar.events.onInputUp.add(this.changeText, this);
+                //when the text bar is clicked, go to the changeText function
+                textBar.events.onInputUp.add(this.changeText, this);
+            } else {
+                gardenScene.addTextBar("Where do you want to go?");
+                this.houseButton();
+                this.iceCavernButton();
+                this.fruitButton();
+            }
+
         }
     },
 
@@ -82,8 +93,9 @@ var gardenState = {
         if (giftText === false) {
             gardenScene.changeText('You have found ' + giftCount + ' gift(s)');
             giftText = true;
+            textBar.events.onInputUp.add(this.changeText, this);
         }
-        textBar.events.onInputUp.add(this.changeText, this);
+
     },
 
     /**All of the functions that change the text in the text box:
@@ -92,11 +104,9 @@ var gardenState = {
      * continueDeathText runs through the death sequence for touching the fruit*/
 
     changeText: function() {
-        //text.kill();
         //describe the grotto
         //only increment the click count 5 times
         if (clickCount < 5) {
-            console.log(clickCount);
             clickCount++;
             if (clickCount === 1) {
                 gardenScene.changeText("The little grotto is overgrown with different types of plants.");
@@ -109,8 +119,8 @@ var gardenState = {
             } else {
                 //once this script has been run through, create the passage/tree buttons
                 gardenScene.changeText("Where do you want to go?");
-                //textBar.events.onInputUp.remove(this.changeText, this);
-                //clickCount = 0;
+                textBar.events.onInputUp.remove(this.changeText, this);
+                clickCount = 0;
                 gardenScene.removeEllipses();
 
                 this.houseButton();
@@ -121,7 +131,6 @@ var gardenState = {
     },
 
     beginDeathText: function() {
-        clickCount = 0;
         //remove listener on the buttons and begin the death script
         fruit.events.onInputUp.remove(this.beginDeathText, this);
         house.events.onInputUp.remove(this.changeStateHouse, this);
@@ -136,28 +145,29 @@ var gardenState = {
     continueDeathText: function() {
         //run the player through the death script
         //only allow the clickCount to increment to 9
-        if (clickCount < 9) {
+        if (clickCount < 10) {
             clickCount++;
             if (clickCount === 1) {
-                gardenScene.changeText("It's a bit of a stretch, but you're able to grab one.")
+                gardenScene.changeText("It's a bit of a stretch, but you're able to grab one.");
+                gardenScene.addEllipses();
             } else if (clickCount === 2) {
-                gardenScene.changeText("Immediately, you retract your hand in surprise.")
+                gardenScene.changeText("Immediately, you retract your hand in surprise.");
             } else if (clickCount === 3) {
-                gardenScene.changeText("The thick gel on its skin latches onto your fingers.")
+                gardenScene.changeText("The thick gel on its skin latches onto your fingers.");
             } else if (clickCount === 3) {
-                gardenScene.changeText("It starts sinking into your flesh like an acid.")
+                gardenScene.changeText("It starts sinking into your flesh like an acid.");
             } else if (clickCount === 4) {
-                gardenScene.changeText("Your arm is turning purple.")
+                gardenScene.changeText("Your arm is turning purple.");
             } else if (clickCount === 5) {
-                gardenScene.changeText("...")
+                gardenScene.changeText("...");
             } else if (clickCount === 6) {
-                gardenScene.changeText("It's turning into fruit!")
+                gardenScene.changeText("It's turning into fruit!");
             } else if (clickCount === 7) {
-                gardenScene.changeText("YOU'RE turning into fruit!")
+                gardenScene.changeText("YOU'RE turning into fruit!");
             } else if (clickCount === 8) {
-                gardenScene.changeText("...")
+                gardenScene.changeText("...");
             } else if (clickCount === 9) {
-                gardenScene.changeText("You give your hand a lick.")
+                gardenScene.changeText("You give your hand a lick.");
             } else {
                 //once this script has been run through, call the death state
                 gardenScene.changeText("Your final comfort is the knowledge that you taste delicious.");
@@ -206,6 +216,7 @@ var gardenState = {
     changeStateDeath: function() {
         //activate the death state
         hasDiedGarden = true;
+        nextState = 'gardenState';
         game.state.start('yaDeadState');
     }
 };

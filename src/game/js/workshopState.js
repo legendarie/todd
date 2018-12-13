@@ -21,11 +21,10 @@ var workshopState = {
         //load the gift sprite into the scene
         workshopScene.setSprite('gift', 'assets/gift.png');
 
-        //reset the global clickCount variable
+        //reset the global clickCount, giftFound, and giftText variables
         clickCount = 0;
-
-        //reset the global variable giftFound to false
         giftFound = false;
+        giftText = false;
     },
 
     create: function() {
@@ -76,7 +75,10 @@ var workshopState = {
     /** Tells the player how many gifts they have found so far. **/
 
     changeGiftText: function() {
-        workshopScene.changeText('You have found ' + giftCount + ' gift(s)');
+        if (giftText === false) {
+            workshopScene.changeText('You have found ' + giftCount + ' gift(s)');
+            giftText = true;
+        }
         textBar.events.onInputUp.add(this.changeText, this);
     },
 
@@ -85,7 +87,7 @@ var workshopState = {
 
     changeText: function() {
         //only increment the click count so many times
-        if (clickCount < 6) {
+        if (clickCount < 5) {
             clickCount++;
             if (clickCount === 1) {
                 workshopScene.changeText("The pounding of the machine slows to a halt.")
@@ -95,13 +97,10 @@ var workshopState = {
                 workshopScene.changeText("The shop looks abandoned.")
             } else if (clickCount === 4) {
                 workshopScene.changeText("There's just one door out of here.")
-            } else if (clickCount === 5) {
+            } else {
                 //change the text in the text bar, then further the plot somehow
                 workshopScene.changeText("You should leave before anyone comes.");
-            } else {
                 workshopScene.removeEllipses();
-                textBar.kill();
-                text.kill();
                 this.doorButton();
             }
         }
