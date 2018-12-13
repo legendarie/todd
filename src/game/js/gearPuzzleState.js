@@ -150,7 +150,6 @@ var gearPuzzleState = {
         if (clickedButton.isIrregular() === true) {
             this.setButtonChanges();
             buttonManager.getNewButtons();
-            clickedButton.removeButtons();
             this.addButtons();
         } else {
             //if it does, run through the script as normal
