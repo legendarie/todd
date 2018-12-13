@@ -57,13 +57,13 @@ var gardenState = {
 
                 //when the text bar is clicked, go to the changeText function
                 textBar.events.onInputUp.add(this.changeText, this);
+
             } else {
                 gardenScene.addTextBar("Where do you want to go?");
                 this.houseButton();
                 this.iceCavernButton();
                 this.fruitButton();
             }
-
         }
     },
 
@@ -93,9 +93,15 @@ var gardenState = {
         if (giftText === false) {
             gardenScene.changeText('You have found ' + giftCount + ' gift(s)');
             giftText = true;
-            textBar.events.onInputUp.add(this.changeText, this);
+            if (clickCount < 5) {
+                textBar.events.onInputUp.add(this.changeText, this);
+            } else {
+                gardenScene.removeEllipses();
+                this.houseButton();
+                this.iceCavernButton();
+                this.fruitButton();
+            }
         }
-
     },
 
     /**All of the functions that change the text in the text box:
@@ -104,6 +110,7 @@ var gardenState = {
      * continueDeathText runs through the death sequence for touching the fruit*/
 
     changeText: function() {
+        console.log(clickCount);
         //describe the grotto
         //only increment the click count 5 times
         if (clickCount < 5) {

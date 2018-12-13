@@ -49,5 +49,5 @@ game.state.add('fightState', fightState);
 game.state.add('yaDeadState', yaDeadState);
 
 //the state that the game begins with:
-game.state.start('gardenState');
+game.state.start('doorState');
 

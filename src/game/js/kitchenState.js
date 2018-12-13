@@ -1,12 +1,12 @@
 var secretRoomButton;
 var textBar;
 var clickCount;
+var gift5;
 var fridgeButton;
 var pantryButton;
 var kitchenButton;
 var finalDoorButton;
 var exitKitchenButton;
-
 var alreadyBeenKN = false; //boolean checking if the player has been in the kitchen before
 
 let kitchenScene = null;
@@ -22,8 +22,15 @@ var kitchenState = {
         //load the background image into the state
         kitchenScene.setBackground('kitchen', 'assets/kitchenbg.jpg');
 
-        //reset the global clickCount variable
+        //load the gift sprite into the state
+        kitchenScene.setSprite('gift', 'assets/gift.png');
+
+        //reset the global clickCount, giftFound, and giftText variables
         clickCount = 0;
+        if (alreadyBeenKN === false) {
+            giftFound = false;
+        }
+        giftText = false;
     },
 
     /**Add the initial visual elements to the canvas, and add the beginning text to the scene*/
@@ -33,6 +40,12 @@ var kitchenState = {
         if (kitchenScene !== null) {
             //add background to the state and scale it
             kitchenScene.loadScene('kitchen', 1.3);
+
+            //load the gift sprite and scale it
+            if (giftFound === false) {
+                gift5 = gardenScene.addSprite(120, 145, 'gift', 0.013);
+                gift5.events.onInputUp.add(this.foundGift, this);
+            }
 
             //if it's the player's first time in the kitchen,
             if (alreadyBeenKN === false) {
@@ -51,6 +64,85 @@ var kitchenState = {
                 this.addButtons();
             }
         }
+    },
+
+    /** All of the functions that create interactive buttons:
+     * addButtons creates the buttons over the fridge, pantry, and hidden cabinet
+     * finalDoorChoice creates the post-puzzle options to leave the kitchen, or to stay
+     * throughFinalDoor removes the choice buttons, and creates a screen-wide button to switch states*/
+
+    addButtons: function() {
+        //add the button on the fridge
+        fridgeButton = kitchenScene.addButton(80, 200, 100, 440, 0);
+
+        //add the button on the pantry
+        pantryButton = kitchenScene.addButton(280, 80, 150, 350, 0);
+
+        if (giftCount === 5) {
+            //add the button on the cabinet that leads to the secret gift room
+            secretRoomButton = kitchenScene.addButton(845, 390, 60, 110, 0);
+        }
+
+        //if all of the hidden items have been found in the pantry puzzle,
+        if (allItemsFound === true) {
+
+            //reset clickCount
+            clickCount = 0;
+
+            //add the first piece of text, and add ellipses to indicate to the player that there is more text
+            kitchenScene.addTextBar('You hear a loud click as a door you didn\'t notice before'
+                + ' unlocks to your right.');
+            kitchenScene.addEllipses();
+
+            //when the text bar is clicked, run the end-of-scene script
+            textBar.events.onInputUp.add(this.beatPuzzleText, this);
+
+            //if the hidden cabinet button is clicked, prepare to change states
+            secretRoomButton.events.onInputUp.add(this.secretRoomTextStart, this);
+
+        } else {
+            //if there are still items that have not been found, add listeners
+
+            //when the fridgeButton is pressed, change states
+            fridgeButton.events.onInputUp.add(this.changeStateList, this);
+
+            //when the pantryButton is pressed, change states
+            pantryButton.events.onInputUp.add(this.changeStatePantry, this);
+
+            //if the secretRoomButton is clicked, change states
+            secretRoomButton.events.onInputUp.add(this.secretRoomTextStart, this);
+        }
+    },
+
+    /** Once the player has found the gift, remove the sprite from the screen, set giftFound to true
+     * (so the gift isn't made again if the player returns to the original state), update the giftCount,
+     * and tell the player that they have found a gift. **/
+
+    foundGift: function() {
+        textBar.kill();
+        text.kill();
+        kitchenScene.removeEllipses();
+
+        gift5.kill();
+        giftFound = true;
+        giftCount++;
+
+        kitchenScene.addTextBar('You found a gift!');
+        kitchenScene.addEllipses();
+        textBar.events.onInputUp.add(this.changeGiftText, this);
+
+        return giftCount;
+    },
+
+    /** Tells the player how many gifts they have found so far. **/
+
+    changeGiftText: function() {
+        if (giftText === false) {
+            kitchenScene.changeText('You have found ' + giftCount + ' gift(s)');
+            giftText = true;
+            textBar.events.onInputUp.add(this.changeText, this);
+        }
+
     },
 
     /** All of the functions that change the text in the text box:
@@ -135,52 +227,6 @@ var kitchenState = {
             }
         }
 
-    },
-
-    /** All of the functions that create interactive buttons:
-     * addButtons creates the buttons over the fridge, pantry, and hidden cabinet
-     * finalDoorChoice creates the post-puzzle options to leave the kitchen, or to stay
-     * throughFinalDoor removes the choice buttons, and creates a screen-wide button to switch states*/
-
-    addButtons: function() {
-        //add the button on the fridge
-        fridgeButton = kitchenScene.addButton(80, 200, 100, 440, 0);
-
-        //add the button on the pantry
-        pantryButton = kitchenScene.addButton(280, 80, 150, 350, 0);
-
-        //add the button on the cabinet that leads to the secret gift room
-        secretRoomButton = kitchenScene.addButton(845, 390, 60, 110, 0);
-
-        //if all of the hidden items have been found in the pantry puzzle,
-        if (allItemsFound === true) {
-
-            //reset clickCount
-            clickCount = 0;
-
-            //add the first piece of text, and add ellipses to indicate to the player that there is more text
-            kitchenScene.addTextBar('You hear a loud click as a door you didn\'t notice before'
-                + ' unlocks to your right.');
-            kitchenScene.addEllipses();
-
-            //when the text bar is clicked, run the end-of-scene script
-            textBar.events.onInputUp.add(this.beatPuzzleText, this);
-
-            //if the hidden cabinet button is clicked, prepare to change states
-            secretRoomButton.events.onInputUp.add(this.secretRoomTextStart, this);
-
-        } else {
-            //if there are still items that have not been found, add listeners
-
-            //when the fridgeButton is pressed, change states
-            fridgeButton.events.onInputUp.add(this.changeStateList, this);
-
-            //when the pantryButton is pressed, change states
-            pantryButton.events.onInputUp.add(this.changeStatePantry, this);
-
-            //if the secretRoomButton is clicked, change states
-            secretRoomButton.events.onInputUp.add(this.secretRoomTextStart, this);
-        }
     },
 
     finalDoorChoice: function() {
