@@ -23,6 +23,9 @@ var algaeDudeState = {
 
         //reset the global clickCount variable
         clickCount = 0;
+
+        //reset the global variable giftFound to false
+        giftFound = false;
     },
 
     /**Add the visual elements to the canvas, and add the first line of text to the scene*/
@@ -108,6 +111,29 @@ var algaeDudeState = {
         //collect the gift and let the player leave the scene
         algaeDudeScene.loadScene('mortbg', 0.32);
         giftButton.kill();
+        this.foundGift();
+    },
+
+    foundGift: function() {
+        textBar.kill();
+        text.kill();
+        algaeDudeScene.removeEllipses();
+
+        giftFound = true;
+        giftCount++;
+
+        algaeDudeScene.addTextBar('You found a gift!');
+        algaeDudeScene.addEllipses();
+        textBar.events.onInputUp.add(this.changeGiftText, this);
+
+        return giftCount;
+    },
+
+    /** Tells the player how many gifts they have found so far. **/
+
+    changeGiftText: function() {
+        algaeDudeScene.changeText('You have found ' + giftCount + ' gift(s)');
+        algaeDudeScene.removeEllipses();
         this.exitButton();
     },
 

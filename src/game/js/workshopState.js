@@ -1,6 +1,7 @@
 //establish the global variables
 var clickCount;
 var textBar;
+var gift3;
 var door;
 let workshopScene = null;
 
@@ -17,8 +18,14 @@ var workshopState = {
         workshopScene = new Scene;
         workshopScene.setBackground('workshopbg', 'assets/workshopbg.png');
 
+        //load the gift sprite into the scene
+        workshopScene.setSprite('gift', 'assets/gift.png');
+
         //reset the global clickCount variable
         clickCount = 0;
+
+        //reset the global variable giftFound to false
+        giftFound = false;
     },
 
     create: function() {
@@ -27,6 +34,12 @@ var workshopState = {
 
             //load the background and scale it
             workshopScene.loadScene('workshopbg', 0.32);
+
+            //add the gift to the scene
+            if (giftFound === false) {
+                gift3 = workshopScene.addSprite(50, 260, 'gift', 0.015);
+                gift3.events.onInputUp.add(this.foundGift, this);
+            }
 
             //add the text bar (with all universal settings), with the first line of text
             workshopScene.addTextBar("As you enter the workshop, you lift the lever by the door.");
@@ -40,12 +53,39 @@ var workshopState = {
         }
     },
 
+    /** Once the player has found the gift, remove the sprite from the screen, set giftFound to true
+     * (so the gift isn't made again if the player returns to the original state), update the giftCount,
+     * and tell the player that they have found a gift. **/
+
+    foundGift: function() {
+        textBar.kill();
+        text.kill();
+        workshopScene.removeEllipses();
+
+        gift3.kill();
+        giftFound = true;
+        giftCount++;
+
+        workshopScene.addTextBar('You found a gift!');
+        workshopScene.addEllipses();
+        textBar.events.onInputUp.add(this.changeGiftText, this);
+
+        return giftCount;
+    },
+
+    /** Tells the player how many gifts they have found so far. **/
+
+    changeGiftText: function() {
+        workshopScene.changeText('You have found ' + giftCount + ' gift(s)');
+        textBar.events.onInputUp.add(this.changeText, this);
+    },
+
     /**All of the functions that change the text in the text box:
      * changeText runs through the first 5 lines of text*/
 
     changeText: function() {
         //only increment the click count so many times
-        if (clickCount < 5) {
+        if (clickCount < 6) {
             clickCount++;
             if (clickCount === 1) {
                 workshopScene.changeText("The pounding of the machine slows to a halt.")
@@ -55,10 +95,13 @@ var workshopState = {
                 workshopScene.changeText("The shop looks abandoned.")
             } else if (clickCount === 4) {
                 workshopScene.changeText("There's just one door out of here.")
-            } else {
+            } else if (clickCount === 5) {
                 //change the text in the text bar, then further the plot somehow
                 workshopScene.changeText("You should leave before anyone comes.");
+            } else {
                 workshopScene.removeEllipses();
+                textBar.kill();
+                text.kill();
                 this.doorButton();
             }
         }
