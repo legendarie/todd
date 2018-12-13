@@ -121,11 +121,11 @@ var doorState = {
 
     changeState: function() {
         //change states to the open door
-        // nextState = 'openDoorState';
-        // game.state.start('openDoorState');
+        nextState = 'openDoorState';
+        game.state.start('openDoorState');
 
         //for testing:
-        nextState = 'gearPuzzleState';
-        game.state.start('gearPuzzleState');
+        //nextState = 'gearPuzzleState';
+        //game.state.start('gearPuzzleState');
     }
 };

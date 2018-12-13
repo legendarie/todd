@@ -92,6 +92,7 @@ class Scene {
         text = game.add.text(0, 0, newText, style);
         text.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
         text.setTextBounds(0, 0, 1200, 100);
+
     }
 
     /**The function for adding a button to a scene. Used in-game to activate text sequences

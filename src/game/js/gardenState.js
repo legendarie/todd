@@ -1,6 +1,7 @@
 //establish the global variables
 var clickCount;
 var textBar;
+var gift4;
 var house;
 var iceCavern;
 var fruit;
@@ -19,8 +20,13 @@ var gardenState = {
         //load in the background image to the state
         gardenScene.setBackground('gardenbg', 'assets/gardenbg.png');
 
-        //reset the global clickCount variable
+        //load the gift sprite into the state
+        gardenScene.setSprite('gift', 'assets/gift.png');
+
+        //reset the global clickCount, giftFound, and giftText variables
         clickCount = 0;
+        giftFound = false;
+        giftText = false;
     },
 
     /**Add the visual elements to the canvas, and add the first line of text to the scene*/
@@ -31,6 +37,12 @@ var gardenState = {
 
             //load the background and scale it
             gardenScene.loadScene('gardenbg', 0.32);
+
+            //load the gift sprite and scale it
+            if (giftFound === false) {
+                gift4 = gardenScene.addSprite(1000, 550, 'gift', 0.015);
+                gift4.events.onInputUp.add(this.foundGift, this);
+            }
 
             //add the text bar (with all universal settings), with the first line of text
             gardenScene.addTextBar("You come across a crossroads.");
@@ -44,29 +56,61 @@ var gardenState = {
         }
     },
 
+    /** Once the player has found the gift, remove the sprite from the screen, set giftFound to true
+     * (so the gift isn't made again if the player returns to the original state), update the giftCount,
+     * and tell the player that they have found a gift. **/
+
+    foundGift: function() {
+        textBar.kill();
+        text.kill();
+        gardenScene.removeEllipses();
+
+        gift4.kill();
+        giftFound = true;
+        giftCount++;
+
+        gardenScene.addTextBar('You found a gift!');
+        gardenScene.addEllipses();
+        textBar.events.onInputUp.add(this.changeGiftText, this);
+
+        return giftCount;
+    },
+
+    /** Tells the player how many gifts they have found so far. **/
+
+    changeGiftText: function() {
+        if (giftText === false) {
+            gardenScene.changeText('You have found ' + giftCount + ' gift(s)');
+            giftText = true;
+        }
+        textBar.events.onInputUp.add(this.changeText, this);
+    },
+
     /**All of the functions that change the text in the text box:
      * changeText runs through the first six lines of text
      * beginDeathText prepares the death script
      * continueDeathText runs through the death sequence for touching the fruit*/
 
     changeText: function() {
+        //text.kill();
         //describe the grotto
         //only increment the click count 5 times
         if (clickCount < 5) {
+            console.log(clickCount);
             clickCount++;
             if (clickCount === 1) {
-                gardenScene.changeText("The little grotto is overgrown with different types of plants.")
+                gardenScene.changeText("The little grotto is overgrown with different types of plants.");
             } else if (clickCount === 2) {
-                gardenScene.changeText("They are somewhat tactfully arranged.")
+                gardenScene.changeText("They are somewhat tactfully arranged.");
             } else if (clickCount === 3) {
-                gardenScene.changeText("A glowing lantern sits on a stony ledge.")
+                gardenScene.changeText("A glowing lantern sits on a stony ledge.");
             } else if (clickCount === 4) {
-                gardenScene.changeText("You see a solid stone door, and an icy tunnel.")
+                gardenScene.changeText("You see a solid stone door, and an icy tunnel.");
             } else {
                 //once this script has been run through, create the passage/tree buttons
                 gardenScene.changeText("Where do you want to go?");
-                textBar.events.onInputUp.remove(this.changeText, this);
-                clickCount = 0;
+                //textBar.events.onInputUp.remove(this.changeText, this);
+                //clickCount = 0;
                 gardenScene.removeEllipses();
 
                 this.houseButton();
@@ -77,6 +121,7 @@ var gardenState = {
     },
 
     beginDeathText: function() {
+        clickCount = 0;
         //remove listener on the buttons and begin the death script
         fruit.events.onInputUp.remove(this.beginDeathText, this);
         house.events.onInputUp.remove(this.changeStateHouse, this);

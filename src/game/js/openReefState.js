@@ -2,6 +2,7 @@
 var clickCount;
 var textBar;
 var gift1;
+var giftText = false; //boolean variable to keep track of whether the gift text has been displayed before
 var sign;
 var path;
 
@@ -28,7 +29,6 @@ var openReefState = {
         //reset the global clickCount variable
         clickCount = 0;
 
-        console.log(giftFound);
     },
 
     /**Add the visual elements to the canvas, and add the first line of text to the scene*/
@@ -79,15 +79,11 @@ var openReefState = {
             clickCount++;
             if (clickCount === 1) {
                 openReefScene.changeText("The water feels strangely cold.")
-            } else if (clickCount === 2) {
+            } else {
                 //change the text in the text bar, remove the ellipses to indicate to the player that
                 // there is no more text at this time, then create the sign and path buttons
                 openReefScene.changeText("You take a good look at your surroundings.");
                 openReefScene.removeEllipses();
-            } else {
-                openReefScene.removeEllipses();
-                textBar.kill();
-                text.kill();
                 alreadyBeenOR = true;
                 this.signButton();
                 this.pathButton();
@@ -113,7 +109,10 @@ var openReefState = {
     },
 
     changeGiftText: function() {
-        openReefScene.changeText('You have found ' + giftCount + ' gift(s)');
+        if (giftText === false) {
+            openReefScene.changeText('You have found ' + giftCount + ' gift(s)');
+            giftText = true;
+        }
         textBar.events.onInputUp.add(this.changeText, this);
     },
 

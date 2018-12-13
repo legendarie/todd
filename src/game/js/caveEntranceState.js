@@ -17,11 +17,11 @@ var caveEntranceState = {
         //load the gift sprite into the state
         caveEntranceScene.setSprite('gift', 'assets/gift.png');
 
-        //reset the global variable clickCount to 0
+        //reset the global clickCount, giftFound, and giftText variables
         clickCount = 0;
-
-        //reset the global variable giftFound to false
         giftFound = false;
+        giftText = false;
+
     },
 
     /**Add the visual elements to the canvas, and add the first line of text to the scene*/
@@ -71,7 +71,10 @@ var caveEntranceState = {
     /** Tells the player how many gifts they have found so far. **/
 
     changeGiftText: function() {
-        caveEntranceScene.changeText('You have found ' + giftCount + ' gift(s)');
+        if (giftText === false) {
+            caveEntranceScene.changeText('You have found ' + giftCount + ' gift(s)');
+            giftText = true;
+        }
         textBar.events.onInputUp.add(this.changeText, this);
     },
 
@@ -87,14 +90,11 @@ var caveEntranceState = {
                 }
             } else if (clickCount === 2) {
                 caveEntranceScene.changeText("You're not too thrilled about the idea of venturing into the darkness.");
-            } else if (clickCount === 3) {
+            } else {
                 //once the clickCount is 3, remove the ellipses to indicate that there is no more text at this
                 //time. Then, call the enterCaveButton function to allow the user to enter the cave
                 caveEntranceScene.changeText("But it doesn't look like you really have a choice.");
-            } else {
                 caveEntranceScene.removeEllipses();
-                textBar.kill();
-                text.kill();
                 this.enterCaveButton();
             }
         }
@@ -104,7 +104,7 @@ var caveEntranceState = {
      * enterCaveButton creates a button over the cave mouth that switches to the next state*/
 
     enterCaveButton: function() {
-        caveEntranceButton = caveEntranceScene.addButton(560, 250, 340, 350, 0);
+        var caveEntranceButton = caveEntranceScene.addButton(560, 250, 340, 350, 0);
         caveEntranceButton.events.onInputUp.add(this.changeState, this);
     },
 
