@@ -1,3 +1,4 @@
+//the hidden item buttons
 var orangeSoda;
 var pizzaSauce;
 var paperTowels;
@@ -6,35 +7,40 @@ var spices2;
 var spices3;
 var popcorn;
 var trashBags;
+
+//score trackers and the exit button
 var score = 0;
 var returnButton;
 var scoreText;
+var check;
+
 var foundItems = [];   //array to keep track of the items that have already been found
 var allItemsFound = false;  //boolean variable to see if all 8 items have been found
-let pantryPuzzle = null;
-var check;
+
+let pantryPuzzleScene = null;
 
 var pantryPuzzleState = {
 
-    /** The initial function to set up the scene for player interaction */
+    /** The initial function to set up the scene for player interaction*/
 
     preload: function() {
+        //declare pantryPuzzleScene to be an instance of Scene
+        pantryPuzzleScene = new Scene;
 
-        pantryPuzzle = new Scene;
-
-        pantryPuzzle.setBackground('pantry', 'assets/pantrybg.jpg');
-        pantryPuzzle.setSprite('check', 'assets/checkMark.png');
+        //load in the background image and checkmark sprite to the state
+        pantryPuzzleScene.setBackground('pantry', 'assets/pantrybg.jpg');
+        pantryPuzzleScene.setSprite('check', 'assets/checkMark.png');
 
     },
 
-    /** Add the visual elements to the scene, and have the first instances of player interaction */
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
 
     create: function() {
 
-        //add the background to the scene
-        pantryPuzzle.loadScene('pantry', 0.8);
+        //load the background and scale it
+        pantryPuzzleScene.loadScene('pantry', 0.8);
 
-        //add the text to the scene, style it, and add a shadow underneath it
+        //add custom text to the scene, style it, and add a shadow underneath it
         var scoreTextBox = game.add.graphics();
         scoreTextBox.beginFill(0x00000, 0.2);
         scoreTextBox.drawRect(0, 0, 350, 60);
@@ -48,48 +54,48 @@ var pantryPuzzleState = {
         /** Maybe make an array of obj, xPos, yPos, width, height, opacity then make a new function
          * that iterates through the array to generate the objects */
         if (!foundItems.includes(orangeSoda)) {
-            orangeSoda = pantryPuzzle.addHiddenButton(640, 60, 40, 100, 0);
+            orangeSoda = pantryPuzzleScene.addHiddenButton(640, 60, 40, 100, 0);
         } else {
-            pantryPuzzle.addStaticSprite(660, 110, 'check', 0.1, 0.5, 0.5);
+            pantryPuzzleScene.addStaticSprite(660, 110, 'check', 0.1, 0.5, 0.5);
         }
         if (!foundItems.includes(pizzaSauce)) {
-            pizzaSauce = pantryPuzzle.addHiddenButton(410, 580, 120, 70, 0);
+            pizzaSauce = pantryPuzzleScene.addHiddenButton(410, 580, 120, 70, 0);
         } else {
-            pantryPuzzle.addStaticSprite(470, 615, 'check', 0.1, 0.5, 0.5);
+            pantryPuzzleScene.addStaticSprite(470, 615, 'check', 0.1, 0.5, 0.5);
         }
         if (!foundItems.includes(paperTowels)) {
-            paperTowels = pantryPuzzle.addHiddenButton(905, 10, 45, 95, 0);
+            paperTowels = pantryPuzzleScene.addHiddenButton(905, 10, 45, 95, 0);
         } else {
-            pantryPuzzle.addStaticSprite(927.5, 57.5, 'check', 0.1, 0.5, 0.5);
+            pantryPuzzleScene.addStaticSprite(927.5, 57.5, 'check', 0.1, 0.5, 0.5);
         }
         if (!foundItems.includes(spices1)) {
-            spices1 = pantryPuzzle.addHiddenButton(170, 230, 175, 50, 0);
+            spices1 = pantryPuzzleScene.addHiddenButton(170, 230, 175, 50, 0);
         } else {
-            pantryPuzzle.addStaticSprite(257.5, 255, 'check', 0.1, 0.5, 0.5);
+            pantryPuzzleScene.addStaticSprite(257.5, 255, 'check', 0.1, 0.5, 0.5);
         }
         if (!foundItems.includes(spices2)) {
-            spices2 = pantryPuzzle.addHiddenButton(570, 95, 55, 95, 0);
+            spices2 = pantryPuzzleScene.addHiddenButton(570, 95, 55, 95, 0);
         } else {
-            pantryPuzzle.addStaticSprite(597.5, 142.5, 'check', 0.1, 0.5, 0.5);
+            pantryPuzzleScene.addStaticSprite(597.5, 142.5, 'check', 0.1, 0.5, 0.5);
         }
         if (!foundItems.includes(spices3)) {
-            spices3 = pantryPuzzle.addHiddenButton(790, 360, 160, 50, 0);
+            spices3 = pantryPuzzleScene.addHiddenButton(790, 360, 160, 50, 0);
         } else {
-            pantryPuzzle.addStaticSprite(870, 385, 'check', 0.1, 0.5, 0.5);
+            pantryPuzzleScene.addStaticSprite(870, 385, 'check', 0.1, 0.5, 0.5);
         }
         if (!foundItems.includes(popcorn)) {
-            popcorn = pantryPuzzle.addHiddenButton(560, 360, 50, 40, 0);
+            popcorn = pantryPuzzleScene.addHiddenButton(560, 360, 50, 40, 0);
         } else {
-            pantryPuzzle.addStaticSprite(585, 380, 'check', 0.1, 0.5, 0.5);
+            pantryPuzzleScene.addStaticSprite(585, 380, 'check', 0.1, 0.5, 0.5);
         }
         if (!foundItems.includes(trashBags)) {
-            trashBags = pantryPuzzle.addHiddenButton(970, 490, 100, 80, 0);
+            trashBags = pantryPuzzleScene.addHiddenButton(970, 490, 100, 80, 0);
         } else {
-            pantryPuzzle.addStaticSprite(1020, 530, 'check', 0.1, 0.5, 0.5);
+            pantryPuzzleScene.addStaticSprite(1020, 530, 'check', 0.1, 0.5, 0.5);
         }
 
         //add the button that returns the player to the kitchenState
-        returnButton = pantryPuzzle.addChoiceButton(908, 580, 290, 85, 'Return to kitchen');
+        returnButton = pantryPuzzleScene.addChoiceButton(908, 580, 290, 85, 'Return to kitchen');
 
         //listens to the buttons of the hidden items, and calls the foundItem function if one is clicked
         //(if the buttons of the hidden items are on the screen)
@@ -113,7 +119,7 @@ var pantryPuzzleState = {
 
     foundItem: function(item) {
 
-        pantryPuzzle.addStaticSprite(item._localBounds.centerX, item._localBounds.centerY, 'check', 0.1, 0.5, 0.5);
+        pantryPuzzleScene.addStaticSprite(item._localBounds.centerX, item._localBounds.centerY, 'check', 0.1, 0.5, 0.5);
 
         //removes the score text from the screen, and removes the button of the hidden item that was clicked
         scoreText.kill();

@@ -75,7 +75,7 @@ var penguinPuzzleScene = null;
 //initialize the state
 var penguinPuzzleState = {
 
-    /** The initial functions to set up the scene for player interaction */
+    /** The initial functions to set up the scene for player interaction*/
 
     preload: function () {
         //declare penguinPuzzleScene to be an instance of a Scene, and load in the background image to the state
@@ -88,7 +88,7 @@ var penguinPuzzleState = {
         clickCount = 0;
     },
 
-    /** Add the initial visual elements to the canvas, and add the first piece of text to the scene */
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
 
     create: function () {
         //check to make sure the penguinPuzzleScene variable is not null

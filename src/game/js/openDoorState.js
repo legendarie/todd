@@ -8,8 +8,10 @@ var openDoorState = {
     /** The initial functions to set up the scene for player interaction */
 
     preload: function() {
-        //declare openDoorScene to be an instance of a Scene, and load in the background image to the state
+        //declare openDoorScene to be an instance of Scene
         openDoorScene = new Scene;
+
+        //load in the background image to the state
         openDoorScene.setBackground('openDoor', 'assets/openDoorbg.png');
 
         //reset the global clickCount variable
@@ -42,37 +44,34 @@ var openDoorState = {
      * changeText runs through the first two lines of text */
 
     changeText: function() {
-        //make sure that the text and button additions occur only once
+        //only allow clickCount to increment once
         if (clickCount < 1) {
             clickCount++;
             if (clickCount === 1) {
-                //change the text  in the text bar, then create the door button
+                //switch the text and create the button over the door
                 openDoorScene.changeText("The water is now above your head," +
                     " but for some reason, you can still breathe.");
                 openDoorScene.removeEllipses();
+
                 this.doorButton();
             }
         }
     },
 
-    /** All of the functions that create interactive buttons:
-     * doorButton switches states to the first reef scene */
+    /**All of the functions that create interactive buttons:
+     *doorButton creates a button to switch to the next state*/
 
     doorButton: function() {
-        //make the open door clickable. If the region is clicked, call the changeState function
+        //make the open door clickable. If the region is clicked, change states
         openDoor = openDoorScene.addButton(500, 100, 280, 460, 0);
         openDoor.events.onInputUp.add(this.changeState, this);
     },
 
-    /** Change the game state to openReefState */
+    /**The function that switches to the next state*/
 
     changeState: function () {
-        //change states to the open reef
-      //   nextState = 'openReefState';
-      // game.state.start('openReefState', openReefState);
-
-      //for testing: fightState
-        nextState = 'fightState';
-        game.state.start('fightState');
+        //change states to openReefState
+        nextState = 'openReefState';
+        game.state.start('openReefState', openReefState);
     }
 };
