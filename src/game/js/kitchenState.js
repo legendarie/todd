@@ -13,7 +13,7 @@ let kitchenScene = null;
 
 var kitchenState = {
 
-    /** The initial function to set up the scene for player interaction*/
+    /** The initial function to set up the scene for player interaction */
 
     preload: function() {
         //declare kitchenScene to be an instance of Scene
@@ -33,7 +33,7 @@ var kitchenState = {
         giftText = false;
     },
 
-    /**Add the initial visual elements to the canvas, and add the beginning text to the scene*/
+    /** Add the initial visual elements to the canvas, and add the beginning text to the scene */
 
     create: function() {
         //check to make sure that the scene has been created
@@ -273,7 +273,6 @@ var kitchenState = {
 
     changeStateSecret: function() {
         //change states to secretRoomState
-        kitchenScene.changeText('nothing exists here yet oops');
-        //game.state.start('secretRoomState'); //doesn't exist yet
+        game.state.start('secretRoomState');
     }
 };

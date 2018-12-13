@@ -38,6 +38,7 @@ game.state.add('gemGame2', gemGame2);
 game.state.add('kitchenState', kitchenState);
 game.state.add('viewListState', viewListState);
 game.state.add('pantryPuzzleState', pantryPuzzleState);
+game.state.add('secretRoomState', secretRoomState);
 
 //the final encounter (with a preparatory scene, a "find santa" minigame,
 //and the santa fight:
