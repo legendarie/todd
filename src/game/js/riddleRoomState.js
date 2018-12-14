@@ -39,6 +39,8 @@ var riddleRoomState = {
         clickCount = 0;
     },
 
+    /**Add the initial visual elements to the canvas, and add the first piece of text to the scene*/
+
     create: function() {
         //check to make sure the scene variable is not null
         if (riddleRoomScene != null) {
@@ -46,6 +48,7 @@ var riddleRoomState = {
             //set it up so that the first riddle is run through
             riddleCounter = 1;
 
+            //keep track of the number of ridles the player has answered correctly
             riddlesCorrect = 0;
 
             //load the background and scale it
@@ -54,12 +57,15 @@ var riddleRoomState = {
             //add the text bar (with all universal settings), with the first line of text
             riddleRoomScene.addTextBar('You see a stone slate carved with the phrase, "What Am I?"');
 
-            //when the text bar is clicked, go to the changeText function
+            //spawn a button over the slate
             this.slateButton();
         }
     },
 
-    /**All of the functions that change the text in the text box:*/
+    /**All of the functions that change the text in the text box:
+     * readyNextRiddle informs the player if they answered correctly and prepares the next riddle, if appropriate
+     * nextRiddle keeps track of the riddles already completed, and presents the next riddle to the player
+     * endScript concludes the scene*/
 
     readyNextRiddle: function() {
         //remove the choice buttons from the screen
@@ -118,6 +124,71 @@ var riddleRoomState = {
         //set what the answers are
         this.setAnswers();
     },
+
+    endScript: function() {
+        //only increment the click count twice
+        if (clickCount < 2) {
+            clickCount++;
+            if (clickCount === 1) {
+                riddleRoomScene.changeText('"...You have answered all of my riddles."');
+            } else {
+                //change the text in the text bar, then create the exit button
+                riddleRoomScene.removeEllipses();
+                riddleRoomScene.changeText('"You may pass."');
+                this.exitButton();
+            }
+        }
+    },
+
+    /**All of the functions that create interactive buttons:
+     * slateButton creates the button to begin the riddles
+     * leftAnswerButton creates the left of the three options
+     * rightAnswerButton creates the right of the three options
+     * middleAnswerButton creates the center option
+     * exitbutton creates the button that ends the state*/
+
+    slateButton: function() {
+        //creates the button over the riddle slate
+        slate = riddleRoomScene.addButton(805, 280, 190, 225, 0);
+        slate.events.onInputUp.add(this.nextRiddle, this);
+    },
+
+    leftAnswerButton: function() {
+        //creates the leftmost choice button with the first answer set to it
+        leftAnswer = riddleRoomScene.addChoiceButton(100, 500, 325, 100, "A plant");
+        leftAnswer.getButton().events.onInputUp.add(this.readyNextRiddle, this);
+    },
+
+    rightAnswerButton: function() {
+        //creates the rightmost choice button with the first answer set to it
+        rightAnswer = riddleRoomScene.addChoiceButton(800, 500, 325, 100, "The color red");
+        rightAnswer.getButton().events.onInputUp.add(this.readyNextRiddle, this);
+    },
+
+    middleAnswerButton: function() {
+        //creates the middle choice button with the first answer set to it
+        middleAnswer = riddleRoomScene.addChoiceButton(450, 500, 325, 100, "A clock");
+        middleAnswer.getButton().events.onInputUp.add(this.correct, this);
+    },
+
+    exitButton: function() {
+        //creates the button over the open passage to switch scenes
+        passage = riddleRoomScene.addButton(225, 100, 300, 375, 0);
+
+        //if the player got at least eight riddles correct,
+        //set up algaeDudeState as the next state
+        if (riddlesCorrect >= 8) {
+            passage.events.onInputUp.add(this.changeStateAlgae, this);
+        } else {
+            passage.events.onInputUp.add(this.changeStateGarden, this);
+        }
+    },
+
+    /** All of the functions that modify the answer buttons:
+     * setAnswers sets the labels and "is correct answer" boolean of the three answer buttons, and returns them to the screen
+     * setCorrectAnswers adds new functions to be called when clicking correct answers
+     * correct lets the game know the player responded correctly, and increments their score
+     * resetCorrectAnswers returns all answer buttons to being incorrect answers*/
 
     setAnswers: function() {
 
@@ -185,8 +256,7 @@ var riddleRoomState = {
             // depending on if they are correct
             this.setCorrectAnswers();
         }
-
-        //always increment the riddle that the player is on
+        //always keep track of the riddle that the player is on
         riddleCounter++;
     },
 
@@ -224,65 +294,6 @@ var riddleRoomState = {
         leftCorrect = false;
         rightCorrect = false;
         middleCorrect = false;
-    },
-
-    endScript: function() {
-        //only increment the click count twice
-        if (clickCount < 2) {
-            clickCount++;
-            if (clickCount === 1) {
-                riddleRoomScene.changeText('"...You have answered all of my riddles."');
-            } else {
-                //change the text in the text bar, then create the exit button
-                riddleRoomScene.removeEllipses();
-                riddleRoomScene.changeText('"You may pass."');
-                this.exitButton();
-            }
-        }
-    },
-
-    /**All of the functions that create interactive buttons:
-     * slateButton creates the button to begin the riddles
-     * leftAnswerButton creates the left of the three options
-     * rightAnswerButton creates the right of the three options
-     * middleAnswerButton creates the center option
-     * exitbutton creates the button that ends the state*/
-
-    slateButton: function() {
-        //creates the button over the riddle slate
-        slate = riddleRoomScene.addButton(805, 280, 190, 225, 0);
-        slate.events.onInputUp.add(this.nextRiddle, this);
-    },
-
-    leftAnswerButton: function() {
-        //creates the leftmost choice button with the first answer set to it
-        leftAnswer = riddleRoomScene.addChoiceButton(100, 500, 325, 100, "A plant");
-        leftAnswer.getButton().events.onInputUp.add(this.readyNextRiddle, this);
-    },
-
-    rightAnswerButton: function() {
-        //creates the rightmost choice button with the first answer set to it
-        rightAnswer = riddleRoomScene.addChoiceButton(800, 500, 325, 100, "The color red");
-        rightAnswer.getButton().events.onInputUp.add(this.readyNextRiddle, this);
-    },
-
-    middleAnswerButton: function() {
-        //creates the middle choice button with the first answer set to it
-        middleAnswer = riddleRoomScene.addChoiceButton(450, 500, 325, 100, "A clock");
-        middleAnswer.getButton().events.onInputUp.add(this.correct, this);
-    },
-
-    exitButton: function() {
-        //creates the button over the open passage to switch scenes
-        passage = riddleRoomScene.addButton(225, 100, 300, 375, 0);
-
-        //if the player got at least eight riddles correct,
-        //set up algaeDudeState as the next state
-        if (riddlesCorrect >= 8) {
-            passage.events.onInputUp.add(this.changeStateAlgae, this);
-        } else {
-            passage.events.onInputUp.add(this.changeStateGarden, this);
-        }
     },
 
     /**The functions that switch to the next state, of which there are two*/
