@@ -67,43 +67,6 @@ var gardenState = {
         }
     },
 
-    /** Once the player has found the gift, remove the sprite from the screen, set giftFound to true
-     * (so the gift isn't made again if the player returns to the original state), update the giftCount,
-     * and tell the player that they have found a gift. **/
-
-    foundGift: function() {
-        textBar.kill();
-        text.kill();
-        gardenScene.removeEllipses();
-
-        gift4.kill();
-        giftFound = true;
-        giftCount++;
-
-        gardenScene.addTextBar('You found a gift!');
-        gardenScene.addEllipses();
-        textBar.events.onInputUp.add(this.changeGiftText, this);
-
-        return giftCount;
-    },
-
-    /** Tells the player how many gifts they have found so far. **/
-
-    changeGiftText: function() {
-        if (giftText === false) {
-            gardenScene.changeText('You have found ' + giftCount + ' gift(s)');
-            giftText = true;
-            if (clickCount < 5) {
-                textBar.events.onInputUp.add(this.changeText, this);
-            } else {
-                gardenScene.removeEllipses();
-                this.houseButton();
-                this.iceCavernButton();
-                this.fruitButton();
-            }
-        }
-    },
-
     /**All of the functions that change the text in the text box:
      * changeText runs through the first six lines of text
      * beginDeathText prepares the death script
@@ -204,6 +167,44 @@ var gardenState = {
         //make the tree's fruits clickable. If clicked, run through a death scene.
         fruit = gardenScene.addButton(266, 185, 30, 40, 0);
         fruit.events.onInputUp.add(this.beginDeathText, this);
+    },
+
+    /**All of the functions that deal with gifts:
+     * foundGift removes the gift from the screen, updates giftCount, and tells the player they found a gift
+     * changeGiftText tells the player how many gifts they have found so far*/
+
+    foundGift: function() {
+        //remove the old textBar object
+        textBar.kill();
+        text.kill();
+        gardenScene.removeEllipses();
+
+        //update the gift count and make it so the gift doesn't respawn
+        gift4.kill();
+        giftFound = true;
+        giftCount++;
+
+        //create a new text bar with new text
+        gardenScene.addTextBar('You found a gift!');
+        gardenScene.addEllipses();
+        textBar.events.onInputUp.add(this.changeGiftText, this);
+
+        return giftCount;
+    },
+
+    changeGiftText: function() {
+        if (giftText === false) {
+            gardenScene.changeText('You have found ' + giftCount + ' gift(s)');
+            giftText = true;
+            if (clickCount < 5) {
+                textBar.events.onInputUp.add(this.changeText, this);
+            } else {
+                gardenScene.removeEllipses();
+                this.houseButton();
+                this.iceCavernButton();
+                this.fruitButton();
+            }
+        }
     },
 
     /**The functions that switch to the next state, of which there are three*/

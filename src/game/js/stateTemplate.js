@@ -18,6 +18,8 @@ var stateTemplate = {
         clickCount = 0;
     },
 
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
+
     create: function() {
         //check to make sure the scene variable is not null
         if (genericScene != null) {
@@ -58,7 +60,7 @@ var stateTemplate = {
 
     /**All of the functions that create interactive buttons:*/
 
-    doorButton: function() {
+    nextSceneButton: function() {
         //make something clickable. If the exit is clicked, call the changeState function
         thing = genericScene.addButton(450, 210, 250, 420, 0);
         thing.events.onInputUp.add(this.changeState, this);

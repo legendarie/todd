@@ -56,9 +56,7 @@ var workshopState = {
     },
 
     /**All of the functions that change the text in the text box:
-     * changeText runs through the first 5 lines of text
-     * foundGift removes the gift from the scene and tells the player they've found a gift
-     * changeGiftText tells the player how many gifts have been found*/
+     * changeText runs through the first 5 lines of text*/
 
     changeText: function() {
         //only increment the click count so many times
@@ -80,6 +78,19 @@ var workshopState = {
             }
         }
     },
+
+    /**All of the functions that create interactive buttons:
+     * doorButton creates a button over the doorway to switch scenes*/
+
+    doorButton: function() {
+        //make the doorway clickable. If the exit is clicked, call the changeState function
+        door = workshopScene.addButton(675, 125, 115, 230, 0);
+        door.events.onInputUp.add(this.changeState, this);
+    },
+
+    /**All of the functions that deal with gifts:
+     * foundGift removes the gift from the screen, updates giftCount, and tells the player they found a gift
+     * changeGiftText tells the player how many gifts they have found so far*/
 
     foundGift: function() {
         //remove the old textBar object
@@ -106,15 +117,6 @@ var workshopState = {
             giftText = true;
         }
         textBar.events.onInputUp.add(this.changeText, this);
-    },
-
-    /**All of the functions that create interactive buttons:
-     * doorButton creates a button over the doorway to switch scenes*/
-
-    doorButton: function() {
-        //make the doorway clickable. If the exit is clicked, call the changeState function
-        door = workshopScene.addButton(675, 125, 115, 230, 0);
-        door.events.onInputUp.add(this.changeState, this);
     },
 
     /**The function that switches to the next state*/

@@ -8,49 +8,58 @@ let transitionScene = null;
 
 var transitionCaveState = {
 
-    preload: function() {
+    /**The initial functions to set up the scene for player interaction*/
 
+    preload: function() {
+        //declare doorScene to be an instance of a Scene
         transitionScene = new Scene;
 
+        //load the background images into the state
         transitionScene.setBackground('transitionCavebgWG', 'assets/transitionCavebgWG.png');
         transitionScene.setBackground('transitionCavebg', 'assets/transitionCavebg.png');
+
+        //load the sprite of Wise Guy
         transitionScene.setSprite('wiseGuy', 'assets/wiseGuy.png');
 
+        //reset the global clickCount to 0;
         clickCount = 0;
 
     },
 
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
+
     create: function() {
-
+        //check to make sure that the scene has been created
         if (transitionScene !== null) {
-
+            //load the background and scale it
             firstBg = transitionScene.loadScene('transitionCavebgWG', 0.48);
 
+            //add a button over the image of Wise Guy that will begin a conversation when clicked
             wiseGuyButton = transitionScene.addButton(970, 370, 80, 50, 0);
-
             wiseGuyButton.events.onInputUp.add(this.wiseGuyAppear, this);
-
         }
     },
 
-    wiseGuyAppear: function() {
+    /** All of the functions that change the text in the text box:
+     * wiseGuyAppear spawns Wise Guy and begins his conversation with the player
+     * wiseGuyConvo continues the conversation with Wise Guy*/
 
+    wiseGuyAppear: function() {
+        //set a new background with sprites
         wiseGuyButton.kill();
         firstBg.kill();
-
         transitionScene.loadScene('transitionCavebg', 0.48);
-
         wiseGuy = transitionScene.addStaticSprite(670, 320, 'wiseGuy', 0.3, 0, 0);
 
+        //begin a conversation
         transitionScene.addTextBar('\"Yo. Wassup. Nice to see you again, bud.\"');
         transitionScene.addEllipses();
 
         textBar.events.onInputUp.add(this.wiseGuyConvo, this);
-
     },
 
     wiseGuyConvo: function() {
-
+        //only allow the clickCount to increment to 14
         if (clickCount < 14) {
             clickCount++;
             if (clickCount === 1) {
@@ -92,7 +101,11 @@ var transitionCaveState = {
         }
     },
 
+    /**The function that switches to the next state*/
+
     changeState: function() {
+        //change states to gardenState
+        nextState = 'gardenState';
         game.state.start('gardenState');
     }
 

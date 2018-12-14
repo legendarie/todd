@@ -14,11 +14,11 @@ var signState = {
         signScene.setBackground('sign', 'assets/signbg.png');
     },
 
-    /** Add the initial visual elements to the canvas */
+    /**Add the visual elements to the canvas, and add the first line of text to the scene*/
 
     create: function() {
 
-        //check to make sure the signScene variable is not null
+        //check to make sure that the scene has been created
         if (signScene != null) {
 
             //load the background and scale it

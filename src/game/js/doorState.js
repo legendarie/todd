@@ -15,7 +15,7 @@ let doorScene = null;
 //initialize the state
 var doorState = {
 
-    /** The initial functions to set up the scene for player interaction */
+    /**The initial functions to set up the scene for player interaction*/
 
     preload: function() {
         //declare doorScene to be an instance of a Scene

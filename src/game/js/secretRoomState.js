@@ -13,11 +13,13 @@ var secretRoomState = {
     /** The initial function to set up the scene for player interaction */
 
     preload: function() {
-
+        //declare secretRoomScene to be an instance of Scene
         secretRoomScene = new Scene;
 
+        //load the background images into the state
         secretRoomScene.setBackground('secretRoombg', 'assets/secretRoombg.jpg');
 
+        //load the sprites of Wise Guy and the gift(s)
         secretRoomScene.setSprite('gift', 'assets/gift.png');
         secretRoomScene.setSprite('wiseGuy', 'assets/wiseGuy.png');
 
@@ -27,11 +29,12 @@ var secretRoomState = {
     },
 
     create: function() {
-
+        //check to make sure that the scene has been created
         if (secretRoomScene !== null) {
-
+            //load the background and scale it
             secretRoomScene.loadScene('secretRoombg', 1);
 
+            //add all sprites to the window
             wiseGuy = secretRoomScene.addSprite(365, 190, 'wiseGuy', 0.3);
 
             gift1 = secretRoomScene.addSprite(600, 460, 'gift', 0.03);
@@ -40,8 +43,10 @@ var secretRoomState = {
             gift4 = secretRoomScene.addSprite(395, 180, 'gift', 0.015);
             gift5 = secretRoomScene.addSprite(300, 560, 'gift', 0.05);
 
+            //add a button to return to the kitchen
             returnButton = secretRoomScene.addChoiceButton(908, 580, 290, 85, 'Return to kitchen');
 
+            //begin Wise Guy's conversation
             secretRoomScene.addTextBar('\"Hello again. Good to see ya.\"');
             secretRoomScene.addEllipses();
 
@@ -50,7 +55,11 @@ var secretRoomState = {
         }
     },
 
+    /** All of the functions that change the text in the text box:
+     * changeText runs through the first seven lines of text*/
+
     changeText: function() {
+        //only allow the clickCount to increment to 7
         if (clickCount < 7) {
             clickCount++;
             if (clickCount === 1) {
@@ -73,8 +82,10 @@ var secretRoomState = {
         }
     },
 
-    giftListeners: function() {
+    /**All of the functions that create interactive buttons:
+     * giftListeners adds listeners to the gift sprites to collect them*/
 
+    giftListeners: function() {
         wiseGuy.kill();
         gift4.kill();
 
@@ -87,26 +98,27 @@ var secretRoomState = {
         gift5.events.onInputUp.add(this.foundGift, this);
     },
 
-    /** Once the player has found the gift, remove the sprite from the screen, set giftFound to true
-     * (so the gift isn't made again if the player returns to the original state), update the giftCount,
-     * and tell the player that they have found a gift. **/
+    /**All of the functions that deal with gifts:
+     * foundGift removes the gift from the screen, updates giftCount, and tells the player they found a gift
+     * changeGiftText tells the player how many gifts they have found so far*/
 
     foundGift: function(gift) {
+        //remove the old textBar object
         textBar.kill();
         text.kill();
         secretRoomScene.removeEllipses();
 
+        //update the gift count and make it so the gift doesn't respawn
         gift.kill();
         giftCount++;
 
+        //create a new text bar with new text
         secretRoomScene.addTextBar('You found a gift!');
         secretRoomScene.addEllipses();
         textBar.events.onInputUp.add(this.changeGiftText, this);
 
         return giftCount;
     },
-
-    /** Tells the player how many gifts they have found so far. **/
 
     changeGiftText: function() {
         if (giftText === false) {
@@ -115,9 +127,10 @@ var secretRoomState = {
         }
     },
 
-    /** Change the game state back to kitchenState */
+    /**The function that switches to the next state*/
 
     returnToKitchen: function() {
+        //change states to kitchenState
         game.state.start('kitchenState');
     }
 

@@ -69,9 +69,7 @@ var openReefState = {
     },
 
     /** All of the functions that change the text in the text box:
-     * changeText runs through the first three lines of text
-     * foundGift removes the gift from the scene and tells the player they've found a gift
-     * changeGiftText tells the player how many gifts have been found*/
+     * changeText runs through the first three lines of text*/
 
     changeText: function() {
         //if the player hasn't been to this screen before,
@@ -91,6 +89,26 @@ var openReefState = {
             }
         }
     },
+
+    /** All of the functions that create interactive buttons:
+     * signButton switches states to the sign
+     * pathButton switches states to the forked path*/
+
+    signButton: function() {
+        //make the sign clickable. If clicked, it will call the changeStateSign function
+        sign = openReefScene.addButton(275, 450, 95, 105, 0);
+        sign.events.onInputUp.add(this.changeStateSign, this);
+    },
+
+    pathButton: function() {
+        //make the path ahead clickable. If clicked, it will call the changeStateFork function
+        path = openReefScene.addButton(500, 250, 250, 200, 0);
+        path.events.onInputUp.add(this.changeStateFork, this);
+    },
+
+    /**All of the functions that deal with gifts:
+     * foundGift removes the gift from the screen, updates giftCount, and tells the player they found a gift
+     * changeGiftText tells the player how many gifts they have found so far*/
 
     foundGift: function() {
         //remove the old textBar object
@@ -118,22 +136,6 @@ var openReefState = {
             giftText = true;
         }
         textBar.events.onInputUp.add(this.changeText, this);
-    },
-
-    /** All of the functions that create interactive buttons:
-     * signButton switches states to the sign
-     * pathButton switches states to the forked path*/
-
-    signButton: function() {
-        //make the sign clickable. If clicked, it will call the changeStateSign function
-        sign = openReefScene.addButton(275, 450, 95, 105, 0);
-        sign.events.onInputUp.add(this.changeStateSign, this);
-    },
-
-    pathButton: function() {
-        //make the path ahead clickable. If clicked, it will call the changeStateFork function
-        path = openReefScene.addButton(500, 250, 250, 200, 0);
-        path.events.onInputUp.add(this.changeStateFork, this);
     },
 
     /** The functions that switch to the next state, of which there are two*/
