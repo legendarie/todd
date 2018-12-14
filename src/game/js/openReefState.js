@@ -2,12 +2,12 @@
 var clickCount;
 var textBar;
 var gift1;
-var giftText = false; //boolean variable to keep track of whether the gift text has been displayed before
 var sign;
 var path;
 
-var alreadyBeenOR = false;    //a boolean variable to track whether the player has visited this state before
-var giftFound = false;  //a boolean variable to check whether the player has clicked on the gift
+var alreadyBeenOR = false;    //boolean variable to track whether the player has visited this state before
+var giftFound = false;  //boolean variable to check whether the player has clicked on the gift
+var giftText = false; //boolean variable to keep track of whether the gift text has been displayed before
 
 let openReefScene = null;
 
@@ -70,7 +70,8 @@ var openReefState = {
 
     /** All of the functions that change the text in the text box:
      * changeText runs through the first three lines of text
-     * foundGift removes the gift from the scene and tells the player they've found a gift*/
+     * foundGift removes the gift from the scene and tells the player they've found a gift
+     * changeGiftText tells the player how many gifts have been found*/
 
     changeText: function() {
         //if the player hasn't been to this screen before,
@@ -92,6 +93,7 @@ var openReefState = {
     },
 
     foundGift: function() {
+        //remove the old textBar object
         textBar.kill();
         text.kill();
         openReefScene.removeEllipses();
@@ -101,6 +103,7 @@ var openReefState = {
         giftFound = true;
         giftCount++;
 
+        //create a new text bar with new text
         openReefScene.addTextBar('You found a gift!');
         openReefScene.addEllipses();
         textBar.events.onInputUp.add(this.changeGiftText, this);
@@ -109,6 +112,7 @@ var openReefState = {
     },
 
     changeGiftText: function() {
+        //tell the player how many gifts have been found if they have not already been told
         if (giftText === false) {
             openReefScene.changeText('You have found ' + giftCount + ' gift(s)');
             giftText = true;

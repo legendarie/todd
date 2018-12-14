@@ -3,6 +3,7 @@ var clickCount;
 var textBar;
 var gift3;
 var door;
+
 let workshopScene = null;
 
 //a declaration for the next state
@@ -14,8 +15,10 @@ var workshopState = {
     /**The initial functions to set up the scene for player interaction*/
 
     preload: function() {
-        //declare scene to be an instance of a Scene, and load in the background image to the state
+        //declare wprkshopScene to be an instance of Scene
         workshopScene = new Scene;
+
+        //load in the background image to the state
         workshopScene.setBackground('workshopbg', 'assets/workshopbg.png');
 
         //load the gift sprite into the scene
@@ -28,13 +31,13 @@ var workshopState = {
     },
 
     create: function() {
-        //check to make sure the scene variable is not null
+        //check to make sure that the scene has been created
         if (workshopScene != null) {
 
             //load the background and scale it
             workshopScene.loadScene('workshopbg', 0.32);
 
-            //add the gift to the scene
+            //add a hidden gift to the scene
             if (giftFound === false) {
                 gift3 = workshopScene.addSprite(50, 260, 'gift', 0.015);
                 gift3.events.onInputUp.add(this.foundGift, this);
@@ -52,38 +55,10 @@ var workshopState = {
         }
     },
 
-    /** Once the player has found the gift, remove the sprite from the screen, set giftFound to true
-     * (so the gift isn't made again if the player returns to the original state), update the giftCount,
-     * and tell the player that they have found a gift. **/
-
-    foundGift: function() {
-        textBar.kill();
-        text.kill();
-        workshopScene.removeEllipses();
-
-        gift3.kill();
-        giftFound = true;
-        giftCount++;
-
-        workshopScene.addTextBar('You found a gift!');
-        workshopScene.addEllipses();
-        textBar.events.onInputUp.add(this.changeGiftText, this);
-
-        return giftCount;
-    },
-
-    /** Tells the player how many gifts they have found so far. **/
-
-    changeGiftText: function() {
-        if (giftText === false) {
-            workshopScene.changeText('You have found ' + giftCount + ' gift(s)');
-            giftText = true;
-        }
-        textBar.events.onInputUp.add(this.changeText, this);
-    },
-
     /**All of the functions that change the text in the text box:
-     * changeText runs through the first 5 lines of text*/
+     * changeText runs through the first 5 lines of text
+     * foundGift removes the gift from the scene and tells the player they've found a gift
+     * changeGiftText tells the player how many gifts have been found*/
 
     changeText: function() {
         //only increment the click count so many times
@@ -106,11 +81,38 @@ var workshopState = {
         }
     },
 
+    foundGift: function() {
+        //remove the old textBar object
+        textBar.kill();
+        text.kill();
+        workshopScene.removeEllipses();
+
+        //update the gift count and make it so the gift doesn't respawn
+        gift3.kill();
+        giftFound = true;
+        giftCount++;
+
+        //create a new text bar with new text
+        workshopScene.addTextBar('You found a gift!');
+        workshopScene.addEllipses();
+        textBar.events.onInputUp.add(this.changeGiftText, this);
+
+        return giftCount;
+    },
+
+    changeGiftText: function() {
+        if (giftText === false) {
+            workshopScene.changeText('You have found ' + giftCount + ' gift(s)');
+            giftText = true;
+        }
+        textBar.events.onInputUp.add(this.changeText, this);
+    },
+
     /**All of the functions that create interactive buttons:
      * doorButton creates a button over the doorway to switch scenes*/
 
     doorButton: function() {
-        //make something clickable. If the exit is clicked, call the changeState function
+        //make the doorway clickable. If the exit is clicked, call the changeState function
         door = workshopScene.addButton(675, 125, 115, 230, 0);
         door.events.onInputUp.add(this.changeState, this);
     },
@@ -118,8 +120,8 @@ var workshopState = {
     /**The function that switches to the next state*/
 
     changeState: function() {
-        //change states to the next state
-        nextState = 'gardenState';
+        //change states to transitionCaveState
+        nextState = 'transitionCaveState';
         game.state.start('transitionCaveState');
     }
 };

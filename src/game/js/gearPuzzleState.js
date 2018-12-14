@@ -79,13 +79,13 @@ var gearPuzzleState = {
                 gearPuzzleScene.addTextBar("What do you want to do?");
             }
 
-            //create all of the buttons and their button links
-            this.createButtons();
-            this.setScripts();
-            this.setNewButtons();
-
             //skip past the initial dialogue if the player has died
             if (this.hasDied !== true) {
+                //create all of the buttons and their button links
+                this.createButtons();
+                this.setScripts();
+                this.setNewButtons();
+
                 buttonManager.setLeftButton(gear1Button);
                 buttonManager.setMiddleButton(barButton);
                 buttonManager.setRightButton(window1Button);
@@ -93,6 +93,7 @@ var gearPuzzleState = {
                 //when the text bar is clicked, go to the changeText function
                 textBar.events.onInputUp.add(this.changeText, this);
             } else {
+                //if the player has died, skip the opening text and load the last choices used
                 if (buttonManager.getLeftButton() != null) {
                     this.makeButton(buttonManager.getLeftButton());
                 }
@@ -114,7 +115,7 @@ var gearPuzzleState = {
      * setScripts sets the scripts and labels for each button */
 
     changeText: function () {
-        //only allow the clickCount ot increment to 4
+        //only allow the clickCount to increment to 4
         if (clickCount < 4) {
             clickCount++;
             if (clickCount === 1) {
@@ -392,10 +393,12 @@ var gearPuzzleState = {
 
     setNewButtons: function () {
         //set the initial button links for the choices
+        //also set if the button is a death ending or the winning ending
         barButton.setNewMiddleButton(followWireButton);
         followWireButton.setNewMiddleButton(testWireButton);
         testWireButton.setNewMiddleButton(tripWireButton);
         tripWireButton.setToDeath();
+        //cutWireButton will not run through its script in the normal fashion
         cutWireButton.setToIrregular();
         cutWireButton.setNewLeftButton(cutDangerButton);
         cutWireButton.setNewRightButton(followWire2Button);

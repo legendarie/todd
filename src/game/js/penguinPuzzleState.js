@@ -78,8 +78,10 @@ var penguinPuzzleState = {
     /** The initial functions to set up the scene for player interaction*/
 
     preload: function () {
-        //declare penguinPuzzleScene to be an instance of a Scene, and load in the background image to the state
+        //declare penguinPuzzleScene to be an instance of Scene
         penguinPuzzleScene = new Scene;
+
+        //load in the background images to the state
         penguinPuzzleScene.setBackground('penguinPuzzlebg', 'assets/penguinPuzzlebg.png');
         penguinPuzzleScene.setBackground('attackPenguinbg', 'assets/attackPenguin.png');
         penguinPuzzleScene.setBackground('sunkPenguinbg', 'assets/sunkPenguinbg.png');
@@ -94,8 +96,9 @@ var penguinPuzzleState = {
         //check to make sure the penguinPuzzleScene variable is not null
         if (penguinPuzzleScene != null) {
 
-            //load the background and scale it
+            //load the background and scale it (depending on deaths/puzzle progression, etc.)
             if (turnUp2Button != null) {
+                //if the player has been attacked by the penguin, show the "sunk" background
                 if (turnUp2Button.beenClicked() === true) {
                     penguinPuzzleScene.loadScene('sunkPenguinbg', 0.32);
                 } else {
@@ -105,6 +108,7 @@ var penguinPuzzleState = {
                 penguinPuzzleScene.loadScene('penguinPuzzlebg', 0.32)
             }
 
+            //edit the text in the text box if the player has died
             if (this.hasDied !== true) {
                 //add the text bar (with all universal settings), with the first line of text
                 penguinPuzzleScene.addTextBar("You pad into a quiet cave.");
@@ -115,10 +119,6 @@ var penguinPuzzleState = {
             } else {
                 penguinPuzzleScene.addTextBar("What do you want to do?");
             }
-
-            // //initialize the button choice manager and button list for the puzzle
-            // //remove this when penguinPuzzleScene is hooked up to the rest of the game
-            // buttonManager = new ButtonManager();
 
             //if the player hasn't died in this game, start it from the beginning
             if (this.hasDied !== true) {
@@ -160,7 +160,7 @@ var penguinPuzzleState = {
      * setScripts sets the scripts and labels for each button */
 
     changeText: function () {
-        //only increment the click count four times
+        //only allow the clickCount to increment to 4
         if (clickCount < 4) {
             clickCount++;
             if (clickCount === 1) {
@@ -170,7 +170,7 @@ var penguinPuzzleState = {
             } else if (clickCount === 3) {
                 penguinPuzzleScene.changeText("Right next to it is a sleeping penguin.")
             } else {
-                //change the text in the text bar, then create the choice buttons
+                //once this script has been run through, create the choice buttons
                 penguinPuzzleScene.changeText("What do you want to do?");
                 penguinPuzzleScene.removeEllipses();
                 textBar.events.onInputUp.remove(this.changeText, this);
@@ -210,9 +210,12 @@ var penguinPuzzleState = {
                 if (clickedButton === turnUp2Button) {
                     buttonManager.removeButtons();
 
+                    //if the clicked button is turnUp2 (the penguin attacks),
+                    //then load the attack background once the script is over
                     penguinPuzzleScene.loadScene('attackPenguinbg', 0.32);
                     penguinPuzzleScene.addTextBar("");
 
+                    //add a button to the background to switch to the next background when clicked
                     penguinAttackButton = penguinPuzzleScene.addButton(0, 0, 1000, 1000, 0);
                     penguinAttackButton.events.onInputUp.add(this.fallScene, this);
                 } else {
@@ -224,7 +227,7 @@ var penguinPuzzleState = {
                     this.addButtons();
                 }
             } else {
-                //if it is a branch end, check if it's a death
+                //if it is an ending, check if it's a death
                 deadEnd = clickedButton.isDeath();
                 if (deadEnd === true) {
                     //if it is a death, enter the "You Died" screen
@@ -237,7 +240,7 @@ var penguinPuzzleState = {
                     openDoor.events.onInputUp.add(this.changeState, this);
                 }
             }
-            //always remove the listener
+            //always remove the listener on the text bar
             textBar.events.onInputUp.remove(this.runScript, this);
         }
     },
@@ -738,10 +741,10 @@ var penguinPuzzleState = {
         this.makeButton(turnDownPermButton);
     },
 
-    /** Change the game state to [insert state name here] */
+    /**The function that switches to the next state*/
 
     changeState: function() {
-        //change states to the next state
+        //change states to santaExpositionState
         game.state.start('santaExpositionState');
     }
 };
