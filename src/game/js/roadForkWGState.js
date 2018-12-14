@@ -1,6 +1,7 @@
 //establish the global variables
 var clickCount;
 var sneakyWG;
+
 let rfWGScene = null;
 
 //initialize the state
@@ -21,8 +22,7 @@ var roadForkWGState = {
     /**Add the visual elements to the canvas, and add the first line of text to the scene*/
 
     create: function() {
-
-        //check to make sure the rfWGScene variable is not null
+        //check to make sure that the scene has been created
         if (rfWGScene != null) {
 
             //load the background and scale it
@@ -31,25 +31,24 @@ var roadForkWGState = {
             //add the text bar (with all universal settings), with the first line of text
             rfWGScene.addTextBar("Following the road, you come across a fork.");
 
-            //call wiseGuyButton function
+            //create a button over the image of Wise Guy
             this.wiseGuyButton()
         }
     },
 
     /** All of the functions that create interactive buttons:
-     * wiseGuyButton switches states to the Wise Guy conversation */
+     * wiseGuyButton switches states to the Wise Guy conversation*/
 
     wiseGuyButton: function() {
-
         //make Wise Guy clickable. If clicked, call the changeState function
         sneakyWG = rfWGScene.addButton(450, 390, 185, 110, 0);
         sneakyWG.events.onInputUp.add(this.changeState, this);
     },
 
-    /** Change game state to roadForkState  */
+    /**The function that switches to the next state*/
 
     changeState: function() {
-        //change states to the first conversation with Wise Guy
+        //change states to roadForkState
         nextState = 'roadForkState';
         game.state.start('roadForkState');
     }

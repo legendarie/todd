@@ -15,6 +15,8 @@ var circle3;
 //graphics objects. Thus, while addButton returns the graphics object directly for easy interaction, addChoiceButton
 //returns the Button object and requires the getButton() function to make the button clickable.
 
+//A class to define the different states (or "scenes") of the game;
+//different backgrounds, text, buttons, etc.
 class Scene {
 
     /**Some general setup functions for loading and adding images to the game window*/
@@ -38,22 +40,19 @@ class Scene {
         game.load.image(sprite, spritePath);
     }
 
-    //add the sprite to the game. Take the coordinates, image, and scale as parameters.
-    //This type of sprite is also interactive, and when the player hovers their mouse over it, the hand
-    //cursor appears
+    //add an interactive sprite to the game. Take the coordinates, image, and scale as parameters
     addSprite(x, y, sprite, scale) {
         //add the sprite and make it interactive
         sprite = game.add.sprite(x, y, sprite);
         sprite.scale.setTo(scale);
         sprite.inputEnabled = true;
+        //when the mouse hovers over the sprite, a hand appears
         sprite.input.useHandCursor = true;
 
         return sprite;
     }
 
-    //add the sprite to the game. Take the coordinates image, and scale as parameters.
-
-    //This type of sprite is not interactable
+    //add a non-interactive sprite to the game. Take the coordinates image, and scale as parameters
     addStaticSprite(x, y, sprite, scale, anchorX, anchorY) {
         sprite = game.add.sprite(x, y, sprite);
         sprite.scale.setTo(scale);
@@ -117,8 +116,7 @@ class Scene {
         return choiceButton;
     }
 
-    //adds a button that does not have the hand cursor when the player hovers their mouse over the button
-    //(hence a hidden button)
+    //adds a button that does not turn the mouse into a hand when hovered over
     addHiddenButton(x, y, width, height, opacity) {
         hiddenButton = new Button(x, y, width, height, opacity);
         hiddenButton.add();

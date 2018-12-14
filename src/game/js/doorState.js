@@ -58,7 +58,7 @@ var doorState = {
     /** All of the functions that change the text in the text box:
      * changeText runs through the first three lines of text
      * blueMessage displays when the blue panel is clicked
-     * otherMessage directs the player to try another dial color (red, white, brown panels) */
+     * otherMessage directs the player to try another dial color (red, white, brown panels)*/
 
     changeText: function() {
         //inquire about the dial on the door
@@ -90,7 +90,7 @@ var doorState = {
 
     /** All of the functions that create interactive buttons:
      * dialButtons creates the different dial color options
-     * doorButton switches states to the open door */
+     * doorButton switches states to the open door*/
 
     dialButtons: function() {
         //make the blue part of the dial clickable. If clicked, it will call the blueMessage function
