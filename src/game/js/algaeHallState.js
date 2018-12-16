@@ -2,6 +2,7 @@
 var clickCount;
 var textBar;
 var exit;
+var bg;
 
 let algaeHallScene = null;
 
@@ -28,7 +29,7 @@ var algaeHallState = {
         if (algaeHallScene != null) {
 
             //load the background and scale it
-            algaeHallScene.loadScene('algaeHallbg', 0.32);
+            bg = algaeHallScene.loadScene('algaeHallbg', 0.32);
 
             //add the text bar (with all universal settings), with the first line of text
             algaeHallScene.addTextBar("The right tunnel twists and turns.");
@@ -42,7 +43,8 @@ var algaeHallState = {
     },
 
     /** All of the functions that change the text in the text box:
-     * changeText runs through the first six lines of text*/
+     * changeText runs through the first six lines of text. Then, when the
+     * background is clicked, changeState function is called. */
 
     changeText: function() {
         //describe the algae-covered passageway
@@ -62,18 +64,9 @@ var algaeHallState = {
                 algaeHallScene.changeText("It isn't long before the passage opens up.");
                 algaeHallScene.removeEllipses();
 
-                this.exitButton();
+                bg.events.onInputUp.add(this.changeState, this);
             }
         }
-    },
-
-    /** All of the functions that create interactive buttons:
-     * exitButton makes the screen interactive (switching to the next scene)*/
-
-    exitButton: function() {
-        //make the screen clickable. If the screen is clicked, call the changeState function
-        exit = algaeHallScene.addButton(0, 0, 1500, 1000, 0);
-        exit.events.onInputUp.add(this.changeState, this);
     },
 
     /**The function that switches to the next state*/

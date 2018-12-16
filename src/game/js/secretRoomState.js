@@ -16,6 +16,9 @@ var secretRoomState = {
         //declare secretRoomScene to be an instance of Scene
         secretRoomScene = new Scene;
 
+        //set alreadyBeenSR to true
+        alreadyBeenSR = true;
+
         //load the background images into the state
         secretRoomScene.setBackground('secretRoombg', 'assets/secretRoombg.jpg');
 

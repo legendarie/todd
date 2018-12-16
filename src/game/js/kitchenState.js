@@ -8,6 +8,7 @@ var kitchenButton;
 var finalDoorButton;
 var exitKitchenButton;
 var alreadyBeenKN = false; //boolean checking if the player has been in the kitchen before
+var alreadyBeenSR = false; //boolean variable to keep track of whether the secret room has been visited
 
 let kitchenScene = null;
 
@@ -72,13 +73,14 @@ var kitchenState = {
      * throughFinalDoor removes the choice buttons, and creates a screen-wide button to switch states*/
 
     addButtons: function() {
+
         //add the button on the fridge
         fridgeButton = kitchenScene.addButton(80, 200, 100, 440, 0);
 
         //add the button on the pantry
         pantryButton = kitchenScene.addButton(280, 80, 150, 350, 0);
 
-        if (giftCount === 5) {
+        if (giftCount === 5 && alreadyBeenSR === false) {
             //add the button on the cabinet that leads to the secret gift room
             secretRoomButton = kitchenScene.addButton(845, 390, 60, 110, 0);
         }
