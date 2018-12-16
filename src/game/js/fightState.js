@@ -43,8 +43,8 @@ var fightState = {
         this.createSanta();
         this.createSnow();
 
-        santaHealthText = game.add.text(0, 0, santaHealth);
-        yourHealthText = game.add.text(300,0,lives);
+        santaHealthText = game.add.text(0, 0, santaHealth, {font: "bold 32px Arial", fill: "#cc0000"});
+        yourHealthText = game.add.text(300,0,lives, {font: "bold 32px Arial", fill: "#00CC00"});
     },
 
 
@@ -83,7 +83,8 @@ var fightState = {
     createSanta: function () {
         // add the santa sprite to the middle of the world
         santa = game.add.sprite(0, 0, 'santa');
-        santa.position.setTo(Math.floor(Math.random() * (game.world.width - santa.width)), Math.floor(Math.random() * (game.world.height - santa.height)));
+        santa.position.setTo(Math.floor(Math.random() * (game.world.width - santa.width)), Math.floor(Math.random()
+            * (game.world.height - santa.height)));
         santa.scale.setTo(0.15);
         game.physics.enable(santa);
         santa.body.collideWorldBounds = true;
@@ -129,7 +130,7 @@ var fightState = {
 
 
     restart: function () {
-        if (candy.input.isDragged == false) {
+        if (candy.input.isDragged === false) {
             santaHealth = santaHealth - 1;
             candy.destroy();
             this.createCandy();
@@ -140,7 +141,7 @@ var fightState = {
     },
 
     hitSnow: function () {
-        if(playing == true) {
+        if(playing === true) {
             lives--;
             candy.kill();
             this.createCandy();
@@ -168,10 +169,10 @@ var fightState = {
     update: function () {
         // as the game is running, the candy and santa are allowed to interact (to bounce off one another)
         game.physics.arcade.collide(candy, santa, this.restart, null, this);
-        if(playing == true) {
+        if(playing === true) {
             game.physics.arcade.collide(candy, snow, this.hitSnow, null, this);
         }
-        santaHealthText.setText("Santa's health: "+ santaHealth);
-        yourHealthText.setText("Your health: "+lives);
+        santaHealthText.setText("Santa's health: " + santaHealth);
+        yourHealthText.setText("Your health: " +lives);
     }
-}
+};
