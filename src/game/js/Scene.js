@@ -141,9 +141,9 @@ class Scene {
     //uses "addCircle" to create an ellipsis, for use in indicating to the player that there is more text
     //to read
     addEllipses() {
-        circle1 = this.addCircle(1150, 90, 5, 5);
-        circle2 = this.addCircle(1165, 90, 5, 5);
-        circle3 = this.addCircle(1180, 90, 5, 5);
+        circle1 = this.addCircle(1130, 88, 8, 8);
+        circle2 = this.addCircle(1155, 88, 8, 8);
+        circle3 = this.addCircle(1180, 88, 8, 8);
     }
 
     //removes the ellipsis to indicate no further text
