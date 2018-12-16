@@ -31,8 +31,9 @@ game.state.add('transitionCaveState', transitionCaveState);
 game.state.add('gardenState', gardenState);
 
 //the right cavern route (with a gem puzzle and a choice puzzle):
-game.state.add('penguinPuzzleState', penguinPuzzleState);
+game.state.add('eelState', eelState);
 game.state.add('gemGame2', gemGame2);
+game.state.add('penguinPuzzleState', penguinPuzzleState);
 
 //the left door route (with a three-state "find the hidden items" puzzle):
 game.state.add('kitchenState', kitchenState);
@@ -50,5 +51,5 @@ game.state.add('fightState', fightState);
 game.state.add('yaDeadState', yaDeadState);
 
 //the state that the game begins with:
-game.state.start('fightState');
+game.state.start('eelState');
 

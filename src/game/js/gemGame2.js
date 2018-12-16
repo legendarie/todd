@@ -14,8 +14,15 @@ var selectedGemTween;
 var tempShiftedGem = null;
 var allowInput;
 
+var numGems = -180; //variable to keep track of how many gems have been removed from the board
+var textBar;
+let gemGameScene = null;
+
 var gemGame2 = {
+
     preload: function() {
+
+        gemGameScene = new Scene;
 
         game.load.spritesheet("GEMS", "assets/diamonds32x5.png", GEM_SIZE, GEM_SIZE);
 
@@ -140,7 +147,6 @@ var gemGame2 = {
 
     // fill the screen with as many gems as possible
     spawnBoard: function() {
-        console.log('spawning');
 
         BOARD_COLS = Math.floor(game.world.width / GEM_SIZE_SPACED);
         BOARD_ROWS = Math.floor(game.world.height / GEM_SIZE_SPACED);
@@ -173,8 +179,6 @@ var gemGame2 = {
 
         selectedGem = null;
         tempShiftedGem = null;
-
-        // this.refillBoard();
     },
 
     // select a gem and remember its starting position
@@ -264,7 +268,8 @@ var gemGame2 = {
         var curY = startGem.posY + moveY;
         var count = 0;
 
-        while (curX >= 0 && curY >= 0 && curX < BOARD_COLS && curY < BOARD_ROWS && this.getGemColor(this.getGem(curX, curY)) === this.getGemColor(startGem))
+        while (curX >= 0 && curY >= 0 && curX < BOARD_COLS && curY < BOARD_ROWS &&
+        this.getGemColor(this.getGem(curX, curY)) === this.getGemColor(startGem))
         {
             count++;
             curX += moveX;
@@ -345,7 +350,11 @@ var gemGame2 = {
         gems.forEach(function(gem) {
             if (!gem.alive) {
                 this.setGemPos(gem, -1,-1);
-                console.log('1')
+                numGems++;
+                textBar.kill();
+                text.kill();
+                gemGameScene.addTextBar("Number of gems removed: " + numGems);
+                textBar.input.useHandCursor = false;
             }
         }.bind(this));
 
@@ -359,13 +368,13 @@ var gemGame2 = {
             durationMultiplier = 1;
         }
 
-        return game.add.tween(gem).to({x: newPosX  * GEM_SIZE_SPACED, y: newPosY * GEM_SIZE_SPACED}, 100 * durationMultiplier, Phaser.Easing.Linear.None, true);
+        return game.add.tween(gem).to({x: newPosX  * GEM_SIZE_SPACED, y: newPosY * GEM_SIZE_SPACED},
+            100 * durationMultiplier, Phaser.Easing.Linear.None, true);
 
     },
 
     // look for gems with empty space beneath them and move them down
     dropGems: function() {
-        console.log('startdrop')
 
         var dropRowCountMax = 0;
 
@@ -375,19 +384,14 @@ var gemGame2 = {
 
             for (var j = BOARD_ROWS - 1; j >= 0; j--)
             {
-                // console.log(i)
-                // console.log(j)
                 var gem = this.getGem(i, j);
-                // console.log(gem === null);
                 if (gem === null)
                 {
-                    console.log('kkk')
                     dropRowCount++;
                 }
                 else if (dropRowCount > 0)
                 {
                     gem.dirty = true;
-                    console.log('dropping')
                     this.setGemPos(gem, gem.posX, gem.posY + dropRowCount);
                     this.tweenGemPos(gem, gem.posX, gem.posY, dropRowCount);
                 }
@@ -432,31 +436,43 @@ var gemGame2 = {
 
     },
 
-    // when the board has finished refilling, re-enable player input
+    // when the board has finished refilling, re-enable player input, if the number of matches is less than
+    // the number of killed gems needed to complete the game.
     boardRefilled: function() {
-        var canKill = false;
-        for (var i = 0; i < BOARD_COLS; i++)
-        {
-            for (var j = BOARD_ROWS - 1; j >= 0; j--)
-            {
-                var gem = this.getGem(i, j);
 
-                if (gem.dirty)
+        if (numGems < 150) {
+            var canKill = false;
+            for (var i = 0; i < BOARD_COLS; i++)
+            {
+                for (var j = BOARD_ROWS - 1; j >= 0; j--)
                 {
-                    gem.dirty = false;
-                    canKill = this.checkAndKillGemMatches(gem) || canKill;
+                    var gem = this.getGem(i, j);
+
+                    if (gem.dirty)
+                    {
+                        gem.dirty = false;
+                        canKill = this.checkAndKillGemMatches(gem) || canKill;
+                    }
                 }
             }
+
+            if(canKill){
+                this.removeKilledGems();
+                var dropGemDuration = this.dropGems();
+                // delay board refilling until all existing gems have dropped down
+                game.time.events.add(dropGemDuration * 100, this.refillBoard, this);
+                allowInput = false;
+            } else {
+                allowInput = true;
+            }
+        } else {
+            this.changeState();
         }
 
-        if(canKill){
-            this.removeKilledGems();
-            var dropGemDuration = this.dropGems();
-            // delay board refilling until all existing gems have dropped down
-            game.time.events.add(dropGemDuration * 100, this.refillBoard, this);
-            allowInput = false;
-        } else {
-            allowInput = true;
-        }
     },
+
+    changeState: function() {
+        game.state.start('eelState');
+    }
+
 };
