@@ -98,7 +98,9 @@ var kitchenState = {
             textBar.events.onInputUp.add(this.beatPuzzleText, this);
 
             //if the hidden cabinet button is clicked, prepare to change states
-            secretRoomButton.events.onInputUp.add(this.secretRoomTextStart, this);
+            if (secretRoomButton != null) {
+                secretRoomButton.events.onInputUp.add(this.secretRoomTextStart, this);
+            }
 
         } else {
             //if there are still items that have not been found, add listeners
@@ -110,7 +112,9 @@ var kitchenState = {
             pantryButton.events.onInputUp.add(this.changeStatePantry, this);
 
             //if the secretRoomButton is clicked, change states
-            secretRoomButton.events.onInputUp.add(this.secretRoomTextStart, this);
+            if (secretRoomButton != null) {
+                secretRoomButton.events.onInputUp.add(this.secretRoomTextStart, this);
+            }
         }
     },
 

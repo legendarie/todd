@@ -59,21 +59,44 @@ var secretRoomState = {
      * changeText runs through the first seven lines of text*/
 
     changeText: function() {
-        //only allow the clickCount to increment to 7
-        if (clickCount < 7) {
+        //only allow the clickCount to increment to 17
+        if (clickCount < 18) {
             clickCount++;
             if (clickCount === 1) {
                 secretRoomScene.changeText('\"I\'m impressed you\'ve made it this far.\"');
             } else if (clickCount === 2) {
-                secretRoomScene.changeText('\"Not that I didn\'t believe in you or anything.\"');
+                secretRoomScene.changeText('\"...Not that I didn\'t believe you could.\"');
             } else if (clickCount === 3) {
-                secretRoomScene.changeText('\"It\'s just that you\'re the first T.O.D.D. to make it here...\"');
+                secretRoomScene.changeText('\"You certainly are the most proficient T.O.D.D. ' +
+                    'to pass through here, though.\"');
             } else if (clickCount === 4) {
-                secretRoomScene.changeText('\"Ehem. Sorry. You\'re doing great!\"');
+                secretRoomScene.changeText('\"Hm?\"');
             } else if (clickCount === 5) {
-                secretRoomScene.changeText('\"As a little treat for being awesome, here\'s the last' +
-                    ' five gifts.\"');
+                secretRoomScene.changeText('\"Oh. Yes, of course. There have been others.\"');
             } else if (clickCount === 6) {
+                secretRoomScene.changeText('\"You guys certainly are persistent.\"');
+            } else if (clickCount === 7) {
+                secretRoomScene.changeText('\"As soon as one of you is knocked down...\"');
+            } else if (clickCount === 8) {
+                secretRoomScene.changeText('\"...another comes waltzing out that door.\"');
+            } else if (clickCount === 9) {
+                secretRoomScene.changeText('\"You\'re certainly living up to your title.\"');
+            } else if (clickCount === 10) {
+                secretRoomScene.changeText('\"\"Travellers of the Doorth Dimension\", right?\"');
+            } else if (clickCount === 11) {
+                secretRoomScene.changeText('\"Protectors of the Realms, and all that.\"');
+            } else if (clickCount === 12) {
+                secretRoomScene.changeText('\"But I have to ask...how do you think you\'re gonna do it?\"');
+            } else if (clickCount === 13) {
+                secretRoomScene.changeText('\"Defeat all evil? In every realm?\"');
+            } else if (clickCount === 14) {
+                secretRoomScene.changeText('\"I guess that\'s a bit of a heavy question.\"');
+            } else if (clickCount === 15) {
+                secretRoomScene.changeText('\"Nevermind. I\'ll leave you to your hunt.\"');
+            } else if (clickCount === 16) {
+                secretRoomScene.changeText('\"As a little treat for you, here\'s some' +
+                    ' more gifts. On me.\"');
+            } else if (clickCount === 17) {
                 secretRoomScene.changeText('\"I\'ll get out of your hair now. You got this.\"');
                 secretRoomScene.removeEllipses();
             } else {

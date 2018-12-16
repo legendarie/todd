@@ -27,8 +27,8 @@ var fightState = {
         game.load.image('slingshot', 'assets/slingshot.png');
         game.load.image('snowFlakes', 'assets/snowflake.png');
 
-        santaHealth = 3;
-        lives = 5;
+        santaHealth = 8;
+        lives = 3;
     },
 
     create: function () {
@@ -92,7 +92,7 @@ var fightState = {
 
     createSnow: function () {
         snow = game.add.emitter(game.world.centerX, 0, 100); //x coordinate, y coordinate, number of particles
-        snow.makeParticles('snowFlakes', 100, 10, true);
+        snow.makeParticles('snowFlakes', 100, 25, true);
         snow.maxParticleScale = 0.3;
         snow.minParticleScale = 0.1;
         snow.setYSpeed(20, 100);
