@@ -93,7 +93,7 @@ var transitionCaveState = {
             } else if (clickCount === 13) {
                 transitionScene.changeText('You\'re not sure if it\'s because of the cold or your nerves.');
             } else if (clickCount === 14) {
-                transitionScene.changeText('You take a deep breath to steady your nerves.');
+                transitionScene.changeText('You take a deep breath.');
                 transitionScene.removeEllipses();
                 leaveCaveButton = transitionScene.addButton(150, 230, 300, 240, 0);
                 leaveCaveButton.events.onInputUp.add(this.changeState, this);
