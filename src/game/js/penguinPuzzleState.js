@@ -441,7 +441,7 @@ var penguinPuzzleState = {
         crossWarmButton.setScript(["You don't even make it three steps before the ice gives out beneath you.",
             "You plunge into the murk below.",
             "You hear a burbling voice behind you:",
-            '"No hard feelings, kiddo."']);
+            '"No hard feelin\'s, pardner."']);
         crossWarmButton.setLabel("Exit room");
         turnDownButton.setScript(["You turn the dial until it hits zero.",
             "The room is feeling pretty frigid."]);
