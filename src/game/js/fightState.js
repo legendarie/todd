@@ -83,8 +83,7 @@ var fightState = {
     createSanta: function () {
         // add the santa sprite to the middle of the world
         santa = game.add.sprite(0, 0, 'santa');
-        santa.position.setTo(Math.floor(Math.random() * (game.world.width - santa.width)), Math.floor(Math.random()
-            * (game.world.height - santa.height)));
+        santa.position.setTo(Math.floor(Math.random() * (game.world.width - santa.width)), 100);
         santa.scale.setTo(0.15);
         game.physics.enable(santa);
         santa.body.collideWorldBounds = true;
@@ -168,8 +167,8 @@ var fightState = {
 
     update: function () {
         // as the game is running, the candy and santa are allowed to interact (to bounce off one another)
-        game.physics.arcade.collide(candy, santa, this.restart, null, this);
         if(playing === true) {
+            game.physics.arcade.collide(candy, santa, this.restart, null, this);
             game.physics.arcade.collide(candy, snow, this.hitSnow, null, this);
         }
         santaHealthText.setText("Santa's health: " + santaHealth);
