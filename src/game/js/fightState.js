@@ -6,7 +6,7 @@ var distanceX;
 var distanceY;
 var candy;
 var santa;
-var slingShot;
+var background;
 var santaHealthText;
 var yourHealthText;
 var snow;
@@ -135,7 +135,7 @@ var fightState = {
             candy.destroy();
             this.createCandy();
             if (santaHealth <= 0) {
-                game.state.start('doorState', doorState);
+                game.state.start('yaWonState');
             }
         }
     },
@@ -146,7 +146,7 @@ var fightState = {
             candy.kill();
             this.createCandy();
             if (lives <= 0) {
-                game.state.start('yaDeadState', yaDeadState);
+                game.state.start('yaDeadState');
             }
         }
     },

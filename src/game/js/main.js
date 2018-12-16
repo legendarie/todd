@@ -50,6 +50,9 @@ game.state.add('fightState', fightState);
 //the death state:
 game.state.add('yaDeadState', yaDeadState);
 
+//the win state:
+game.state.add('yaWonState', yaWonState);
+
 //the state that the game begins with:
-game.state.start('findingSanta');
+game.state.start('yaWonState');
 
