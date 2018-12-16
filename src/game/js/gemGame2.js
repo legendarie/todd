@@ -1,6 +1,4 @@
-// Example by https://twitter.com/awapblog
-// Updated by https://twitter.com/boldbigflank
-
+//Adapted from https://phaser.io/examples/v2/games/gemmatch
 
 var GEM_SIZE = 64;
 var GEM_SPACING = 2;
