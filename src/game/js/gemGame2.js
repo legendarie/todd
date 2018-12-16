@@ -351,9 +351,8 @@ var gemGame2 = {
             if (!gem.alive) {
                 this.setGemPos(gem, -1,-1);
                 numGems++;
-                textBar.kill();
                 text.kill();
-                gemGameScene.addTextBar("Number of gems removed: " + numGems);
+                gemGameScene.changeText("Number of gems removed: " + numGems);
                 textBar.input.useHandCursor = false;
             }
         }.bind(this));
