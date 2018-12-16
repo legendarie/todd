@@ -6,11 +6,14 @@ var distanceX;
 var distanceY;
 var candy;
 var santa;
-var numCollision;
 var slingShot;
 var santaHealthText;
 var yourHealthText;
 var snow;
+let playing = false;
+let dragging = true;
+let dragBounds = new Phaser.Rectangle(originalX-100,originalY-100,200,200);
+var countBounce = 0;
 
 
 var fightState = {
@@ -39,7 +42,6 @@ var fightState = {
         this.createCandy();
         this.createSanta();
         this.createSnow();
-        numCollision = 0;
 
         santaHealthText = game.add.text(0, 0, santaHealth);
         yourHealthText = game.add.text(300,0,lives);
@@ -48,6 +50,7 @@ var fightState = {
 
     createCandy: function () {
         // randomly chooses between the two candy sprites and adds it to the world
+        playing = false;
         var num = Math.random();
         if (num < 0.5) {
             candy = game.add.sprite(game.world.centerX, 550, 'dotCandy');
@@ -63,6 +66,9 @@ var fightState = {
         game.physics.enable(candy);
         candy.inputEnabled = true;
         candy.input.enableDrag(true);
+        dragBounds = new Phaser.Rectangle(originalX-100,originalY-100,200,200);
+        candy.input.boundsRect = dragBounds;
+
 
         this.play();
     },
@@ -85,7 +91,7 @@ var fightState = {
     },
 
     createSnow: function () {
-        snow = game.add.emitter(game.world.centerX, 0, 50); //x coordinate, y coordinate, number of particles
+        snow = game.add.emitter(game.world.centerX, 0, 100); //x coordinate, y coordinate, number of particles
         snow.makeParticles('snowFlakes', 100, 10, true);
         snow.maxParticleScale = 0.3;
         snow.minParticleScale = 0.1;
@@ -99,13 +105,17 @@ var fightState = {
 
 
     play: function () {
+        playing = false;
         candy.events.onInputUp.add(this.launch, this);
     },
 
     launch: function () {
         // enables game physics to apply to the candy sprite, then sets its x and y velocity, the gravity
         // that will be applied to the sprite when it falls, and the x and y trajectory upon a bounce
+        playing = true;
         candy.body.collideWorldBounds = true;
+        candy.body.onWorldBounds = new Phaser.Signal();
+        candy.body.onWorldBounds.add(this.candyIncrementBounds, this);
 
         distanceX = (candy.x - originalX);
         distanceY = (candy.y - originalY);
@@ -117,33 +127,50 @@ var fightState = {
 
     },
 
-    incrementCollision: function () {
-        numCollision++;
-    },
 
     restart: function () {
-        santaHealth = santaHealth - 1;
-        candy.destroy();
-        this.createCandy();
-        if (santaHealth <= 0) {
-            game.state.start('doorState', doorState);
+        if (candy.input.isDragged == false) {
+            santaHealth = santaHealth - 1;
+            candy.destroy();
+            this.createCandy();
+            if (santaHealth <= 0) {
+                game.state.start('doorState', doorState);
+            }
         }
-
     },
 
     hitSnow: function () {
-        lives--;
-        candy.kill();
-        this.createCandy();
-        if (lives <= 0) {
-            game.state.start('yaDeadState', yaDeadState);
+        if(playing == true) {
+            lives--;
+            candy.kill();
+            this.createCandy();
+            if (lives <= 0) {
+                game.state.start('yaDeadState', yaDeadState);
+            }
         }
     },
+
+    candyIncrementBounds: function() {
+        //sets the rule that if the candy bounces off the wall 3 times, it will return to the sling shot again
+        if (countBounce >= 2) {
+            candy.destroy();
+            this.createCandy();
+            countBounce = 0;
+        }
+        else {
+            countBounce++;
+        }
+    },
+
+
+
 
     update: function () {
         // as the game is running, the candy and santa are allowed to interact (to bounce off one another)
         game.physics.arcade.collide(candy, santa, this.restart, null, this);
-        game.physics.arcade.collide(candy, snow, this.hitSnow, null, this);
+        if(playing == true) {
+            game.physics.arcade.collide(candy, snow, this.hitSnow, null, this);
+        }
         santaHealthText.setText("Santa's health: "+ santaHealth);
         yourHealthText.setText("Your health: "+lives);
     }
