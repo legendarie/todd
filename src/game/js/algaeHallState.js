@@ -64,6 +64,7 @@ var algaeHallState = {
                 algaeHallScene.changeText("It isn't long before the passage opens up.");
                 algaeHallScene.removeEllipses();
 
+                bg.input.useHandCursor = true;
                 bg.events.onInputUp.add(this.changeState, this);
             }
         }

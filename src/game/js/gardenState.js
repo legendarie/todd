@@ -216,9 +216,9 @@ var gardenState = {
     },
 
     changeStateCavern: function() {
-        //change states penguinPuzzleState
-        nextState = 'penguinPuzzleState';
-        game.state.start('penguinPuzzleState');
+        //change states eelState
+        nextState = 'eelState';
+        game.state.start('eelState');
     },
 
     changeStateDeath: function() {

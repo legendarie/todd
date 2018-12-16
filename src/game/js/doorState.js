@@ -50,32 +50,11 @@ var doorState = {
             doorScene.addEllipses();
 
             //when the text bar is clicked, go to the changeText function
-            textBar.events.onInputUp.add(this.changeText, this);
+            textBar.events.onInputUp.add(this.dialButtons, this);
         }
 
     },
 
-    /** All of the functions that change the text in the text box:
-     * changeText runs through the first three lines of text
-     * blueMessage displays when the blue panel is clicked
-     * otherMessage directs the player to try another dial color (red, white, brown panels)*/
-
-    changeText: function() {
-        //inquire about the dial on the door
-        //only allow the clickCount to increment to 2
-        if (clickCount < 2) {
-            clickCount++;
-            if (clickCount === 1) {
-                doorScene.changeText("To what color do you turn the dial?")
-            } else {
-                //once this script has been run through, create the dial buttons
-                doorScene.changeText("Choose a color.");
-                doorScene.removeEllipses();
-
-                this.dialButtons();
-            }
-        }
-    },
 
     blueMessage: function() {
         //change the text in the text box, and create the door button
@@ -93,6 +72,9 @@ var doorState = {
      * doorButton switches states to the open door*/
 
     dialButtons: function() {
+        doorScene.changeText("To what color do you turn the dial?");
+        doorScene.removeEllipses();
+        
         //make the blue part of the dial clickable. If clicked, it will call the blueMessage function
         blueDial = doorScene.addButton(540, 263, 60, 40, 0);
         blueDial.events.onInputUp.add(this.blueMessage, this);

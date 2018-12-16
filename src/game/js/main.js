@@ -54,5 +54,5 @@ game.state.add('yaDeadState', yaDeadState);
 game.state.add('yaWonState', yaWonState);
 
 //the state that the game begins with:
-game.state.start('eelState');
+game.state.start('doorState');
 

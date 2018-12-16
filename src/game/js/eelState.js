@@ -46,7 +46,7 @@ var eelState = {
     },
 
     changeText: function() {
-        if (clickCount < 8) {
+        if (clickCount < 9) {
             clickCount++;
             if (clickCount === 1) {
                 eelScene.changeText('\"I don\'t see many folks \'round these parts.\"');
@@ -61,9 +61,10 @@ var eelState = {
             } else if (clickCount === 6) {
                 eelScene.changeText('\"I gotta make for certain yer fit as a fiddle.\"');
             } else if(clickCount === 7) {
-                eelScene.changeText('\"If you can nix 150 gems, I\'ll shoot that ol\' gem there' +
-                    ' and letcha pass.\"');
-            } else {
+                eelScene.changeText('\"If you can nix 150 gems in my puzzle, I\'ll letcha pass.\"');
+            } else if (clickCount === 8) {
+                eelScene.changeText('\"Move a gem up, down, left, or right to match three or more.\"');
+            }else {
                 eelScene.changeText('\"Go ahead and head on up to the gem to get started.\"');
                 eelScene.removeEllipses();
                 singleGem.events.onInputUp.add(this.goToGame, this);
@@ -83,7 +84,7 @@ var eelState = {
             } else if (clickCount === 4) {
                 eelScene.changeText('\"Lemme take out this gem for ya, so you can get on with it.\"');
             } else if (clickCount === 5) {
-                eelScene.changeText('With a sharp pop, the eel shot the gem blocking the cave, shattering it.');
+                eelScene.changeText('With a sharp pop, the eel shoots the gem blocking the cave, shattering it.');
             } else if (clickCount === 6) {
                 singleGem.kill();
                 eelScene.changeText('\"Good luck, stranger. Also, could you give that varmint' +
