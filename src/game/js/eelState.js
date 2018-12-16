@@ -1,4 +1,4 @@
-var clickCount = 0;
+//initialize global variables
 var eelSprite;
 var singleGem;
 var textBar;
@@ -9,28 +9,33 @@ let eelScene = null;
 //initialize the state
 var eelState = {
 
+    /** The initial functions to set up the scene for player interaction */
+
     preload: function() {
 
+        //create new instance of the Scene class
         eelScene = new Scene;
 
+        //load in all of the images to the state
         eelScene.setBackground('eelCavebg', 'assets/eelCavebg.png');
-
         eelScene.setSprite('eelWithAGun', 'assets/eelWithAGun.png');
-
         eelScene.setSprite('singleGem', 'assets/singleGem.png');
 
+        //reset global clickCount variable to 0
         clickCount = 0;
 
     },
 
+    /** Add the visual elements to the canvas, and add the first line of text to the scene */
+
     create: function() {
 
+        //add the background and the sprites to the scene
         eelScene.loadScene('eelCavebg', 0.477);
-
         eelSprite = eelScene.addStaticSprite(650, 240, 'eelWithAGun', 0.3, 0, 0);
-
         singleGem = eelScene.addSprite(285, 420, 'singleGem', 2.5);
 
+        //checks to see if the player has already entered the state
         if (alreadyBeenES === false) {
             alreadyBeenES = true;
 
@@ -44,6 +49,8 @@ var eelState = {
         }
 
     },
+
+    /** Runs through the player's conversation with Eel with a Gun */
 
     changeText: function() {
         if (clickCount < 9) {
@@ -72,6 +79,9 @@ var eelState = {
         }
     },
 
+    /** Runs through the rest of the player's conversation with Eel with a Gun. Only appears
+     * after the player has beaten the gem game */
+
     afterGameText: function() {
         if (clickCount < 8) {
             clickCount++;
@@ -99,15 +109,20 @@ var eelState = {
         }
     },
 
+    /** Creates the button on the cave entrance. When it is clicked, the changeState function is called */
+
     exitButton: function() {
         var caveButton = eelScene.addButton(285, 375, 170, 180, 0);
         caveButton.events.onInputUp.add(this.changeState, this);
     },
 
+    /** Change the state to the gem game */
 
     goToGame: function() {
         game.state.start('gemGame2');
     },
+
+    /** Change the state to the penguin puzzle */
 
     changeState: function() {
         game.state.start('penguinPuzzleState');

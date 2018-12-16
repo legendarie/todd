@@ -86,8 +86,6 @@ var caveEntranceState = {
             clickCount++;
             if (clickCount === 1) {
                 caveEntranceScene.changeText("You can't see what is waiting for you in the cave.");
-                if (circle1 === null) {
-                }
             } else if (clickCount === 2) {
                 caveEntranceScene.changeText("You're not too thrilled about the idea of venturing into the darkness.");
             } else {

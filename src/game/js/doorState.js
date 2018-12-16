@@ -74,7 +74,7 @@ var doorState = {
     dialButtons: function() {
         doorScene.changeText("To what color do you turn the dial?");
         doorScene.removeEllipses();
-        
+
         //make the blue part of the dial clickable. If clicked, it will call the blueMessage function
         blueDial = doorScene.addButton(540, 263, 60, 40, 0);
         blueDial.events.onInputUp.add(this.blueMessage, this);

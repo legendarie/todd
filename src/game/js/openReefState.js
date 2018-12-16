@@ -77,7 +77,7 @@ var openReefState = {
             //only increment the click count twice. Unnecessary to increment it more
             clickCount++;
             if (clickCount === 1) {
-                openReefScene.changeText("The water feels strangely cold.")
+                openReefScene.changeText("The water feels strangely cold.");
             } else {
                 //change the text in the text bar, remove the ellipses to indicate to the player that
                 // there is no more text at this time, then create the sign and path buttons
@@ -133,6 +133,9 @@ var openReefState = {
         //tell the player how many gifts have been found if they have not already been told
         if (giftText === false) {
             openReefScene.changeText('You have found ' + giftCount + ' gift(s)');
+            if (clickCount >= 2) {
+                openReefScene.removeEllipses();
+            }
             giftText = true;
         }
         textBar.events.onInputUp.add(this.changeText, this);
