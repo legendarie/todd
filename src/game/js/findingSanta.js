@@ -41,6 +41,10 @@ var findingSanta = {
         santaSound.loop = true;
         santaSound.play();
 
+        //textbar giving player instructions
+        findScene.addTextBar('Follow the ho ho ho\'s to find your foe!');
+        textBar.input.useHandCursor = false;
+
         santa.inputEnabled = true; //make santa interactive
         santa.events.onInputDown.add(this.gameWin,this); //clicking on santa
         santa.input.useHandCursor = true; //change pointer into the pointing finger when mouse is over santa

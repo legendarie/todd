@@ -459,4 +459,4 @@ var gemGame2 = {
             allowInput = true;
         }
     },
-}
+};
