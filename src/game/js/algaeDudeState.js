@@ -49,8 +49,8 @@ var algaeDudeState = {
     beginConvo: function() {
         //start off the cryptic conversation with mort, the algae growth
         algaeDude.kill();
-        algaeDudeScene.addEllipses();
         algaeDudeScene.addTextBar('\"hello\"');
+        algaeDudeScene.addEllipses();
         textBar.events.onInputUp.add(this.convoText, this);
     },
 

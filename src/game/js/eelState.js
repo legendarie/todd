@@ -3,6 +3,7 @@ var eelSprite;
 var singleGem;
 var textBar;
 var alreadyBeenES = false; //boolean to check whether the player has been to this state or not
+var nextState;
 
 let eelScene = null;
 
@@ -125,7 +126,8 @@ var eelState = {
     /** Change the state to the penguin puzzle */
 
     changeState: function() {
-        game.state.start('penguinPuzzleState');
+        nextState = 'penguinPuzzleState';
+        game.state.start(nextState);
     }
 
 };
