@@ -6,7 +6,6 @@ var slingshot;
 var back;
 var wormHole;
 var cliffRoad;
-var bg;
 
 var alreadyBeenRF = false;     //boolean to keep track of whether the player has been in this state before
 
@@ -38,7 +37,7 @@ var roadForkState = {
         //check to make sure that the scene has been created
         if (convo1Scene != null) {
             //load the background and scale it
-            bg = convo1Scene.loadScene('roadForkbg', 0.55);
+            convo1Scene.loadScene('roadForkbg', 0.55);
 
             //if the player has not been here before,
             if (alreadyBeenRF === false) {
@@ -120,16 +119,16 @@ var roadForkState = {
 
         //add Wise Guy's last piece of dialogue
         convo1Scene.changeText("\"Thanks a million, buddy. Good luck out there.\"");
+        convo1Scene.addEllipses();
 
         //when the textBar is clicked, spawn buttons over the two paths
-        bg.input.useHandCursor = true;
-        bg.events.onInputUp.add(this.pathChoice, this);
+        textBar.events.onInputUp.add(this.pathChoice, this);
 
     },
 
     pathChoice: function() {
 
-        bg.input.useHandCursor = false;
+        convo1Scene.removeEllipses();
 
         //remove Wise Guy from the scene (if he was there) -- N/A if alreadyBeenRF is true
         wiseGuy.kill();
