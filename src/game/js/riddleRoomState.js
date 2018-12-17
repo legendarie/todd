@@ -34,6 +34,7 @@ var riddleRoomState = {
         //declare scene to be an instance of a Scene, and load in the background image to the state
         riddleRoomScene = new Scene;
         riddleRoomScene.setBackground('riddleRoombg', 'assets/riddleRoombg.png');
+        riddleRoomScene.setBackground('riddleRoomPassbg', 'assets/riddleRoomPassbg.png');
 
         //reset the global clickCount variable
         clickCount = 0;
@@ -133,8 +134,8 @@ var riddleRoomState = {
                 riddleRoomScene.changeText('"...You have answered all of my riddles."');
             } else {
                 //change the text in the text bar, then create the exit button
-                riddleRoomScene.removeEllipses();
-                riddleRoomScene.changeText('"You may pass."');
+                riddleRoomScene.loadScene('riddleRoomPassbg', 0.32);
+                riddleRoomScene.addTextBar('"You may pass."');
                 this.exitButton();
             }
         }
