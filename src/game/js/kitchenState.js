@@ -146,7 +146,15 @@ var kitchenState = {
         if (giftText === false) {
             kitchenScene.changeText('You have found ' + giftCount + ' gift(s)');
             giftText = true;
-            textBar.events.onInputUp.add(this.changeText, this);
+            if (score < 8) {
+                textBar.events.onInputUp.add(this.changeText, this);
+            } else {
+                if (clickCount < 3) {
+                    textBar.events.onInputUp.add(this.beatPuzzleText, this);
+                } else {
+                    kitchenScene.removeEllipses();
+                }
+            }
         }
 
     },

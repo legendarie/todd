@@ -6,6 +6,7 @@ var gift4;
 var house;
 var iceCavern;
 var fruit;
+var deathClickCount = 0;
 
 let gardenScene = null;
 
@@ -90,7 +91,6 @@ var gardenState = {
                 //once this script has been run through, create the passage/tree buttons
                 gardenScene.changeText("Where do you want to go?");
                 textBar.events.onInputUp.remove(this.changeText, this);
-                clickCount = 0;
                 gardenScene.removeEllipses();
 
                 this.houseButton();
@@ -115,28 +115,28 @@ var gardenState = {
     continueDeathText: function() {
         //run the player through the death script
         //only allow the clickCount to increment to 9
-        if (clickCount < 10) {
-            clickCount++;
-            if (clickCount === 1) {
+        if (deathClickCount < 10) {
+            deathClickCount++;
+            if (deathClickCount === 1) {
                 gardenScene.changeText("It's a bit of a stretch, but you're able to grab one.");
                 gardenScene.addEllipses();
-            } else if (clickCount === 2) {
+            } else if (deathClickCount === 2) {
                 gardenScene.changeText("Immediately, you retract your hand in surprise.");
-            } else if (clickCount === 3) {
+            } else if (deathClickCount === 3) {
                 gardenScene.changeText("The thick gel on its skin latches onto your fingers.");
-            } else if (clickCount === 3) {
+            } else if (deathClickCount === 3) {
                 gardenScene.changeText("It starts sinking into your flesh like an acid.");
-            } else if (clickCount === 4) {
+            } else if (deathClickCount === 4) {
                 gardenScene.changeText("Your arm is turning purple.");
-            } else if (clickCount === 5) {
+            } else if (deathClickCount === 5) {
                 gardenScene.changeText("...");
-            } else if (clickCount === 6) {
+            } else if (deathClickCount === 6) {
                 gardenScene.changeText("It's turning into fruit!");
-            } else if (clickCount === 7) {
+            } else if (deathClickCount === 7) {
                 gardenScene.changeText("YOU'RE turning into fruit!");
-            } else if (clickCount === 8) {
+            } else if (deathClickCount === 8) {
                 gardenScene.changeText("...");
-            } else if (clickCount === 9) {
+            } else if (deathClickCount === 9) {
                 gardenScene.changeText("You give your hand a lick.");
             } else {
                 //once this script has been run through, call the death state

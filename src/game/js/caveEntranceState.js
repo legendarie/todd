@@ -74,6 +74,9 @@ var caveEntranceState = {
         if (giftText === false) {
             caveEntranceScene.changeText('You have found ' + giftCount + ' gift(s)');
             giftText = true;
+            if (clickCount >= 3) {
+                caveEntranceScene.removeEllipses();
+            }
         }
         textBar.events.onInputUp.add(this.changeText, this);
     },
@@ -82,7 +85,7 @@ var caveEntranceState = {
 
     changeText: function() {
         //only allow the clickCount to increment to 3 (unnecessary that it increments more)
-        if (clickCount < 4) {
+        if (clickCount < 3) {
             clickCount++;
             if (clickCount === 1) {
                 caveEntranceScene.changeText("You can't see what is waiting for you in the cave.");

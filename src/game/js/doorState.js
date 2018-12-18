@@ -50,9 +50,15 @@ var doorState = {
             doorScene.addEllipses();
 
             //when the text bar is clicked, go to the changeText function
-            textBar.events.onInputUp.add(this.dialButtons, this);
+            textBar.events.onInputUp.add(this.changeText, this);
         }
 
+    },
+
+    changeText: function() {
+        doorScene.changeText("To what color do you turn the dial?");
+        doorScene.removeEllipses();
+        this.dialButtons();
     },
 
 
@@ -72,9 +78,6 @@ var doorState = {
      * doorButton switches states to the open door*/
 
     dialButtons: function() {
-        doorScene.changeText("To what color do you turn the dial?");
-        doorScene.removeEllipses();
-
         //make the blue part of the dial clickable. If clicked, it will call the blueMessage function
         blueDial = doorScene.addButton(540, 263, 60, 40, 0);
         blueDial.events.onInputUp.add(this.blueMessage, this);
