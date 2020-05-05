@@ -19,8 +19,8 @@ tell you where to click.
 
 
 ## Authors
-* **Sadie Nederveld** - *Artwork and Storyline Development* 
-* **Linnea Prehn** - *Artwork and Storyline Development*
+* **Sadie Nederveld** - *Artwork, Storyline Development and Minigames* 
+* **Linnea Prehn** - *Artwork, Storyline Development and Minigames*
 * **Dat Le** - *Minigames and Game physics*
 
 
